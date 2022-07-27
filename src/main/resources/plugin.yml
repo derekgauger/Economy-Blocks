@@ -1,0 +1,15 @@
+name: EconomyBlocks
+version: '${project.version}'
+main: craftplugins.economyblocks.EconomyBlocks
+api-version: 1.19
+authors: [ Dirk ]
+description: Custom Minecraft economy plugin with buying "Lucky Block" care packages
+commands:
+  send:
+    description: Send money to other people
+  shop:
+    description: Open the shop GUI
+  balance:
+    aliases:
+      - bal
+    description: Gets the player's current account balance
