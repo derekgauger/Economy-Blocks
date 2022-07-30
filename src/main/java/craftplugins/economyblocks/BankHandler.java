@@ -1,6 +1,7 @@
 package craftplugins.economyblocks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,9 +28,18 @@ public class BankHandler implements Listener, CommandExecutor {
 
     public BankHandler(EconomyBlocks plugin) {
         this.plugin = plugin;
+
         bankAccounts = loadData("bank.data");
+
         if (bankAccounts == null) {
             bankAccounts = new ArrayList<>();
+        }
+
+        for (BankAccount ba : bankAccounts) {
+            Player p = Bukkit.getPlayer(UUID.fromString(ba.uuid));
+            if (p != null) {
+                ba.setPlayer(UUID.fromString(ba.uuid));
+            }
         }
 
         new CarePackageShop(plugin, this);
@@ -40,6 +50,14 @@ public class BankHandler implements Listener, CommandExecutor {
         Bukkit.getServer().getPluginCommand("balance").setExecutor(this);
     }
 
+    private void print_bank(BankAccount ba) {
+        if (ba.uuid != null) {
+            System.out.println(ba.uuid);
+            ba.setPlayer(UUID.fromString(ba.uuid));
+            System.out.println(ba.player.getName());
+            System.out.println(ba.balance);
+        }
+    }
 
     public boolean saveData(String filePath) {
         try {
@@ -72,7 +90,14 @@ public class BankHandler implements Listener, CommandExecutor {
         Player p = event.getPlayer();
 
         if (!p.hasPlayedBefore()) {
-            bankAccounts.add(new BankAccount(plugin,p, 0));
+            bankAccounts.add(new BankAccount(plugin,p.getUniqueId(), 0));
+        }
+
+        for (BankAccount ba : bankAccounts) {
+            if (ba.uuid.equals(p.getUniqueId().toString())) {
+                ba.setPlayer(UUID.fromString(ba.uuid));
+
+            }
         }
     }
 
@@ -118,6 +143,7 @@ public class BankHandler implements Listener, CommandExecutor {
 
             BankAccount bankAccount = getBankAccount(player);
             player.sendMessage(Utils.chat("&aBalance: $" + Utils.format(bankAccount.getBalance())));
+
         }
 
         return true;
@@ -137,7 +163,7 @@ public class BankHandler implements Listener, CommandExecutor {
 
         Player player = Bukkit.getServer().getPlayer(username);
 
-        BankAccount ba = new BankAccount(plugin, player, 0);
+        BankAccount ba = new BankAccount(plugin, player.getUniqueId(), 0);
         bankAccounts.add(ba);
 
         return ba;
@@ -151,7 +177,7 @@ public class BankHandler implements Listener, CommandExecutor {
             }
         }
 
-        BankAccount ba = new BankAccount(plugin, player, 0);
+        BankAccount ba = new BankAccount(plugin, player.getUniqueId(), 0);
         bankAccounts.add(ba);
 
         return ba;

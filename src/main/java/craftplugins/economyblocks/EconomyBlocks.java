@@ -12,6 +12,7 @@ public final class EconomyBlocks extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         bankHandler = new BankHandler(this);
+
         new Utils(this);
     }
 

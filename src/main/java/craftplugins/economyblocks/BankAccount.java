@@ -8,19 +8,22 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class BankAccount implements Serializable {
 
     private static transient final long serialVersionUID = -1681012206529286330L;
 
     transient EconomyBlocks plugin;
-    Player player;
+    transient Player player;
     double balance;
+    String uuid;
 
-    public BankAccount(EconomyBlocks plugin, Player player, double startingBalance) {
+    public BankAccount(EconomyBlocks plugin, UUID uuid, double startingBalance) {
         this.plugin = plugin;
-        this.player = player;
         this.balance = startingBalance;
+        this.uuid = uuid.toString();
+        setPlayer(uuid);
     }
 
     public void deposit(double amount) {
@@ -52,6 +55,11 @@ public class BankAccount implements Serializable {
 
     public double getBalance() {
         return balance;
+    }
+
+    public void setPlayer(UUID uuid) {
+        player = Bukkit.getPlayer(uuid);
+
     }
 
 }
