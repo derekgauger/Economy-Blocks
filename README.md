@@ -25,4 +25,4 @@ Custom blocks that do random events when you place them. There are 5 tiers of bl
 
 - /cp : Open the care package shop
 
-If there are any issues with this plugin or you have ideas for improvements/new features, please contact me at gaugerderek@gmail.com or Discord: Dirk#8540
+**If there are any issues with this plugin or you have ideas for improvements/new features, please contact me at gaugerderek@gmail.com or Discord: Dirk#8540**
