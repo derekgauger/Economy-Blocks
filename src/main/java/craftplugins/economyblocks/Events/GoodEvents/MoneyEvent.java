@@ -1,14 +1,18 @@
-package craftplugins.economyblocks.Events;
+package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankAccount;
 import craftplugins.economyblocks.BankHandler;
+import craftplugins.economyblocks.Events.CarePackageEvent;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
 
-public class MoneyEvent implements CarePackageEvent{
+public class MoneyEvent implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
+
+        System.out.println("Give Money");
+
         BankAccount bankAccount = bankHandler.getBankAccount(player);
 
         Random rand = new Random();

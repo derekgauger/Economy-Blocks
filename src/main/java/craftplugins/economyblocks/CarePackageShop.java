@@ -11,6 +11,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class CarePackageShop implements Listener, CommandExecutor {
 
@@ -32,6 +34,25 @@ public class CarePackageShop implements Listener, CommandExecutor {
     static final double tier4Cost = 10000;
     static final double tier5Cost = 16000;
 
+
+
+    // 30%
+    ItemStack tierOne = Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier1Cost));
+
+    // 25%
+    ItemStack tierTwo = Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier2Cost));
+
+    // 20%
+    ItemStack tierThree = Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier3Cost));
+
+    // 15%
+    ItemStack tierFour = Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier4Cost));
+
+    // 10%
+    ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier5Cost));
+
+    ItemStack[] items = {tierOne, tierTwo, tierThree, tierFour, tierFive};
+
     public CarePackageShop(EconomyBlocks plugin, BankHandler bankHandler) {
         this.plugin = plugin;
         this.bankHandler = bankHandler;
@@ -39,7 +60,7 @@ public class CarePackageShop implements Listener, CommandExecutor {
         initializeCarePackages();
 
         Bukkit.getServer().getPluginManager().registerEvents(this,plugin);
-        Bukkit.getServer().getPluginCommand("shop").setExecutor(this);
+        Bukkit.getServer().getPluginCommand("carepackage").setExecutor(this);
 
     }
 
@@ -52,7 +73,7 @@ public class CarePackageShop implements Listener, CommandExecutor {
         Player player = (Player) sender;
 
         player.sendMessage(Utils.chat("&dCalled care packages, but sometimes the Minecraft gods don't care"));
-
+        player.sendMessage(Utils.chat("&dItems from care packages will not be given if inventory is full"));
         openInventory((Player) sender);
 
         return true;
@@ -73,29 +94,24 @@ public class CarePackageShop implements Listener, CommandExecutor {
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
 
         // Good: 33%, Bad: 67%
-        ItemStack tierOne = createGuiItem(Material.WHITE_WOOL,Utils.chat("&f&lCare Package Tier 1"), Utils.chat("&aCost: $" + tier1Cost));
         shop.addItem(tierOne);
-        new TierOne(plugin,tierOne);
+        new TierOne(plugin, tierOne, bankHandler);
 
         // Good: 50%, Bad: 50%
-        ItemStack tierTwo = createGuiItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"), Utils.chat("&aCost: $" + tier2Cost));
         shop.addItem(tierTwo);
-        new TierTwo(plugin, tierTwo);
+        new TierTwo(plugin, tierTwo, bankHandler);
 
         // Good: 67%, Bad: 33%
-        ItemStack tierThree = createGuiItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"), Utils.chat("&aCost: $" + tier3Cost));
         shop.addItem(tierThree);
-        new TierThree(plugin, tierThree);
+        new TierThree(plugin, tierThree, bankHandler);
 
         // Good: 80%, Bad: 20%
-        ItemStack tierFour = createGuiItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), Utils.chat("&aCost: $" + tier4Cost));
         shop.addItem(tierFour);
-        new TierFour(plugin, tierFour);
+        new TierFour(plugin, tierFour, bankHandler);
 
         // Good: 90%, Bad: 10%
-        ItemStack tierFive = createGuiItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), Utils.chat("&aCost: $" + tier5Cost));
         shop.addItem(tierFive);
-        new TierFive(plugin, tierFive);
+        new TierFive(plugin, tierFive, bankHandler);
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
@@ -194,4 +210,18 @@ public class CarePackageShop implements Listener, CommandExecutor {
         player.sendMessage(Utils.chat("&cInsufficient Funds"));
 
     }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Random rand = new Random();
+        int randomNum = (int) (rand.nextDouble() * 2000);
+
+        if (randomNum > 1990) {
+            int randomIndex = Utils.getRandomNumber(0, items.length);
+            event.getPlayer().getInventory().addItem((items[randomIndex]));
+            event.getPlayer().sendMessage(Utils.chat("&dYou have received a free care package!"));
+            event.getPlayer().sendMessage(String.valueOf(randomNum));
+        }
+    }
+
 }

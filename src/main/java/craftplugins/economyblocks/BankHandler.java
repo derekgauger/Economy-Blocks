@@ -8,24 +8,63 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.NotNull;
 
+import javax.xml.crypto.Data;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class BankHandler implements Listener, CommandExecutor {
 
     EconomyBlocks plugin;
-    List<BankAccount> bankAccounts = new ArrayList<>();
+    List<BankAccount> bankAccounts;
 
     public BankHandler(EconomyBlocks plugin) {
         this.plugin = plugin;
+        bankAccounts = loadData("bank.data");
+        if (bankAccounts == null) {
+            bankAccounts = new ArrayList<>();
+        }
 
         new CarePackageShop(plugin, this);
+        new MineralShop(plugin, this);
 
         Bukkit.getServer().getPluginManager().registerEvents(this,plugin);
         Bukkit.getServer().getPluginCommand("send").setExecutor(this);
+        Bukkit.getServer().getPluginCommand("balance").setExecutor(this);
     }
+
+
+    public boolean saveData(String filePath) {
+        try {
+            BukkitObjectOutputStream out = new BukkitObjectOutputStream(new GZIPOutputStream(new FileOutputStream(filePath)));
+            out.writeObject(bankAccounts);
+            out.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<BankAccount> loadData(String filePath) {
+        try {
+            BukkitObjectInputStream in = new BukkitObjectInputStream(new GZIPInputStream(new FileInputStream(filePath)));
+            bankAccounts = (List<BankAccount>) in.readObject();
+            in.close();
+            return bankAccounts;
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     @EventHandler
@@ -40,28 +79,52 @@ public class BankHandler implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        try {
-            double amount = Double.parseDouble(args[0]);
-            String toUsername = args[1];
-            BankAccount sendTo = getBankAccount(toUsername);
+        if (label.equalsIgnoreCase("send")) {
+            try {
+                String toUsername = args[0];
+
+                double amount = Double.parseDouble(args[1]);
+
+                if (!checkPlayerExists(toUsername)) {
+                    sender.sendMessage(Utils.chat("&cUsername: '&4" + toUsername + "&c' not found."));
+                    return false;
+                }
+
+                BankAccount sendTo = getBankAccount(toUsername);
+
+                if (!(sender instanceof Player)) {
+                    sendTo.deposit(amount);
+                    return true;
+                }
+
+                Player player = (Player) sender;
+                BankAccount from = getBankAccount(player);
+
+                sendTo.deposit(amount);
+                from.withdraw(amount);
+
+            } catch (NumberFormatException e) {
+                sender.sendMessage(Utils.chat("&cUsage: /send {player} {amount}"));
+                return false;
+            }
+        } else if (label.equalsIgnoreCase("bal") || label.equalsIgnoreCase("balance")) {
 
             if (!(sender instanceof Player)) {
-                sendTo.deposit(amount);
+                System.out.println("Only players in game can do that");
                 return true;
             }
 
             Player player = (Player) sender;
-            BankAccount from = getBankAccount(player);
 
-            sendTo.deposit(amount);
-            from.withdraw(amount);
-
-        } catch (NumberFormatException e) {
-            sender.sendMessage(Utils.chat("&cUsage: /send {amount} {player}"));
-            return false;
+            BankAccount bankAccount = getBankAccount(player);
+            player.sendMessage(Utils.chat("&aBalance: $" + Utils.format(bankAccount.getBalance())));
         }
 
         return true;
+    }
+
+    private boolean checkPlayerExists(String username) {
+        return Bukkit.getPlayer(username) != null;
     }
 
     public BankAccount getBankAccount(String username) {
@@ -74,7 +137,10 @@ public class BankHandler implements Listener, CommandExecutor {
 
         Player player = Bukkit.getServer().getPlayer(username);
 
-        return new BankAccount(plugin, player, 0);
+        BankAccount ba = new BankAccount(plugin, player, 0);
+        bankAccounts.add(ba);
+
+        return ba;
     }
 
     public BankAccount getBankAccount(Player player) {
@@ -85,6 +151,9 @@ public class BankHandler implements Listener, CommandExecutor {
             }
         }
 
-        return new BankAccount(plugin, player, 0);
+        BankAccount ba = new BankAccount(plugin, player, 0);
+        bankAccounts.add(ba);
+
+        return ba;
     }
 }

@@ -1,5 +1,6 @@
 package craftplugins.economyblocks.CarePackages;
 
+import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.EconomyBlocks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,10 +17,12 @@ public class TierTwo extends CarePackage implements Listener {
 
     EconomyBlocks plugin;
     ItemStack carePackage;
+    BankHandler bankHandler;
 
-    public TierTwo(EconomyBlocks plugin, ItemStack carePackage) {
+    public TierTwo(EconomyBlocks plugin, ItemStack carePackage, BankHandler bankHandler) {
         this.plugin = plugin;
         this.carePackage = carePackage;
+        this.bankHandler = bankHandler;
 
         Bukkit.getServer().getPluginManager().registerEvents(this,plugin);
     }
@@ -40,9 +43,9 @@ public class TierTwo extends CarePackage implements Listener {
         double randDouble = rand.nextDouble();
 
         if (randDouble >= .50) {
-            bad(player);
+            bad(player, bankHandler);
         } else {
-            good(player);
+            good(player, bankHandler);
         }
 
         block.setType(Material.AIR);

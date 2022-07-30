@@ -7,9 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class BankAccount implements CommandExecutor {
+import java.io.Serializable;
 
-    EconomyBlocks plugin;
+public class BankAccount implements Serializable {
+
+    private static transient final long serialVersionUID = -1681012206529286330L;
+
+    transient EconomyBlocks plugin;
     Player player;
     double balance;
 
@@ -17,17 +21,6 @@ public class BankAccount implements CommandExecutor {
         this.plugin = plugin;
         this.player = player;
         this.balance = startingBalance;
-
-        Bukkit.getServer().getPluginCommand("balance").setExecutor(this);
-    }
-
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender == player) {
-            player.sendMessage(Utils.chat("&aBalance $" + balance));
-            return true;
-        }
-        return false;
     }
 
     public void deposit(double amount) {
@@ -37,6 +30,8 @@ public class BankAccount implements CommandExecutor {
         }
 
         balance += amount;
+        player.sendMessage(Utils.chat("&a$" + Utils.format(amount) + " has been sent to your account!"));
+
     }
 
     public void withdraw(double amount) {
@@ -48,9 +43,10 @@ public class BankAccount implements CommandExecutor {
 
         if (balance - amount >= 0) {
             balance -= amount;
+            player.sendMessage(Utils.chat("&c$" + Utils.format(amount) + " has been removed to your account!"));
 
         } else {
-            player.sendMessage(Utils.chat("&cCannot withdraw $" + amount + " Current Balance: $" + balance));
+            player.sendMessage(Utils.chat("&cCannot withdraw $" + Utils.format(amount) + " Current Balance: $" + Utils.format(balance)));
         }
     }
 

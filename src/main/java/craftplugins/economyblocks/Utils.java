@@ -3,20 +3,30 @@ package craftplugins.economyblocks;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Utils implements Listener {
 
     EconomyBlocks plugin;
+    ItemStack smiteStick = Utils.createItem(Material.STICK, Utils.chat("&bLightning Stick"), 1,null, null);
+
 
     public Utils(EconomyBlocks plugin) {
         this.plugin = plugin;
@@ -61,4 +71,49 @@ public class Utils implements Listener {
 
         return blocks;
     }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        ItemStack item = event.getPlayer().getItemInHand();
+        if (item.isSimilar(smiteStick)) {
+            Block tb = event.getPlayer().getTargetBlock(120);
+
+            if (tb != null) {
+                tb.getWorld().spawnEntity(tb.getLocation(), EntityType.LIGHTNING);
+            } else {
+                Block teb = event.getPlayer().getTargetEntity(120).getLocation().getBlock();
+                teb.getWorld().spawnEntity(teb.getLocation(), EntityType.LIGHTNING);
+            }
+
+        }
+    }
+
+    public static ItemStack createItem(final Material material, final String name, int amount, Enchantment[] enchants, int[] levels, final String... lore) {
+        final ItemStack item = new ItemStack(material, amount);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(name);
+
+        meta.setLore(Arrays.asList(lore));
+
+        if (enchants != null) {
+            for (int i = 0; i < enchants.length; i++) {
+                meta.addEnchant(enchants[i], levels[i], true);
+            }
+        }
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    public static int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    public static String format(double value) {
+        DecimalFormat df = new DecimalFormat("###,###,###.##");
+        return String.valueOf(df.format(value));
+    }
+
 }

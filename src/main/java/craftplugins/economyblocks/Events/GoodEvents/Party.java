@@ -1,6 +1,7 @@
-package craftplugins.economyblocks.Events;
+package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankHandler;
+import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,9 +11,12 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class Party implements CarePackageEvent{
+public class Party implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
+
+        System.out.println("Party");
+
         List<Block> blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
 
 

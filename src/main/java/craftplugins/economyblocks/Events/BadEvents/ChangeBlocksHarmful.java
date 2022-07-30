@@ -9,19 +9,19 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class ChangeBlocks implements CarePackageEvent {
+public class ChangeBlocksHarmful implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
-
+        System.out.println("Harmful Blocks");
         List<Block> blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
 
         Material[] types = {Material.LAVA, Material.TNT, Material.FIRE};
+        int randomIndex = Utils.getRandomNumber(0, types.length);
 
         for (Block b : blocks) {
             if (b.getType() != Material.AIR) {
-
+                b.setType(types[randomIndex]);
             }
         }
-
     }
 }
