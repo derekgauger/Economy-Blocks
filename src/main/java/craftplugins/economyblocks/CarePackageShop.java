@@ -231,7 +231,28 @@ public class CarePackageShop implements Listener, CommandExecutor {
         }
     }
     
-    // Add entity kill event
+    @EventHandler
+    public void onMobKill(EntityDeathEvent event) {
+        Entity entity = event.getEntity();
+        Entity killer = event.getKiller();
+        if (!(killer instance of Player)) {
+            return;
+        }
+        
+        Random rand = new Random();
+        int randomNum = (int) (rand.nextDouble() * 2000);
+        
+        if (randomNum > 1970) {
+            int randomIndex = Utils.getRandomNumber(0, items.length);
+            Utils.addItemToInventory(items[randomIndex], event.getPlayer());
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getDisplayName() + " has received a free " + items[randomIndex].getDisplayName() + "&d!"));
+        }
+    }
+    
+    @EventHandler
+    public void onHarvest(BlockBreakEvent event) {
+        
+    }
     // Harvest event
     
 }
