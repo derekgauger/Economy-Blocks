@@ -45,12 +45,12 @@ public class Nuke implements CarePackageEvent {
         if (randomNum > 50) {
 
             location.getWorld().createExplosion(location, 100);
-            location.getWorld().createExplosion(location.add(20, 0, 0), 75);
-            location.getWorld().createExplosion(location.add(-20, 0, 0), 75);
-            location.getWorld().createExplosion(location.add(0, 0, 20), 75);
-            location.getWorld().createExplosion(location.add(0, 0, -20), 75);
-            location.getWorld().createExplosion(location.add(0, 20, 0), 75);
-            location.getWorld().createExplosion(location.add(0, -20, 0), 75);
+            location.getWorld().createExplosion(location.add(20, 0, 0), 50);
+            location.getWorld().createExplosion(location.add(-20, 0, 0), 50);
+            location.getWorld().createExplosion(location.add(0, 0, 20), 50);
+            location.getWorld().createExplosion(location.add(0, 0, -20), 50);
+            location.getWorld().createExplosion(location.add(0, 20, 0), 50);
+            location.getWorld().createExplosion(location.add(0, -20, 0), 50);
         } else {
             Bukkit.broadcastMessage(Utils.chat("&dYou look real dumb running from nothing right now..."));
 
