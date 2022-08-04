@@ -31,11 +31,11 @@ public class Party implements CarePackageEvent {
 
         EntityType entity = entities[Utils.getRandomNumber(0, wool.length)];
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
 
-            Entity piggy = player.getWorld().spawnEntity(player.getLocation().add(1, 3,1), entity);
-            piggy.setCustomNameVisible(true);
-            piggy.setCustomName(Utils.chat("&d&lSexy " + entity.getName() + " #" + (i + 1)));
+            Entity spawn = player.getWorld().spawnEntity(player.getLocation().add(1, 3,1), entity);
+            spawn.setCustomNameVisible(true);
+            spawn.setCustomName(Utils.chat("&d&lSexy " + entity.getName() + " #" + (i + 1)));
         }
     }
 }
