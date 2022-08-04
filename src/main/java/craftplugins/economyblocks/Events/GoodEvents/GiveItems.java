@@ -32,47 +32,47 @@ public class GiveItems implements CarePackageEvent {
         double randomNum = rand.nextDouble() * 100;
 
         if (randomNum > 98) {
-            player.getInventory().addItem(smiteStick);
+            Utils.addItemToInventory(smiteStick, player);
             player.sendMessage(Utils.chat("&dYou have been given a smite stick!"));
 
         } else if (randomNum > 93) {
-            player.getInventory().addItem(kbStick);
+            Utils.addItemToInventory(kbStick, player);
             player.sendMessage(Utils.chat("&dYou have been given a knockback stick!"));
 
         } else if (randomNum > 85) {
-            player.getInventory().addItem(enderChest);
+            Utils.addItemToInventory(enderChest, player);
             player.sendMessage(Utils.chat("&dYou have been given an Enderchest!"));
 
         } else if (randomNum > 80) {
-            player.getInventory().addItem(enchantedGoldenApples);
+            Utils.addItemToInventory(enchantedGoldenApples, player);
             player.sendMessage(Utils.chat("&dYou have been given golden apples"));
 
         } else if (randomNum > 75) {
-            player.getInventory().addItem(goldenApples);
+            Utils.addItemToInventory(goldenApples, player);
             player.sendMessage(Utils.chat("&dYou have been given enchanted golden apples!"));
 
         } else if (randomNum > 70) {
-            player.getInventory().addItem(netherite);
+            Utils.addItemToInventory(netherite, player);
             player.sendMessage(Utils.chat("&dYou have been given netherite ingots!"));
 
         }  else if (randomNum > 65) {
-            player.getInventory().addItem(diamond);
+            Utils.addItemToInventory(diamond, player);
             player.sendMessage(Utils.chat("&dYou have been given diamonds!"));
 
         } else if (randomNum > 50) {
-            player.getInventory().addItem(gold);
+            Utils.addItemToInventory(gold, player);
             player.sendMessage(Utils.chat("&dYou have been given gold ingots!"));
 
         } else if (randomNum > 40) {
-            player.getInventory().addItem(iron);
+            Utils.addItemToInventory(iron, player);
             player.sendMessage(Utils.chat("&dYou have been given iron ingots!"));
 
         } else if (randomNum > 25) {
-            player.getInventory().addItem(lapis);
+            Utils.addItemToInventory(lapis, player);
             player.sendMessage(Utils.chat("&dYou have been given lapis ore!"));
 
         } else {
-            player.getInventory().addItem(redstone);
+            Utils.addItemToInventory(redstone, player);
             player.sendMessage(Utils.chat("&dYou have been given redstone ore!"));
 
         }
