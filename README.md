@@ -8,15 +8,39 @@ The EconomyBlocks plugin contains 3 main features: Custom built economy, mineral
 - /send {username} {amount} : send money to another player
 - /bal : get your balance
 
-**Mineral Selling Shop:** Sell your minerals
+**Shop:** Sell your minerals, crops, or mob drops
 
+Minerals: 
+
+- Netherrack: $0.10
+- Cobbled Deepslate: $0.50
 - Cobblestone: $0.50
 - Iron Ingot: $100
 - Gold Ingot: $125
 - Diamond: $500
 - Netherite Scrap: $8000
 
-**Mineral Selling Shop Commands:**
+Mob Drops:
+
+- Rotten Flesh: $
+- Spider Eye: $5
+- Bone: $5
+- Gun Powder: $5
+- Ender Pearl: $15
+- Shulker Shell: $300
+- Ghast Tear: $500
+
+Crops:
+
+- Wheat: $3
+- Carrot: $3
+- Potato: $3
+- Beatroot: $3
+- Melon Slice: $4
+- Cactus: $20
+- Pumpkin: $40
+
+**Shop Commands:**
 
 - /shop : open the mineral shop
 
