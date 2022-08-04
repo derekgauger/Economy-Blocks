@@ -36,8 +36,8 @@ public class SpawnEnemies implements CarePackageEvent {
         for (int i = 0; i < 10; i++) {
 
             Entity spawn = player.getWorld().spawnEntity(player.getLocation().add(1, 3,1), entity);
-            piggy.setCustomNameVisible(true);
-            piggy.setCustomName(Utils.chat("&d&lPapa " + spawn.getName() + " #" + (i + 1)));
+            spawn.setCustomNameVisible(true);
+            spawn.setCustomName(Utils.chat("&d&lPapa " + entity.getName() + " #" + (i + 1)));
         }
     }
 }
