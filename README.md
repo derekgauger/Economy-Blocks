@@ -1,6 +1,6 @@
 **Plugin Download:** https://www.spigotmc.org/resources/economyblocks.103809/
 
-The EconomyBlocks plugin contains 3 main features: Custom built economy, mineral selling shop, and care packages.
+The EconomyBlocks plugin contains 3 main features: Custom built economy, selling shop, and care packages.
 
 **Economy:** A basic system for keeping track of a player's bank account.
 **Economy Commands:**
