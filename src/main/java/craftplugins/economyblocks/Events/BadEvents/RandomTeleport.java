@@ -12,8 +12,8 @@ public class RandomTeleport implements CarePackageEvent {
 
         System.out.println("Random Teleport");
 
-        double randomXDelta = Utils.getRandomNumber(0, 1000);
-        double randomZDelta = Utils.getRandomNumber(0, 1000);
+        double randomXDelta = Utils.getRandomNumber(0, 500);
+        double randomZDelta = Utils.getRandomNumber(0, 500);
 
         Location location = player.getLocation();
 
