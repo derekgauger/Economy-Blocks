@@ -25,14 +25,32 @@ import java.util.Arrays;
 public class MineralShop implements Listener, CommandExecutor {
 
     EconomyBlocks plugin;
-    public Inventory shop = Bukkit.createInventory(null,27, "Mineral Shop");
+    public Inventory shop = Bukkit.createInventory(null,27, "Shop");
     BankHandler bankHandler;
-
+    
+    double netherrackPrice = .10;
+    double cobbledDeepslatePrice = .50;
     double cobblestonePrice = .50;
-    double ironIngotPrice = 100;
-    double goldIngotPrice = 125;
+    double ironIngotPrice = 75;
+    double goldIngotPrice = 100;
     double diamondPrice = 500;
-    double netheriteScrapPrice = 16000;
+    double netheriteScrapPrice = 8000;
+    
+    double spiderEyePrice = 5;
+    double rottenFleshPrice = 5;
+    double bonePrice = 5;
+    double gunPowderPrice = 5;
+    double enderPearlPrice = 15;
+    double shulkerShellPrice = 300;
+    double ghastTearPrice = 500;
+    
+    double wheatPrice = 3;
+    double carrotPrice = 3;
+    double potatoPrice = 3;
+    double beatrootPrice = 3;
+    double melonSlicePrice = 4;
+    double cactusPrice = 20;
+    double pumpkinPrice = 40;
 
     public MineralShop(EconomyBlocks plugin, BankHandler bankHandler) {
         this.plugin = plugin;
@@ -61,20 +79,14 @@ public class MineralShop implements Listener, CommandExecutor {
     private void initializeShop() {
         int emptyCount = 1;
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
+        
+        shop.addItem(createGuiItem(Material.NETHERRACK, Utils.chat("&c&lNetherrack"), Utils.chat("&aPrice Per: $" + netherrackPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
-        shop.addItem(createGuiItem(Material.COBBLESTONE, Utils.chat("&8&lCobblestone"), Utils.chat("&aPrice Per: $" + cobblestonePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+        shop.addItem(createGuiItem(Material.COBBLED_DEEPSLATE, Utils.chat("&8&lCobbled Deepslate"), Utils.chat("&aPrice Per: $" + cobbledDeepslatePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
-        shop.addItem(createGuiItem(Material.IRON_INGOT, Utils.chat("&7&lIron Ingot"), Utils.chat("&aPrice Per: $" + ironIngotPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+        shop.addItem(createGuiItem(Material.COBBLESTONE, Utils.chat("&7&lCobblestone"), Utils.chat("&aPrice Per: $" + cobblestonePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.IRON_INGOT, Utils.chat("&f&lIron Ingot"), Utils.chat("&aPrice Per: $" + ironIngotPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
         shop.addItem(createGuiItem(Material.GOLD_INGOT, Utils.chat("&6&lGold Ingot"), Utils.chat("&aPrice Per: $" + goldIngotPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
@@ -84,14 +96,38 @@ public class MineralShop implements Listener, CommandExecutor {
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
+        
+        shop.addItem(createGuiItem(Material.ROTTEN_FLESH, Utils.chat("&c&lRotten Flesh"), Utils.chat("&aPrice Per: $" + rottenFleshPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.SPIDER_EYE, Utils.chat("&4&lSpider Eye"), Utils.chat("&aPrice Per: $" + spiderEyePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.BONE, Utils.chat("&f&lBone"), Utils.chat("&aPrice Per: $" + bonePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.GUN_POWDER, Utils.chat("&7&lGun Powder"), Utils.chat("&aPrice Per: $" + gunPowderPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.ENDER_PEARLS, Utils.chat("&1&lEnder Pearl"), Utils.chat("&aPrice Per: $" + enderPearlPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.SHULKER_SHELL, Utils.chat("&5&lShulker Shell"), Utils.chat("&aSell One: $" + shulkerShellPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.GHAST_TEAR, Utils.chat("&b&lGhast Tear"), Utils.chat("&aPrice Per: $" + ghastTearPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
+        
+        shop.addItem(createGuiItem(Material.WHEAT, Utils.chat("&e&lWheat"), Utils.chat("&aPrice Per: $" + wheatPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.CARROT, Utils.chat("&6&lCarrot"), Utils.chat("&aPrice Per: $" + carrotPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.POTATO, Utils.chat("&9&lPotato"), Utils.chat("&aPrice Per: $" + potatoPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.BEATROOT, Utils.chat("&c&Beatroot"), Utils.chat("&aPrice Per: $" + beatRootPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.MELON_SLICE, Utils.chat("&a&lMelon Slice"), Utils.chat("&aSell One: $" + melonSlicePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+        
+        shop.addItem(createGuiItem(Material.CACTUS, Utils.chat("&2&lCactus"), Utils.chat("&aPrice Per: $" + cactusPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
+        shop.addItem(createGuiItem(Material.PUMPKIN, Utils.chat("&6&lPumpkin"), Utils.chat("&aPrice Per: $" + pumpkinPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
     }
 
@@ -180,6 +216,171 @@ public class MineralShop implements Listener, CommandExecutor {
             if (removedAmount != 0) {
                 double totalSellPrice = removedAmount * diamondPrice;
                 player.sendMessage(Utils.chat("&aSold " + removedAmount + " &b" + Material.DIAMOND.name().replace("_", " ").toLowerCase() + "a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.NETHERITE_SCRAP) {
+            double removedAmount = removeItems(clickType, player, Material.NETHERITE_SCRAP, netheriteScrapPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * netheriteScrapPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.NETHERITE_SCRAP.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.ROTTEN_FLESH) {
+            double removedAmount = removeItems(clickType, player, Material.ROTTEN_FLESH, rottenFleshPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * rottenFleshPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.ROTTEN_FLESH.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.SPIDER_EYE) {
+            double removedAmount = removeItems(clickType, player, Material.SPIDER_EYE, spiderEyePrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * spiderEyePrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.SPIDER_EYE.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.BONE) {
+            double removedAmount = removeItems(clickType, player, Material.BONE, bonePrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * bonePrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.BONE.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.GUN_POWDER) {
+            double removedAmount = removeItems(clickType, player, Material.GUN_POWDER, gunPowderPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * gunPowderPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.GUN_POWDER.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.ENDER_PEARL) {
+            double removedAmount = removeItems(clickType, player, Material.ENDER_PEARL, enderPearlPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * enderPearlPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.ENDER_PEARL.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.SHULKER_SHELL) {
+            double removedAmount = removeItems(clickType, player, Material.SHULKER_SHELL, shulkerShellPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * shulkerShellPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.SHULKER_SHELL.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.GHAST_TEAR) {
+            double removedAmount = removeItems(clickType, player, Material.GHAST_TEAR, ghastTearPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * ghastTearPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.GHAST_TEAR.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.WHEAT) {
+            double removedAmount = removeItems(clickType, player, Material.WHEAT, wheatPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * wheatPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.WHEAT.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.CARROT) {
+            double removedAmount = removeItems(clickType, player, Material.CARROT, carrotPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * carrotPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.CARROT.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.POTATO) {
+            double removedAmount = removeItems(clickType, player, Material.POTATO, potatoPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * potatoPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.POTATO.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.BEATROOT) {
+            double removedAmount = removeItems(clickType, player, Material.BEATROOT, beatrootPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * beatrootPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.BEATROOT.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.MELON_SLICE) {
+            double removedAmount = removeItems(clickType, player, Material.MELON_SLICE, melonSlicePrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * melonSlicePrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.MELON_SLICE.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.CACTUS) {
+            double removedAmount = removeItems(clickType, player, Material.CACTUS, cactusPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * cactusPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.CACTUS.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.PUMPKIN) {
+            double removedAmount = removeItems(clickType, player, Material.PUMPKIN, pumpkinPrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * pumpkinPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.PUMPKIN.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
                 bankAccount.deposit(totalSellPrice);
             } else {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
