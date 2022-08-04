@@ -13,7 +13,7 @@ public class ChangeBlocksHarmful implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
         System.out.println("Harmful Blocks");
-        List<Block> blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
+        List<Block> blocks = Utils.getBlocks(player.getLocation().getBlock(), 3);
 
         Material[] types = {Material.LAVA, Material.TNT, Material.FIRE};
         int randomIndex = Utils.getRandomNumber(0, types.length);
