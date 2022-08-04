@@ -228,7 +228,7 @@ public class CarePackageShop implements Listener, CommandExecutor {
         if (randomNum > 1980) {
             int randomIndex = Utils.getRandomNumber(0, items.length);
             event.getPlayer().getInventory().addItem((items[randomIndex]));
-            event.getPlayer().sendMessage(Utils.chat("&dYou have received a free care package!"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getDisplayName() + " has received a free care package!"));
         }
     }
     
