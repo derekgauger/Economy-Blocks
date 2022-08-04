@@ -33,11 +33,11 @@ public class SpawnEnemies implements CarePackageEvent {
 
         EntityType entity = entities[Utils.getRandomNumber(0, entities.length)];
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
 
-            Entity piggy = player.getWorld().spawnEntity(player.getLocation().add(1, 3,1), entity);
+            Entity spawn = player.getWorld().spawnEntity(player.getLocation().add(1, 3,1), entity);
             piggy.setCustomNameVisible(true);
-            piggy.setCustomName(Utils.chat("&d&lPapa " + entity.getName() + " #" + (i + 1)));
+            piggy.setCustomName(Utils.chat("&d&lPapa " + spawn.getName() + " #" + (i + 1)));
         }
     }
 }
