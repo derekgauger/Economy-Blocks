@@ -14,9 +14,9 @@ public class ChangeBlocksToOres implements CarePackageEvent {
     public void runEvent(Player player, BankHandler bankHandler) {
 
         System.out.println("Change Blocks to Ores");
-        List<Block> blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
+        List<Block> blocks = Utils.getBlocks(player.getLocation().getBlock(), 2);
 
-        Material[] types = {Material.EMERALD_ORE, Material.DIAMOND_ORE, Material.IRON_ORE, Material.IRON_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.GOLD_ORE, Material.GOLD_ORE, Material.COPPER_ORE, Material.COPPER_ORE, Material.COPPER_ORE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE};
+        Material[] types = {Material.COAL, Material.EMERALD_ORE, Material.DIAMOND_ORE, Material.IRON_ORE, Material.IRON_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.GOLD_ORE, Material.GOLD_ORE, Material.COPPER_ORE, Material.COPPER_ORE, Material.COPPER_ORE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE, Material.STONE};
 
         for (Block b : blocks) {
             if (b.getType() != Material.AIR) {

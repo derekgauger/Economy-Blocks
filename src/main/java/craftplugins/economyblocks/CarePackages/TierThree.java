@@ -3,13 +3,18 @@ package craftplugins.economyblocks.CarePackages;
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.EconomyBlocks;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.util.Random;
 
@@ -46,6 +51,13 @@ public class TierThree extends CarePackage implements Listener {
             bad(player, bankHandler);
         } else {
             good(player, bankHandler);
+            Firework fw = (Firework) block.getWorld().spawnEntity(block.getLocation().add(.5,.5,.5), EntityType.FIREWORK);
+            FireworkMeta fwm = fw.getFireworkMeta();
+            fwm.setPower(2);
+            fwm.addEffect(FireworkEffect.builder().withColor(Color.PURPLE).flicker(true).build());
+
+            fw.setFireworkMeta(fwm);
+            fw.detonate();
         }
 
         block.setType(Material.AIR);

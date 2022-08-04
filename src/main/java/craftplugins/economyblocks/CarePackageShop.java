@@ -215,12 +215,24 @@ public class CarePackageShop implements Listener, CommandExecutor {
     public void onBlockBreak(BlockBreakEvent event) {
         Random rand = new Random();
         int randomNum = (int) (rand.nextDouble() * 2000);
+        Material[] blocks = {Material.GRASS_BLOCK, Material.STONE, Material.IRON_ORE, Material.COAL_ORE, Material.GOLD_ORE, Material.REDSTONE_ORE, Material.COPPER_ORE, Material.DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.DIORITE, Material.GRANITE, Material.ANDESITE, Material.SAND, Material.COBBLESTONE, Material.DEEPSLATE, Material.COBBLED_DEEPSLATE, Material.LAPIS_ORE, Material.DIRT, Material.TUFF, Material.GRAVEL, Material.SANDSTONE, Material.OBSIDIAN, Material.SOUL_SAND,Material.NETHERRACK, Material.DEEPSLATE_IRON_ORE, Material.DEEPSLATE_GOLD_ORE, Material.DEEPSLATE_REDSTONE_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_EMERALD_ORE, Material.DEEPSLATE_COAL_ORE, Material.DEEPSLATE_COPPER_ORE, Material.DEEPSLATE_LAPIS_ORE, Material.EMERALD_ORE};
+
+        boolean giveChance = false;
+
+        for (Material type : blocks) {
+            if (type == event.getBlock().getType()) {
+                giveChance = true;
+            }
+        }
+
+        if (!giveChance) {
+            return;
+        }
 
         if (randomNum > 1990) {
             int randomIndex = Utils.getRandomNumber(0, items.length);
             event.getPlayer().getInventory().addItem((items[randomIndex]));
             event.getPlayer().sendMessage(Utils.chat("&dYou have received a free care package!"));
-            event.getPlayer().sendMessage(String.valueOf(randomNum));
         }
     }
 

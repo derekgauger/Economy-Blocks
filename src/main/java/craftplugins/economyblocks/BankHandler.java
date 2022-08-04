@@ -125,8 +125,13 @@ public class BankHandler implements Listener, CommandExecutor {
                 Player player = (Player) sender;
                 BankAccount from = getBankAccount(player);
 
-                sendTo.deposit(amount);
-                from.withdraw(amount);
+                if (from.getBalance() >= amount) {
+                    from.withdraw(amount);
+                    sendTo.deposit(amount);
+                } else {
+                    player.sendMessage(Utils.chat("&cInsufficient Funds"));
+                }
+
 
             } catch (NumberFormatException e) {
                 sender.sendMessage(Utils.chat("&cUsage: /send {player} {amount}"));
