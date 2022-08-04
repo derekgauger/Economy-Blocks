@@ -51,7 +51,7 @@ public class TierOne extends CarePackage implements Listener {
             bad(player, bankHandler);
         } else {
             good(player, bankHandler);
-            Firework fw = (Firework) block.getWorld().spawnEntity(block.getLocation().add(.5,.5,.5), EntityType.FIREWORK);
+            Firework fw = (Firework) block.getWorld().spawnEntity(block.getLocation().add(.5,8.5,.5), EntityType.FIREWORK);
             FireworkMeta fwm = fw.getFireworkMeta();
             fwm.setPower(2);
             fwm.addEffect(FireworkEffect.builder().withColor(Color.PURPLE).flicker(true).build());
