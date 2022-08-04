@@ -251,8 +251,38 @@ public class CarePackageShop implements Listener, CommandExecutor {
     
     @EventHandler
     public void onHarvest(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        Material[] validCrops = {Material.WHEAT, Material.CARROT, Material.BEATROOT, MATERIAL.POTATO};
+        Material[] validBlocks = {Material.CACTUS, Material.PUMPKIN, Material.MELON};
         
+        boolean giveChance = false;
+        for (Material m : validBlocks) {
+            if (m == block.getType()) {
+                giveChance = true;
+                break;
+            }
+        }
+        for (Material m : validCrops) {
+            if (m == block.getType()) {
+                giveChance = true;
+                Ageable a = (Ageable) block.getBlockData();
+                if (a.getAge() != 7) {
+                    return;
+                }
+            }
+        }
+        
+        if (!giveChance) {
+            return;
+        }
+        
+        Random rand = new Random();
+        int randomNum = (int) (rand.nextDouble() * 2000);
+        
+        if (randomNum > 1970) {
+            int randomIndex = Utils.getRandomNumber(0, items.length);
+            Utils.addItemToInventory(items[randomIndex], event.getPlayer());
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getDisplayName() + " has received a free " + items[randomIndex].getDisplayName() + "&d!"));
+        }
     }
-    // Harvest event
-    
 }
