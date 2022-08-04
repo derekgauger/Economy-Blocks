@@ -22,52 +22,52 @@ public class GiveBlocks implements CarePackageEvent {
 
         if (randomNum > 99) {
             ItemStack giveItem = createItem(Material.BEACON, Utils.chat("&bBeacon"), 1, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given a &bBeacon"));
 
         } else if (randomNum > 98) {
             ItemStack giveItem = createItem(Material.NETHERITE_BLOCK, Utils.chat("&fNetherite Block"), 1, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given a netherite block"));
 
         } else if (randomNum > 97) {
             ItemStack giveItem = createItem(Material.DIAMOND_BLOCK, Utils.chat("&fDiamond Block"), 4, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given 4 diamond blocks"));
 
         } else if (randomNum > 95) {
             ItemStack giveItem = createItem(Material.SHULKER_BOX, Utils.chat("&5Shulker Box"), 1, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given a shulker box"));
 
         } else if (randomNum > 92) {
             ItemStack giveItem = createItem(Material.CHEST, Utils.chat("&fChest"), 128, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given 2 stacks of chests"));
 
         } else if (randomNum > 88) {
             ItemStack giveItem = createItem(Material.ENDER_CHEST, Utils.chat("&fEnderchest"), 1, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given an enderchest"));
 
         } else if (randomNum > 83) {
             ItemStack giveItem = createItem(Material.GOLD_BLOCK, Utils.chat("&fGold Block"), 8, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given 8 gold blocks"));
 
         } else if (randomNum > 75) {
             ItemStack giveItem = createItem(Material.IRON_BLOCK, Utils.chat("&fIron Block"), 8, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given 8 iron blocks"));
 
         } else if (randomNum > 65) {
             ItemStack giveItem = createItem(Material.OBSIDIAN, Utils.chat("&fObsidian"), 32, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given 32 obsidian"));
 
         } else if (randomNum > 50) {
             ItemStack giveItem = createItem(Material.END_STONE, Utils.chat("&fEndstone"), 64, null, null);
-            player.getInventory().addItem(giveItem);
+            Utils.addItemToInventory(giveItem, player);
             player.sendMessage(Utils.chat("&dYou have been given a stack of endstone"));
 
         } else if (randomNum > 30) {
@@ -77,12 +77,12 @@ public class GiveBlocks implements CarePackageEvent {
             ItemStack birch = createItem(Material.BIRCH_LOG, Utils.chat("&fBirch Log"), 64, null, null);
             ItemStack acacia = createItem(Material.ACACIA_LOG, Utils.chat("&few  Acacia Log"), 64, null, null);
             ItemStack jungle = createItem(Material.JUNGLE_LOG, Utils.chat("&fJungle Log"), 64, null, null);
-            player.getInventory().addItem(oak);
-            player.getInventory().addItem(spruce);
-            player.getInventory().addItem(dark);
-            player.getInventory().addItem(birch);
-            player.getInventory().addItem(acacia);
-            player.getInventory().addItem(jungle);
+            Utils.addItemToInventory(oak, player);
+            Utils.addItemToInventory(spruce, player);
+            Utils.addItemToInventory(dark, player);
+            Utils.addItemToInventory(birch, player);
+            Utils.addItemToInventory(acacia, player);
+            Utils.addItemToInventory(jungle, player);
             player.sendMessage(Utils.chat("&dYou have been given a lot of wood"));
 
         } else {
@@ -92,12 +92,12 @@ public class GiveBlocks implements CarePackageEvent {
             ItemStack mossyCobble = createItem(Material.MOSSY_COBBLESTONE, Utils.chat("&fMossy Cobblestone"), 64, null, null);
             ItemStack honey = createItem(Material.HONEY_BLOCK, Utils.chat("&fHoney Block"), 64, null, null);
             ItemStack slime = createItem(Material.SLIME_BLOCK, Utils.chat("&fSlime Block"), 64, null, null);
-            player.getInventory().addItem(grass);
-            player.getInventory().addItem(sand);
-            player.getInventory().addItem(stone);
-            player.getInventory().addItem(mossyCobble);
-            player.getInventory().addItem(honey);
-            player.getInventory().addItem(slime);
+            Utils.addItemToInventory(grass, player);
+            Utils.addItemToInventory(sand, player);
+            Utils.addItemToInventory(stone, player);
+            Utils.addItemToInventory(mossyCobble, player);
+            Utils.addItemToInventory(honey, player);
+            Utils.addItemToInventory(slime, player);
             player.sendMessage(Utils.chat("&dYou have been given some blocks"));
 
         }
