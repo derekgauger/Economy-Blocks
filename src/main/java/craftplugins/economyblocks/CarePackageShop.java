@@ -73,7 +73,6 @@ public class CarePackageShop implements Listener, CommandExecutor {
         Player player = (Player) sender;
 
         player.sendMessage(Utils.chat("&dCalled care packages, but sometimes the Minecraft gods don't care"));
-        player.sendMessage(Utils.chat("&dItems from care packages will not be given if inventory is full"));
         openInventory((Player) sender);
 
         return true;
