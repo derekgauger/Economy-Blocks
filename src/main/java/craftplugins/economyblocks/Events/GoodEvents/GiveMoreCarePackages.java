@@ -46,23 +46,23 @@ public class GiveMoreCarePackages implements CarePackageEvent {
         double randomNum = rand.nextDouble() * 100;
 
         if (randomNum > 90) {
-            player.getInventory().addItem(tierFive);
+            Utils.addItemToInventory(tierFive, player);
             player.sendMessage(Utils.chat("&dYou have been given a &6Tier 5 Care Package"));
 
         } else if (randomNum > 75) {
-            player.getInventory().addItem(tierFour);
+            Utils.addItemToInventory(tierFour, player);
             player.sendMessage(Utils.chat("&dYou have been given a &5Tier 4 Care Package"));
 
         } else if (randomNum > 55) {
-            player.getInventory().addItem(tierThree);
+            Utils.addItemToInventory(tierThree, player);
             player.sendMessage(Utils.chat("&dYou have been given a &bTier 3 Care Package"));
 
         } else if (randomNum > 35) {
-            player.getInventory().addItem(tierTwo);
+            Utils.addItemToInventory(tierTwo, player);
             player.sendMessage(Utils.chat("&dYou have been given a &aTier 2 Care Package"));
 
         } else {
-            player.getInventory().addItem(tierOne);
+            Utils.addItemToInventory(tierOne, player);
             player.sendMessage(Utils.chat("&dYou have been given a &fTier 1 Care Package"));
 
         }
