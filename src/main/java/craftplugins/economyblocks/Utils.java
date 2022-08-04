@@ -115,5 +115,15 @@ public class Utils implements Listener {
         DecimalFormat df = new DecimalFormat("###,###,###.##");
         return String.valueOf(df.format(value));
     }
-
+    
+    public static void addItemToInventory(ItemStack item, Player player) {
+        
+        if (player.getInventory().firstEmpty() == -1) {
+            player.getWorld().dropNaturally(player.getLocation(), item);
+            player.sendMessage("&dItem has been dropped at your feet");
+        } else {
+            player.getInventory().addItem(item);
+        }
+    }
+    
 }
