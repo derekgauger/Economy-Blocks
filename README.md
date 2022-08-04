@@ -3,6 +3,7 @@
 The EconomyBlocks plugin contains 3 main features: Custom built economy, selling shop, and care packages.
 
 **Economy:** A basic system for keeping track of a player's bank account.
+
 **Economy Commands:**
 
 - /send {username} {amount} : send money to another player
