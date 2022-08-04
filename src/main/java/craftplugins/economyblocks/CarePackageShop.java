@@ -215,25 +215,24 @@ public class CarePackageShop implements Listener, CommandExecutor {
     public void onBlockBreak(BlockBreakEvent event) {
         Random rand = new Random();
         int randomNum = (int) (rand.nextDouble() * 2000);
-        Material[] blocks = {Material.GRASS_BLOCK, Material.STONE, Material.IRON_ORE, Material.COAL_ORE, Material.GOLD_ORE, Material.REDSTONE_ORE, Material.COPPER_ORE, Material.DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.DIORITE, Material.GRANITE, Material.ANDESITE, Material.SAND, Material.COBBLESTONE, Material.DEEPSLATE, Material.COBBLED_DEEPSLATE, Material.LAPIS_ORE, Material.DIRT, Material.TUFF, Material.GRAVEL, Material.SANDSTONE, Material.OBSIDIAN, Material.SOUL_SAND,Material.NETHERRACK, Material.DEEPSLATE_IRON_ORE, Material.DEEPSLATE_GOLD_ORE, Material.DEEPSLATE_REDSTONE_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_EMERALD_ORE, Material.DEEPSLATE_COAL_ORE, Material.DEEPSLATE_COPPER_ORE, Material.DEEPSLATE_LAPIS_ORE, Material.EMERALD_ORE};
+        Material invalidBreaks = {Material.AZALEA, Material.REDSTONE_COMPARATOR, Material.REDSTONE_REPEATER, Material.REDSTONE_WIRE, Material.REDSTONE_TORCH, Material.TORCH, Material.TUBE_CORAL, Material.BRAIN_CORAL, Material.BUBBLE_CORAL, Material.FIRE_CORAL, Material.HORN_CORAL, Material.DEAD_TUBE_CORAL, Material.DEAD_BRAIN_CORAL, Material.DEAD_FIRE_CORAL, Material.DEAD_HORN_CORAL, Material.SCAFFOLDING, Material.SLIME_BLOCK, Material.HONEY_BLOCK, Material.TNT, Material.TRIPWIRE, Material.TRIPWIRE_HOOK, Material.GRASS, Material.FERN, Material.DANDELION, Material.POPPY, Material.BLUE_ORCHID, Material.ALLIUM, Material.AZURE_BLUET, Material.TULIP, Material.OXEYE_DAISY, Material.CORNFLOWER, Material.LILY_OF_THE_VALLEY, Material.WITHER_ROSE, Material.SUNFLOWER, Material.LILAC, Material.ROSE_BUSH, Material.PEONY, Material.SUGAR_CANE, Material.LILY_PAD, Material.SPRUCE_SAPLING, Material.BIRCH_SAPLING, Material.DARK_OAK_SAPLING, Material.ACACIA_SAPLING, Material.OAK_SAPLING, Material.JUNGLE_SAPLING, Material.BAMBOO, Material.SPORE_BLOSSOM, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM, Material.DEAD_BUSH, Material.FLOWER_POT, Material.MELON_STEM, Material.PUMPKIN_STEM, Material.WARPED_FUNGUS, Material.CRIMSON_FUNGUS, Material.CRIMSON_ROOT, Material.WARPED_ROOT, Material.WEEPING_VINE, Material.TWISTING_VINE, Material.WHEAT, Material.CARROT, Material.BEATROOT, Material.CACTUS, Material.PUMPKIN, Material.MELON, MATERIAL.POTATO};
 
         boolean giveChance = false;
 
-        for (Material type : blocks) {
-            if (type == event.getBlock().getType()) {
-                giveChance = true;
+        for (Material type : invalidBreaks) {
+            if (event.getBlock().getType() == type) {
+                return;
             }
         }
 
-        if (!giveChance) {
-            return;
-        }
-
-        if (randomNum > 1990) {
+        if (randomNum > 1980) {
             int randomIndex = Utils.getRandomNumber(0, items.length);
             event.getPlayer().getInventory().addItem((items[randomIndex]));
             event.getPlayer().sendMessage(Utils.chat("&dYou have received a free care package!"));
         }
     }
-
+    
+    // Add entity kill event
+    // Harvest event
+    
 }
