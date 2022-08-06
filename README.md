@@ -1,55 +1,51 @@
 **Plugin Download:** https://www.spigotmc.org/resources/economyblocks.103809/
 
-The EconomyBlocks plugin contains 3 main features: Custom built economy, selling shop, and care packages.
+EconomyBlocks is a 1.19.1+ Vanilla Minecraft plugin for adding a little bit more spice.
 
-**Economy:** A basic system for keeping track of a player's bank account.
+**Info Comamnd**
 
-**Economy Commands:**
+The info command is a shortened version of this desciption.
 
-- /send {username} {amount} : send money to another player
-- /bal : get your balance
+- /info : Displays the information about the plugin
 
-**Shop:** Sell your minerals, crops, or mob drops
+**Shops**
 
-Minerals: 
+- /sell : Opens a shop for selling items
+- /buy : Opens a shop for buying items
 
-- Netherrack: $0.10
-- Cobbled Deepslate: $0.50
-- Cobblestone: $0.50
-- Iron Ingot: $100
-- Gold Ingot: $125
-- Diamond: $500
-- Netherite Scrap: $8000
+Only a few items will be available for selling. Only blocks that frequently fill inventories, minerals, mob drops, and crops.
+The buy shop features difficult items to obtain, care packages, a few spawn eggs, and redstone.
 
-Mob Drops:
+**Care Packages**
 
-- Rotten Flesh: $
-- Spider Eye: $5
-- Bone: $5
-- Gun Powder: $5
-- Ender Pearl: $15
-- Shulker Shell: $300
-- Ghast Tear: $500
+Care packages are custom wool blocks that, when placed, trigger a random event to happen. The event can be good or bad for the player.
+Disclaimer: Try not to open near important areas
 
-Crops:
+**Care Package Tiers**
 
-- Wheat: $3
-- Carrot: $3
-- Potato: $3
-- Beetroot: $3
-- Melon Slice: $4
-- Cactus: $20
-- Pumpkin: $40
+- Tier 1 : 50% chance of a good event
+- Tier 2 : 67% chance of a good event
+- Tier 3 : 80% chance of a good event
+- Tier 4 : 95% chance of a good event
+- Tier 5 : 100% chance of a good event
 
-**Shop Commands:**
+**Economy**
 
-- /shop : open the mineral shop
+This plugin has a very basic implementation of an economy.
 
-**Care Packages:**
-Custom blocks that do random events when you place them. There are 5 tiers of blocks, the higher the tier, the more likely good events will happen for you. You can get care packages by buying them or getting lucky when you mine.
+- /send {username} {amount} : Transfers money from your bank account to another player's bank account
+- /bal : Checks your bank account balance
+- /bal {username} : Checks another player's bank account balance
 
-**Care Packages Commands:**
+**Teleport Menu**
 
-- /cp : Open the care package shop
+The teleport menu is a GUI that allows the user to teleport to other people for a price. If you have enough money to teleport, you can click on that person's head in the menu to go to them.
 
-**If there are any issues with this plugin or you have ideas for improvements/new features, please contact me at gaugerderek@gmail.com or Discord: Dirk#8540**
+- /go : Opens the teleporting menu
+- /godisable : Disable teleporting to you
+- /goenable : Enable teleporting to you
+
+**Homes**
+
+- /sethome : Stores the coordinates for your home
+- /home : Displays the coordinates for your set home
