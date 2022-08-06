@@ -152,7 +152,7 @@ public class BuyShop implements Listener, CommandExecutor {
 
         shop.addItem(createGuiItem(Material.AXOLOTL_SPAWN_EGG, Utils.chat("&f&lAxolatl Spawn Egg"),Utils.chat("&aPrice Per: $" + axolotlPrice)));
         shop.addItem(createGuiItem(Material.PANDA_SPAWN_EGG, Utils.chat("&b&lPanda Spawn Egg"),Utils.chat("&aPrice Per: $" + pandaPrice)));
-        shop.addItem(Utils.createItem(Material.REDSTONE, Utils.chat("&c&lRedstone Dust"), 64, null, null, Utils.chat("&aPrice Per: $" + redstonePrice)));
+        shop.addItem(Utils.createItem(Material.REDSTONE, Utils.chat("&c&lRedstone Dust"), 64, null, null, Utils.chat("&aPrice Per Stack: $" + redstonePrice)));
         shop.addItem(createGuiItem(Material.FOX_SPAWN_EGG, Utils.chat("&e&lFox Spawn Egg"),Utils.chat("&aPrice Per Stack: $" + foxPrice)));
         shop.addItem(createGuiItem(Material.PARROT_SPAWN_EGG, Utils.chat("&a&lParrot Spawn Egg"),Utils.chat("&aPrice Per: $" + parrotPrice)));
 

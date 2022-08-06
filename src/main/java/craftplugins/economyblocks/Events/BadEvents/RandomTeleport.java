@@ -10,7 +10,7 @@ public class RandomTeleport implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Random Teleport");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         double randomXDelta = Utils.getRandomNumber(0, 100);
         double randomZDelta = Utils.getRandomNumber(0, 100);

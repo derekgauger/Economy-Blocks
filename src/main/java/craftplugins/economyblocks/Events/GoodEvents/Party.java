@@ -25,9 +25,9 @@ public class Party implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Party");
-        blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
+        blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
 
         for (Block block : blocks) {
             blockDatas.add(block.getBlockData());

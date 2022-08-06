@@ -21,7 +21,7 @@ public class ChangeBlocksToOres implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Change Blocks to Ores");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
         blocks = Utils.getBlocks(player.getLocation().getBlock(), 3);
 
         for (Block block : blocks) {

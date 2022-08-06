@@ -10,7 +10,7 @@ public class SpawnTNT implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Spawn TNT");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         for (int i = 0; i < 9; i++) {
             player.getWorld().spawnEntity(player.getLocation(), EntityType.PRIMED_TNT);

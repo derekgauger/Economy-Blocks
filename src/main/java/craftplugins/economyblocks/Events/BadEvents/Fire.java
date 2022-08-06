@@ -9,7 +9,7 @@ public class Fire implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Fire");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         player.setFireTicks(20 * 60 * 2);
         player.setFoodLevel(0);

@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
 public class Boost implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
-        System.out.println("Boost");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
         player.setVelocity(new Vector(0, 10, 0));
         player.sendMessage(Utils.chat("&dWeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...."));
     }

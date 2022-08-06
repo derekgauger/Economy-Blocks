@@ -37,7 +37,7 @@ public class GiveMoreCarePackages implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Give Care Package");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;

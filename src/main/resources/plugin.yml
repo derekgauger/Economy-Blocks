@@ -28,3 +28,18 @@ commands:
 
   goenable:
     description: Enable teleporting to you
+
+  sethome:
+    description: Set your home
+    aliases:
+      - sh
+
+  home:
+    description: Display your home location
+    aliases:
+      - h
+
+  info:
+    description: Displayed information about the plugin
+    aliases:
+      - commands

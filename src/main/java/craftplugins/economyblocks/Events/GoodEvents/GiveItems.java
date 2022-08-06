@@ -15,7 +15,7 @@ public class GiveItems implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Give Items");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         ItemStack smiteStick = Utils.createItem(Material.STICK, Utils.chat("&bLightning Stick"), 1,null, null);
         ItemStack kbStick = Utils.createItem(Material.STICK, Utils.chat("&6Knockback Stick"), 1, new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{10});

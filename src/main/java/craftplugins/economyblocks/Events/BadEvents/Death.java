@@ -12,7 +12,7 @@ public class Death implements CarePackageEvent {
 
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
-        System.out.println("Death");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         Location location = player.getLocation();
 

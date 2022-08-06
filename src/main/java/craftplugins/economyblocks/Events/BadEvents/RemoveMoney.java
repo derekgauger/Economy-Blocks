@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class RemoveMoney implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
-        System.out.println("Remove Money");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
         BankAccount bankAccount = bankHandler.getBankAccount(player);
 
         double balance = bankAccount.getBalance();

@@ -143,12 +143,24 @@ public class BankHandler implements Listener, CommandExecutor {
                 System.out.println("Only players in game can do that");
                 return true;
             }
-
             Player player = (Player) sender;
 
-            BankAccount bankAccount = getBankAccount(player);
-            player.sendMessage(Utils.chat("&aBalance: $" + Utils.format(bankAccount.getBalance())));
 
+            try {
+                String username = args[0];
+
+                if (!checkPlayerExists(username)) {
+                    sender.sendMessage(Utils.chat("&cUsername: '&4" + username + "&c' not found."));
+                    return false;
+                }
+
+                BankAccount checkAccount = getBankAccount(username);
+
+                player.sendMessage(Utils.chat("&d" + username + "'s balance: &a$" + Utils.format(checkAccount.getBalance())));
+            } catch (Exception e) {
+                BankAccount bankAccount = getBankAccount(player);
+                player.sendMessage(Utils.chat("&aBalance: $" + Utils.format(bankAccount.getBalance())));
+            }
         }
 
         return true;

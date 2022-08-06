@@ -19,11 +19,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Utils implements Listener {
 
@@ -116,6 +114,22 @@ public class Utils implements Listener {
     public static String format(double value) {
         DecimalFormat df = new DecimalFormat("###,###,###.##");
         return String.valueOf(df.format(value));
+    }
+
+    public static String formatMaterialName(String value) {
+        value = value.replace("_", " ");
+        String[] split = value.split(" ");
+        List<String> name = new ArrayList<>();
+        for (String s : split) {
+            s = s.toLowerCase();
+            s = String.valueOf(s.charAt(0)).toUpperCase() + s.substring(1);
+            name.add(s);
+        }
+        StringBuilder output = new StringBuilder();
+        for (String s : name) {
+            output.append(s).append(" ");
+        }
+        return output.substring(0, output.length() - 1);
     }
     
     public static void addItemToInventory(ItemStack item, Player player) {

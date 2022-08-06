@@ -18,7 +18,7 @@ public class Nuke implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Nuke");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         this.location = player.getLocation();
 
@@ -27,7 +27,7 @@ public class Nuke implements CarePackageEvent {
 
             @Override
             public void run() {
-                Bukkit.broadcastMessage(Utils.chat("&4NUKE IN " + (15 - count++) + "!!!!"));
+                Bukkit.broadcastMessage(Utils.chat("&4NUKE IN " + (16 - count++) + "!!!!"));
 
                 if (count > 15) {
                     nukeIt();

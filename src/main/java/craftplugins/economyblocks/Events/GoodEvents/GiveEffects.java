@@ -11,7 +11,7 @@ public class GiveEffects implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Give Effects");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 60 * 20, 1));
         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 60 * 20, 1));

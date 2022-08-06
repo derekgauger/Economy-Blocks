@@ -25,7 +25,7 @@ public class SpawnEnemies implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Spawn Enemies");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         blocks = Utils.getBlocks(player.getLocation().getBlock(), 5);
 

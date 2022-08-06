@@ -13,7 +13,7 @@ public class Insult implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
 
-        System.out.println("Insult");
+        System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
         List<String> insults = new ArrayList<>();
 
