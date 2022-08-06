@@ -5,8 +5,6 @@ import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +12,8 @@ import java.util.Scanner;
 public class Insult implements CarePackageEvent {
     @Override
     public void runEvent(Player player, BankHandler bankHandler) {
+
+        System.out.println("Insult");
 
         List<String> insults = new ArrayList<>();
 

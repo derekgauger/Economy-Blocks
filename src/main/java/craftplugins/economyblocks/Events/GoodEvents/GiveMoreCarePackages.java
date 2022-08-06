@@ -1,14 +1,11 @@
 package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankHandler;
-import craftplugins.economyblocks.EconomyBlocks;
 import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;

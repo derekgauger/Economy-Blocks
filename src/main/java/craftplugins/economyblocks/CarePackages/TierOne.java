@@ -47,7 +47,7 @@ public class TierOne extends CarePackage implements Listener {
         Random rand = new Random();
         double randDouble = rand.nextDouble();
 
-        if (randDouble >= .33) {
+        if (randDouble >= .50) {
             bad(player, bankHandler);
         } else {
             good(player, bankHandler);

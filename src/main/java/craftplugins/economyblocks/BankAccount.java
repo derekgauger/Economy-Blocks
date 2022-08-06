@@ -22,8 +22,9 @@ public class BankAccount implements Serializable {
     public BankAccount(EconomyBlocks plugin, UUID uuid, double startingBalance) {
         this.plugin = plugin;
         this.balance = startingBalance;
-        this.uuid = uuid.toString();
-        setPlayer(uuid);
+        this.uuid = String.valueOf(uuid);
+        setPlayer();
+
     }
 
     public void deposit(double amount) {
@@ -57,9 +58,13 @@ public class BankAccount implements Serializable {
         return balance;
     }
 
-    public void setPlayer(UUID uuid) {
-        player = Bukkit.getPlayer(uuid);
+    public void setPlayer() {
+        player = Bukkit.getPlayer(UUID.fromString(uuid));
+    }
 
+    @Override
+    public String toString() {
+        return "Name: " + ", UUID: " + uuid + ", Balance: " + balance;
     }
 
 }

@@ -5,6 +5,7 @@ import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -26,9 +27,9 @@ public class Nuke implements CarePackageEvent {
 
             @Override
             public void run() {
-                Bukkit.broadcastMessage(Utils.chat("&4NUKE IN " + (10 - count++) + "!!!!"));
+                Bukkit.broadcastMessage(Utils.chat("&4NUKE IN " + (15 - count++) + "!!!!"));
 
-                if (count > 10) {
+                if (count > 15) {
                     nukeIt();
                 }
 
@@ -42,15 +43,19 @@ public class Nuke implements CarePackageEvent {
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;
 
-        if (randomNum > 50) {
+        if (randomNum > 75) {
 
             location.getWorld().createExplosion(location, 100);
-            location.getWorld().createExplosion(location.add(20, 0, 0), 50);
-            location.getWorld().createExplosion(location.add(-20, 0, 0), 50);
-            location.getWorld().createExplosion(location.add(0, 0, 20), 50);
-            location.getWorld().createExplosion(location.add(0, 0, -20), 50);
-            location.getWorld().createExplosion(location.add(0, 20, 0), 50);
-            location.getWorld().createExplosion(location.add(0, -20, 0), 50);
+            World world = location.getWorld();
+            world.createExplosion(location.add(0, 10, 0), 20);
+            world.createExplosion(location.add(0, -10, 0), 20);
+            world.createExplosion(location.add(0, 0, 0), 20);
+            world.createExplosion(location.add(10, 0, 0), 20);
+            world.createExplosion(location.add(-10, 0, 0), 20);
+            world.createExplosion(location.add(0, 0, 10), 20);
+            world.createExplosion(location.add(0, 0, -10), 20);
+
+
         } else {
             Bukkit.broadcastMessage(Utils.chat("&dYou look real dumb running from nothing right now..."));
 

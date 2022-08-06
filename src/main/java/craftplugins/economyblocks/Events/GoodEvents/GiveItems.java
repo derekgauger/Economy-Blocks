@@ -3,6 +3,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -18,7 +19,7 @@ public class GiveItems implements CarePackageEvent {
 
         ItemStack smiteStick = Utils.createItem(Material.STICK, Utils.chat("&bLightning Stick"), 1,null, null);
         ItemStack kbStick = Utils.createItem(Material.STICK, Utils.chat("&6Knockback Stick"), 1, new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{10});
-        ItemStack goldenApples = Utils.createItem(Material.GOLDEN_APPLE, Utils.chat("&6Golden Apple"), 64,null, null);
+        ItemStack goldenApples = Utils.createItem(Material.GOLDEN_APPLE, Utils.chat("&6Golden Apple"), 10,null, null);
         ItemStack enchantedGoldenApples = Utils.createItem(Material.ENCHANTED_GOLDEN_APPLE, Utils.chat("&6Enchanted Golden Apple"), 5,null, null);
         ItemStack enderChest = Utils.createItem(Material.ENDER_CHEST, Utils.chat("&fEnderchest"), 1, null, null);
         ItemStack netherite = Utils.createItem(Material.NETHERITE_INGOT, Utils.chat("&fNetherite Ingot"), 2, null, null);
@@ -26,22 +27,22 @@ public class GiveItems implements CarePackageEvent {
         ItemStack gold = Utils.createItem(Material.GOLD_INGOT, Utils.chat("&fGold Ingot"), 32, null, null);
         ItemStack iron = Utils.createItem(Material.IRON_INGOT, Utils.chat("&fIron Ingot"), 32, null, null);
         ItemStack lapis = Utils.createItem(Material.LAPIS_ORE, Utils.chat("&fLapis Ore"), 20, null, null);
-        ItemStack redstone = Utils.createItem(Material.REDSTONE_ORE, Utils.chat("&fRedstone Ore"), 20, null, null);
+        ItemStack cookedBeef = Utils.createItem(Material.COOKED_BEEF, Utils.chat("&fCooked Beef"), 20, null, null);
 
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;
 
         if (randomNum > 98) {
             Utils.addItemToInventory(smiteStick, player);
-            player.sendMessage(Utils.chat("&dYou have been given a smite stick!"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a smite stick!"));
 
         } else if (randomNum > 93) {
             Utils.addItemToInventory(kbStick, player);
-            player.sendMessage(Utils.chat("&dYou have been given a knockback stick!"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a knockback stick!"));
 
         } else if (randomNum > 85) {
             Utils.addItemToInventory(enderChest, player);
-            player.sendMessage(Utils.chat("&dYou have been given an Enderchest!"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " have been given an Enderchest!"));
 
         } else if (randomNum > 80) {
             Utils.addItemToInventory(enchantedGoldenApples, player);
@@ -53,7 +54,7 @@ public class GiveItems implements CarePackageEvent {
 
         } else if (randomNum > 70) {
             Utils.addItemToInventory(netherite, player);
-            player.sendMessage(Utils.chat("&dYou have been given netherite ingots!"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given netherite ingots!"));
 
         }  else if (randomNum > 65) {
             Utils.addItemToInventory(diamond, player);
@@ -72,8 +73,8 @@ public class GiveItems implements CarePackageEvent {
             player.sendMessage(Utils.chat("&dYou have been given lapis ore!"));
 
         } else {
-            Utils.addItemToInventory(redstone, player);
-            player.sendMessage(Utils.chat("&dYou have been given redstone ore!"));
+            Utils.addItemToInventory(cookedBeef, player);
+            player.sendMessage(Utils.chat("&dYou have been given some steak ore!"));
 
         }
     }

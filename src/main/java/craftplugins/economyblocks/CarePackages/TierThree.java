@@ -47,7 +47,7 @@ public class TierThree extends CarePackage implements Listener {
         Random rand = new Random();
         double randDouble = rand.nextDouble();
 
-        if (randDouble >= .67) {
+        if (randDouble >= .80) {
             bad(player, bankHandler);
         } else {
             good(player, bankHandler);

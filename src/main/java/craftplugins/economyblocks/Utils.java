@@ -14,12 +14,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Utils implements Listener {
@@ -101,7 +104,6 @@ public class Utils implements Listener {
                 meta.addEnchant(enchants[i], levels[i], true);
             }
         }
-
         item.setItemMeta(meta);
 
         return item;
@@ -117,12 +119,10 @@ public class Utils implements Listener {
     }
     
     public static void addItemToInventory(ItemStack item, Player player) {
-        
-        if (player.getInventory().firstEmpty() == -1) {
-            player.getWorld().dropNaturally(player.getLocation(), item);
-            player.sendMessage("&dItem has been dropped at your feet");
-        } else {
-            player.getInventory().addItem(item);
+        HashMap<Integer, ItemStack> addedItem = player.getInventory().addItem(item);
+        if (!addedItem.isEmpty()) {
+            player.getWorld().dropItemNaturally(player.getLocation(), item);
+            player.sendMessage(Utils.chat("&dItem has been dropped at your feet"));
         }
     }
     

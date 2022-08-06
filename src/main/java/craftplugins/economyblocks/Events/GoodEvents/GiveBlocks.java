@@ -3,6 +3,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,22 +24,22 @@ public class GiveBlocks implements CarePackageEvent {
         if (randomNum > 99) {
             ItemStack giveItem = createItem(Material.BEACON, Utils.chat("&bBeacon"), 1, null, null);
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a &bBeacon"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a &bBeacon"));
 
         } else if (randomNum > 98) {
             ItemStack giveItem = createItem(Material.NETHERITE_BLOCK, Utils.chat("&fNetherite Block"), 1, null, null);
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a netherite block"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a netherite block"));
 
         } else if (randomNum > 97) {
             ItemStack giveItem = createItem(Material.DIAMOND_BLOCK, Utils.chat("&fDiamond Block"), 4, null, null);
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given 4 diamond blocks"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given 4 diamond blocks"));
 
         } else if (randomNum > 95) {
             ItemStack giveItem = createItem(Material.SHULKER_BOX, Utils.chat("&5Shulker Box"), 1, null, null);
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a shulker box"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a shulker box"));
 
         } else if (randomNum > 92) {
             ItemStack giveItem = createItem(Material.CHEST, Utils.chat("&fChest"), 128, null, null);

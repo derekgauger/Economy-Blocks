@@ -3,6 +3,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,27 +25,27 @@ public class GiveWeaponsAndHorseArmor implements CarePackageEvent {
         if (randomNum > 99) {
             ItemStack giveItem = createItem(Material.TRIDENT, Utils.chat("&fTrident"), 1, null, null);
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a trident"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a trident"));
 
         } else if (randomNum > 98) {
             ItemStack giveItem = createItem(Material.NETHERITE_AXE, Utils.chat("&fNetherite Axe"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY}, new int[]{5, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted netherite axe"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite axe"));
 
         } else if (randomNum > 97) {
             ItemStack giveItem = createItem(Material.NETHERITE_SWORD, Utils.chat("&fNetherite Sword"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_MOBS}, new int[]{5, 3, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted netherite sword"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite sword"));
 
         } else if (randomNum > 95) {
             ItemStack giveItem = createItem(Material.DIAMOND_AXE, Utils.chat("&fDiamond Axe"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY}, new int[]{5, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted diamond axe"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond axe"));
 
         } else if (randomNum > 93) {
             ItemStack giveItem = createItem(Material.DIAMOND_SWORD, Utils.chat("&fDiamond Sword"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_MOBS}, new int[]{5, 3, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted diamond sword"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond sword"));
 
         } else if (randomNum > 91) {
             ItemStack giveItem = createItem(Material.NETHERITE_AXE, Utils.chat("&fNetherite Axe"), 1, null, null);

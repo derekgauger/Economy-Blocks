@@ -3,6 +3,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class GiveArmor implements CarePackageEvent {
         if (randomNum > 99) {
             ItemStack giveItem = createItem(Material.NETHERITE_CHESTPLATE, Utils.chat("&fNetherite Chestplate"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL}, new int[]{3, 4, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted netherite chestplate"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite chestplate"));
 
         } else if (randomNum > 98) {
             ItemStack netherHelm = createItem(Material.NETHERITE_HELMET, Utils.chat("&fNetherite Helmet"), 1, null, null);
@@ -35,12 +36,12 @@ public class GiveArmor implements CarePackageEvent {
             Utils.addItemToInventory(netherChest, player);
             Utils.addItemToInventory(netherPants, player);
             Utils.addItemToInventory(netherBoots, player);
-            player.sendMessage(Utils.chat("&dYou have been given a full set of netherite armor"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a full set of netherite armor"));
 
         } else if (randomNum > 97) {
             ItemStack giveItem = createItem(Material.DIAMOND_CHESTPLATE, Utils.chat("&fDiamond Chestplate"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL}, new int[]{3, 4, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted diamond chestplate"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond chestplate"));
 
         } else if (randomNum > 96) {
             ItemStack diamondHelm = createItem(Material.DIAMOND_HELMET, Utils.chat("&fDiamond Helmet"), 1, null, null);
@@ -51,7 +52,7 @@ public class GiveArmor implements CarePackageEvent {
             Utils.addItemToInventory(diamondChest, player);
             Utils.addItemToInventory(diamondPants, player);
             Utils.addItemToInventory(diamondBoots, player);
-            player.sendMessage(Utils.chat("&dYou have been given a full set of diamond armor"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a full set of diamond armor"));
 
         } else if (randomNum > 93) {
             ItemStack giveItem = createItem(Material.NETHERITE_HELMET, Utils.chat("&fNetherite Helmet"), 1, null, null);

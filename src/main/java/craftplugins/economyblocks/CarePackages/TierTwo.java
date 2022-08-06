@@ -47,7 +47,7 @@ public class TierTwo extends CarePackage implements Listener {
         Random rand = new Random();
         double randDouble = rand.nextDouble();
 
-        if (randDouble >= .50) {
+        if (randDouble >= .67) {
             bad(player, bankHandler);
         } else {
             good(player, bankHandler);

@@ -3,6 +3,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
 import craftplugins.economyblocks.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,22 +25,22 @@ public class GiveTools implements CarePackageEvent {
         if (randomNum > 99) {
             ItemStack giveItem = createItem(Material.NETHERITE_PICKAXE, Utils.chat("&fNetherite Pickaxe"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.DIG_SPEED, Enchantment.LOOT_BONUS_BLOCKS}, new int[]{3, 5, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted netherite pickaxe"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite pickaxe"));
 
         } else if (randomNum > 98) {
             ItemStack giveItem = createItem(Material.DIAMOND_PICKAXE, Utils.chat("&fDiamond Pickaxe"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.DIG_SPEED, Enchantment.LOOT_BONUS_BLOCKS}, new int[]{3, 5, 3});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted diamond pickaxe"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond pickaxe"));
 
         } else if (randomNum > 95) {
             ItemStack giveItem = createItem(Material.DIAMOND_PICKAXE, Utils.chat("&fDiamond Pickaxe"), 1, new Enchantment[]{Enchantment.SILK_TOUCH}, new int[]{1});
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a silk touch diamond pickaxe"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a silk touch diamond pickaxe"));
 
         } else if (randomNum > 92) {
             ItemStack giveItem = createItem(Material.NETHERITE_PICKAXE, Utils.chat("&fNetherite Pickaxe"), 1, null, null);
             Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a netherite pickaxe"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a netherite pickaxe"));
 
         } else if (randomNum > 87) {
             ItemStack giveItem = createItem(Material.DIAMOND_PICKAXE, Utils.chat("&fDiamond Pickaxe"), 1, null, null);

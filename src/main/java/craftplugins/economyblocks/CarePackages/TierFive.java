@@ -44,21 +44,14 @@ public class TierFive extends CarePackage implements Listener {
             return;
         }
 
-        Random rand = new Random();
-        double randDouble = rand.nextDouble();
+        good(player, bankHandler);
+        Firework fw = (Firework) block.getWorld().spawnEntity(block.getLocation().add(.5,8.5,.5), EntityType.FIREWORK);
+        FireworkMeta fwm = fw.getFireworkMeta();
+        fwm.setPower(2);
+        fwm.addEffect(FireworkEffect.builder().withColor(Color.PURPLE).flicker(true).build());
 
-        if (randDouble >= .90) {
-            bad(player, bankHandler);
-        } else {
-            good(player, bankHandler);
-            Firework fw = (Firework) block.getWorld().spawnEntity(block.getLocation().add(.5,8.5,.5), EntityType.FIREWORK);
-            FireworkMeta fwm = fw.getFireworkMeta();
-            fwm.setPower(2);
-            fwm.addEffect(FireworkEffect.builder().withColor(Color.PURPLE).flicker(true).build());
-
-            fw.setFireworkMeta(fwm);
-            fw.detonate();
-        }
+        fw.setFireworkMeta(fwm);
+        fw.detonate();
 
         block.setType(Material.AIR);
 

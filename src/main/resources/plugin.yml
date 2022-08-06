@@ -7,15 +7,24 @@ description: Custom Minecraft economy plugin with buying "Lucky Block" care pack
 commands:
   send:
     description: Send money to other people
-  carepackage:
-    description: Open the care package GUI
-    aliases:
-      - cp
-      - cpshop
-      - carepackageshop
+    usage: /send {username} {amount}
+
+  buy:
+    description: Open the buy shop
+
   balance:
     aliases:
       - bal
     description: Gets the player's current account balance
-  shop:
-    description: Open the mineral shop GUI
+
+  sell:
+    description: Open the sell shop
+
+  go:
+    description: Open teleport GUI
+
+  godisable:
+    description: Disable teleporting to you
+
+  goenable:
+    description: Enable teleporting to you

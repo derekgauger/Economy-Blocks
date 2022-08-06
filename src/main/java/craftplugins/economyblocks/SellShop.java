@@ -1,12 +1,10 @@
 package craftplugins.economyblocks;
 
-import craftplugins.economyblocks.CarePackages.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,10 +20,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class MineralShop implements Listener, CommandExecutor {
+public class SellShop implements Listener, CommandExecutor {
 
     EconomyBlocks plugin;
-    public Inventory shop = Bukkit.createInventory(null,27, "Shop");
+    public Inventory shop = Bukkit.createInventory(null,27, "Sell Shop");
     BankHandler bankHandler;
     
     double netherrackPrice = .10;
@@ -43,22 +41,22 @@ public class MineralShop implements Listener, CommandExecutor {
     double enderPearlPrice = 15;
     double shulkerShellPrice = 300;
     double ghastTearPrice = 500;
-    
+
+    double sugarCanePrice = 2;
     double wheatPrice = 3;
     double carrotPrice = 3;
     double potatoPrice = 3;
-    double beatrootPrice = 3;
+    double beetRootPrice = 3;
     double melonSlicePrice = 4;
-    double cactusPrice = 20;
     double pumpkinPrice = 40;
 
-    public MineralShop(EconomyBlocks plugin, BankHandler bankHandler) {
+    public SellShop(EconomyBlocks plugin, BankHandler bankHandler) {
         this.plugin = plugin;
         this.bankHandler = bankHandler;
         initializeShop();
 
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
-        Bukkit.getServer().getPluginCommand("shop").setExecutor(this);
+        Bukkit.getServer().getPluginCommand("sell").setExecutor(this);
     }
 
     @Override
@@ -103,9 +101,9 @@ public class MineralShop implements Listener, CommandExecutor {
 
         shop.addItem(createGuiItem(Material.BONE, Utils.chat("&f&lBone"), Utils.chat("&aPrice Per: $" + bonePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
-        shop.addItem(createGuiItem(Material.GUN_POWDER, Utils.chat("&7&lGun Powder"), Utils.chat("&aPrice Per: $" + gunPowderPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+        shop.addItem(createGuiItem(Material.GUNPOWDER, Utils.chat("&7&lGun Powder"), Utils.chat("&aPrice Per: $" + gunPowderPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
-        shop.addItem(createGuiItem(Material.ENDER_PEARLS, Utils.chat("&1&lEnder Pearl"), Utils.chat("&aPrice Per: $" + enderPearlPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+        shop.addItem(createGuiItem(Material.ENDER_PEARL, Utils.chat("&1&lEnder Pearl"), Utils.chat("&aPrice Per: $" + enderPearlPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
         shop.addItem(createGuiItem(Material.SHULKER_SHELL, Utils.chat("&5&lShulker Shell"), Utils.chat("&aSell One: $" + shulkerShellPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
@@ -113,18 +111,18 @@ public class MineralShop implements Listener, CommandExecutor {
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        
+
+        shop.addItem(createGuiItem(Material.SUGAR_CANE, Utils.chat("&1&lSugar Cane"), Utils.chat("&aPrice Per: $" + sugarCanePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+
         shop.addItem(createGuiItem(Material.WHEAT, Utils.chat("&e&lWheat"), Utils.chat("&aPrice Per: $" + wheatPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
         shop.addItem(createGuiItem(Material.CARROT, Utils.chat("&6&lCarrot"), Utils.chat("&aPrice Per: $" + carrotPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
         shop.addItem(createGuiItem(Material.POTATO, Utils.chat("&9&lPotato"), Utils.chat("&aPrice Per: $" + potatoPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
-        shop.addItem(createGuiItem(Material.BEATROOT, Utils.chat("&c&Beatroot"), Utils.chat("&aPrice Per: $" + beatRootPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
+        shop.addItem(createGuiItem(Material.BEETROOT, Utils.chat("&c&lBeetroot"), Utils.chat("&aPrice Per: $" + beetRootPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
         shop.addItem(createGuiItem(Material.MELON_SLICE, Utils.chat("&a&lMelon Slice"), Utils.chat("&aSell One: $" + melonSlicePrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
-        
-        shop.addItem(createGuiItem(Material.CACTUS, Utils.chat("&2&lCactus"), Utils.chat("&aPrice Per: $" + cactusPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
         shop.addItem(createGuiItem(Material.PUMPKIN, Utils.chat("&6&lPumpkin"), Utils.chat("&aPrice Per: $" + pumpkinPrice), Utils.chat("Left Click: Sell One"), Utils.chat("Right Click: Sell All")));
 
@@ -138,10 +136,6 @@ public class MineralShop implements Listener, CommandExecutor {
         meta.setDisplayName(name);
 
         meta.setLore(Arrays.asList(lore));
-
-        if (item.getType() != Material.GRAY_STAINED_GLASS_PANE) {
-            meta.addEnchant(Enchantment.MENDING,1, true);
-        }
 
         item.setItemMeta(meta);
 
@@ -157,6 +151,10 @@ public class MineralShop implements Listener, CommandExecutor {
         if (e.getInventory() == shop) {
             e.setCancelled(true);
         }
+    }
+
+    private void handleTransaction(ClickType clickType, Player player, double removeAmount, Material material, double price) {
+
     }
 
     @EventHandler
@@ -176,8 +174,29 @@ public class MineralShop implements Listener, CommandExecutor {
         Player player = (Player) event.getWhoClicked();
         ClickType clickType = event.getClick();
         BankAccount bankAccount = bankHandler.getBankAccount(player);
+        if (clickedItem.getType() == Material.NETHERRACK) {
+            double removedAmount = removeItems(clickType, player, Material.NETHERRACK, netherrackPrice);
 
-        if (clickedItem.getType() == Material.COBBLESTONE) {
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * netherrackPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &8" + Material.NETHERRACK.name().replace("_", " ").toLowerCase() + "a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.COBBLED_DEEPSLATE) {
+            double removedAmount = removeItems(clickType, player, Material.COBBLED_DEEPSLATE, cobbledDeepslatePrice);
+
+            if (removedAmount != 0) {
+                double totalSellPrice = removedAmount * cobbledDeepslatePrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &8" + Material.COBBLED_DEEPSLATE.name().replace("_", " ").toLowerCase() + "a for &b$" + Utils.format(totalSellPrice)));
+                bankAccount.deposit(totalSellPrice);
+            } else {
+                player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
+            }
+
+        } else if (clickedItem.getType() == Material.COBBLESTONE) {
             double removedAmount = removeItems(clickType, player, Material.COBBLESTONE, cobblestonePrice);
 
             if (removedAmount != 0) {
@@ -265,12 +284,12 @@ public class MineralShop implements Listener, CommandExecutor {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
             }
 
-        } else if (clickedItem.getType() == Material.GUN_POWDER) {
-            double removedAmount = removeItems(clickType, player, Material.GUN_POWDER, gunPowderPrice);
+        } else if (clickedItem.getType() == Material.GUNPOWDER) {
+            double removedAmount = removeItems(clickType, player, Material.GUNPOWDER, gunPowderPrice);
 
             if (removedAmount != 0) {
                 double totalSellPrice = removedAmount * gunPowderPrice;
-                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.GUN_POWDER.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.GUNPOWDER.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
                 bankAccount.deposit(totalSellPrice);
             } else {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
@@ -342,12 +361,12 @@ public class MineralShop implements Listener, CommandExecutor {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
             }
 
-        } else if (clickedItem.getType() == Material.BEATROOT) {
-            double removedAmount = removeItems(clickType, player, Material.BEATROOT, beatrootPrice);
+        } else if (clickedItem.getType() == Material.BEETROOT) {
+            double removedAmount = removeItems(clickType, player, Material.BEETROOT, beetRootPrice);
 
             if (removedAmount != 0) {
-                double totalSellPrice = removedAmount * beatrootPrice;
-                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.BEATROOT.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                double totalSellPrice = removedAmount * beetRootPrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.BEETROOT.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
                 bankAccount.deposit(totalSellPrice);
             } else {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
@@ -364,12 +383,12 @@ public class MineralShop implements Listener, CommandExecutor {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));
             }
 
-        } else if (clickedItem.getType() == Material.CACTUS) {
-            double removedAmount = removeItems(clickType, player, Material.CACTUS, cactusPrice);
+        } else if (clickedItem.getType() == Material.SUGAR_CANE) {
+            double removedAmount = removeItems(clickType, player, Material.SUGAR_CANE, sugarCanePrice);
 
             if (removedAmount != 0) {
-                double totalSellPrice = removedAmount * cactusPrice;
-                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.CACTUS.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
+                double totalSellPrice = removedAmount * sugarCanePrice;
+                player.sendMessage(Utils.chat("&aSold " + removedAmount + " &5" + Material.SUGAR_CANE.name().replace("_", " ").toLowerCase() + "&a for &b$" + Utils.format(totalSellPrice)));
                 bankAccount.deposit(totalSellPrice);
             } else {
                 player.sendMessage(Utils.chat("&cYou don't have enough of this item to sell"));

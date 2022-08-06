@@ -47,7 +47,7 @@ public class TierFour extends CarePackage implements Listener {
         Random rand = new Random();
         double randDouble = rand.nextDouble();
 
-        if (randDouble >= .80) {
+        if (randDouble >= .95) {
             bad(player, bankHandler);
         } else {
             good(player, bankHandler);
