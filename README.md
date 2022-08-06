@@ -36,7 +36,7 @@ Crops:
 - Wheat: $3
 - Carrot: $3
 - Potato: $3
-- Beatroot: $3
+- Beetroot: $3
 - Melon Slice: $4
 - Cactus: $20
 - Pumpkin: $40
