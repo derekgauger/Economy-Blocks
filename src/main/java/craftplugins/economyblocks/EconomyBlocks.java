@@ -1,20 +1,17 @@
 package craftplugins.economyblocks;
 
-import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.Serializable;
 
 public final class EconomyBlocks extends JavaPlugin {
 
     BankHandler bankHandler;
-    Home home;
+    Homes home;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         bankHandler = new BankHandler(this);
-        home = new Home(this);
+        home = new Homes(this, bankHandler);
 
         new CommandsInfo(this);
         new Utils(this);

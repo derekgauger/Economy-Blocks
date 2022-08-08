@@ -40,6 +40,7 @@ abstract class CarePackage {
         goodEvents.add(new GiveWeaponsAndHorseArmor());
         goodEvents.add(new MoneyEvent());
         goodEvents.add(new Party());
+        goodEvents.add(new GiveExp());
 
         return goodEvents;
     }

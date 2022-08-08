@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -87,6 +88,18 @@ public class Utils implements Listener {
             }
 
         }
+    }
+
+    @EventHandler
+    public void onDeathEvent(PlayerDeathEvent event) {
+        Player player = event.getPlayer();
+
+        Location location = player.getLocation();
+        int x = (int) location.getX();
+        int y = (int) location.getY();
+        int z = (int) location.getZ();
+        player.sendMessage("Death Location - x: " + x + ", y: " + y + ", z: " + z);
+
     }
 
     public static ItemStack createItem(final Material material, final String name, int amount, Enchantment[] enchants, int[] levels, final String... lore) {

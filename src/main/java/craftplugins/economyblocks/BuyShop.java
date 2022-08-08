@@ -349,7 +349,7 @@ public class BuyShop implements Listener, CommandExecutor {
             int count = 0;
             @Override
             public void run() {
-                if (count++ > 45) {
+                if (count++ > 30) {
                     uneligablePlayers.remove(player);
                     this.cancel();
                 }

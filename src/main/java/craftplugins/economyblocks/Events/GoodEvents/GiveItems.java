@@ -22,12 +22,12 @@ public class GiveItems implements CarePackageEvent {
         ItemStack goldenApples = Utils.createItem(Material.GOLDEN_APPLE, Utils.chat("&6Golden Apple"), 10,null, null);
         ItemStack enchantedGoldenApples = Utils.createItem(Material.ENCHANTED_GOLDEN_APPLE, Utils.chat("&6Enchanted Golden Apple"), 5,null, null);
         ItemStack enderChest = Utils.createItem(Material.ENDER_CHEST, Utils.chat("&fEnderchest"), 1, null, null);
-        ItemStack netherite = Utils.createItem(Material.NETHERITE_INGOT, Utils.chat("&fNetherite Ingot"), 2, null, null);
-        ItemStack diamond = Utils.createItem(Material.DIAMOND, Utils.chat("&fDiamond"), 16, null, null);
-        ItemStack gold = Utils.createItem(Material.GOLD_INGOT, Utils.chat("&fGold Ingot"), 32, null, null);
-        ItemStack iron = Utils.createItem(Material.IRON_INGOT, Utils.chat("&fIron Ingot"), 32, null, null);
-        ItemStack lapis = Utils.createItem(Material.LAPIS_ORE, Utils.chat("&fLapis Ore"), 20, null, null);
-        ItemStack cookedBeef = Utils.createItem(Material.COOKED_BEEF, Utils.chat("&fCooked Beef"), 20, null, null);
+        ItemStack netherite = Utils.createItem(Material.NETHERITE_INGOT, Utils.chat("&fNetherite Ingot"), 1, null, null);
+        ItemStack diamond = Utils.createItem(Material.DIAMOND, Utils.chat("&fDiamond"), 9, null, null);
+        ItemStack gold = Utils.createItem(Material.GOLD_INGOT, Utils.chat("&fGold Ingot"), 10, null, null);
+        ItemStack iron = Utils.createItem(Material.IRON_INGOT, Utils.chat("&fIron Ingot"), 10, null, null);
+        ItemStack lapis = Utils.createItem(Material.LAPIS_ORE, Utils.chat("&fLapis Ore"), 16, null, null);
+        ItemStack cookedBeef = Utils.createItem(Material.COOKED_BEEF, Utils.chat("&fCooked Beef"), 32, null, null);
 
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;

@@ -40,8 +40,9 @@ public class CommandsInfo implements Listener, CommandExecutor {
             sender.sendMessage(Utils.chat("&dCommands:"));
             sender.sendMessage(Utils.chat("&d- &a/sell &d: Opens a shop for selling items"));
             sender.sendMessage(Utils.chat("&d- &a/buy &d: Opens a shop for buying items"));
-            sender.sendMessage(Utils.chat("&d- &a/sethome &d: Sets your home location"));
-            sender.sendMessage(Utils.chat("&d- &a/home &d: Displays your home location"));
+            sender.sendMessage(Utils.chat("&d- &a/sethome &d: Adds new home location to the menu"));
+            sender.sendMessage(Utils.chat("&d- &a/sethome {home number} &d: Replaces home location"));
+            sender.sendMessage(Utils.chat("&d- &a/homes &d: Displays your current homes"));
             sender.sendMessage(Utils.chat("&d- &a/go &d: Opens a teleporting menu"));
             sender.sendMessage(Utils.chat("&d- &a/godisable &d: Removes you from the teleporting menu"));
             sender.sendMessage(Utils.chat("&d- &a/goenable &d: Adds you to the teleporting menu"));

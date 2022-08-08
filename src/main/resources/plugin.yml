@@ -34,7 +34,7 @@ commands:
     aliases:
       - sh
 
-  home:
+  homes:
     description: Display your home location
     aliases:
       - h

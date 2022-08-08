@@ -43,7 +43,7 @@ public class Nuke implements CarePackageEvent {
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;
 
-        if (randomNum > 75) {
+        if (randomNum > 33) {
 
             location.getWorld().createExplosion(location, 100);
             World world = location.getWorld();

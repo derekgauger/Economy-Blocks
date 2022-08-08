@@ -32,9 +32,9 @@ public class GiveBlocks implements CarePackageEvent {
             Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a netherite block"));
 
         } else if (randomNum > 97) {
-            ItemStack giveItem = createItem(Material.DIAMOND_BLOCK, Utils.chat("&fDiamond Block"), 4, null, null);
+            ItemStack giveItem = createItem(Material.DIAMOND_BLOCK, Utils.chat("&fDiamond Block"), 2, null, null);
             Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given 4 diamond blocks"));
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given 2 diamond blocks"));
 
         } else if (randomNum > 95) {
             ItemStack giveItem = createItem(Material.SHULKER_BOX, Utils.chat("&5Shulker Box"), 1, null, null);
