@@ -47,5 +47,8 @@ The teleport menu is a GUI that allows the user to teleport to other people for 
 
 **Homes:**
 
-- /sethome : Stores the coordinates for your home
-- /home : Displays the coordinates for your set home
+The homes menu is a GUI that allows the user to display coordinates and teleport to the homes for a price. Click the block associated with the home you want to go to, if you have enough money. You can go there.
+
+- /sethome : Adds a new home location
+- /sethome {home number}: Replaces an existing home location
+- /homes : Open the menu for displaying currently set homes
