@@ -13,15 +13,15 @@ public class GiveEffects implements CarePackageEvent {
 
         System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 60 * 20, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 20 * 60 * 20, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 60 * 10, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 20 * 60 * 10, 1));
 
         player.sendMessage(Utils.chat("&dYou have been given potion effects"));
     }

@@ -2,6 +2,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
+import craftplugins.economyblocks.GiveItemInfo;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,90 +19,56 @@ public class GiveBlocks implements CarePackageEvent {
 
         System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
-        Random rand = new Random();
-        double randomNum = rand.nextDouble() * 100;
+        ItemStack beacon = createItem(Material.BEACON, "", 1, null, null);
 
-        if (randomNum > 99) {
-            ItemStack giveItem = createItem(Material.BEACON, Utils.chat("&bBeacon"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a &bBeacon"));
+        ItemStack netheriteBlock = createItem(Material.NETHERITE_BLOCK, "", 1, null, null);
 
-        } else if (randomNum > 98) {
-            ItemStack giveItem = createItem(Material.NETHERITE_BLOCK, Utils.chat("&fNetherite Block"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a netherite block"));
+        ItemStack diamondBlock = createItem(Material.DIAMOND_BLOCK, "", 2, null, null);
 
-        } else if (randomNum > 97) {
-            ItemStack giveItem = createItem(Material.DIAMOND_BLOCK, Utils.chat("&fDiamond Block"), 2, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given 2 diamond blocks"));
+        ItemStack shulker = createItem(Material.SHULKER_BOX, "", 1, null, null);
 
-        } else if (randomNum > 95) {
-            ItemStack giveItem = createItem(Material.SHULKER_BOX, Utils.chat("&5Shulker Box"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a shulker box"));
+        ItemStack chests = createItem(Material.CHEST, "", 128, null, null);
 
-        } else if (randomNum > 92) {
-            ItemStack giveItem = createItem(Material.CHEST, Utils.chat("&fChest"), 128, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given 2 stacks of chests"));
+        ItemStack enderchest = createItem(Material.ENDER_CHEST, "", 1, null, null);
 
-        } else if (randomNum > 88) {
-            ItemStack giveItem = createItem(Material.ENDER_CHEST, Utils.chat("&fEnderchest"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enderchest"));
+        ItemStack gold = createItem(Material.GOLD_BLOCK, "", 8, null, null);
 
-        } else if (randomNum > 83) {
-            ItemStack giveItem = createItem(Material.GOLD_BLOCK, Utils.chat("&fGold Block"), 8, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given 8 gold blocks"));
+        ItemStack iron = createItem(Material.IRON_BLOCK, "", 8, null, null);
 
-        } else if (randomNum > 75) {
-            ItemStack giveItem = createItem(Material.IRON_BLOCK, Utils.chat("&fIron Block"), 8, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given 8 iron blocks"));
+        ItemStack obsidian = createItem(Material.OBSIDIAN, "", 32, null, null);
 
-        } else if (randomNum > 65) {
-            ItemStack giveItem = createItem(Material.OBSIDIAN, Utils.chat("&fObsidian"), 32, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given 32 obsidian"));
+        ItemStack endstone = createItem(Material.END_STONE, "", 64, null, null);
 
-        } else if (randomNum > 50) {
-            ItemStack giveItem = createItem(Material.END_STONE, Utils.chat("&fEndstone"), 64, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a stack of endstone"));
+        ItemStack oak = createItem(Material.OAK_LOG, "", 64, null, null);
+        ItemStack spruce = createItem(Material.SPRUCE_LOG, "", 64, null, null);
+        ItemStack dark = createItem(Material.DARK_OAK_LOG, "", 64, null, null);
+        ItemStack birch = createItem(Material.BIRCH_LOG, "", 64, null, null);
+        ItemStack acacia = createItem(Material.ACACIA_LOG, "", 64, null, null);
+        ItemStack jungle = createItem(Material.JUNGLE_LOG, "", 64, null, null);
 
-        } else if (randomNum > 30) {
-            ItemStack oak = createItem(Material.OAK_LOG, Utils.chat("&fOak Log"), 64, null, null);
-            ItemStack spruce = createItem(Material.SPRUCE_LOG, Utils.chat("&fSpruce Log"), 64, null, null);
-            ItemStack dark = createItem(Material.DARK_OAK_LOG, Utils.chat("&fDark Oak Log"), 64, null, null);
-            ItemStack birch = createItem(Material.BIRCH_LOG, Utils.chat("&fBirch Log"), 64, null, null);
-            ItemStack acacia = createItem(Material.ACACIA_LOG, Utils.chat("&few  Acacia Log"), 64, null, null);
-            ItemStack jungle = createItem(Material.JUNGLE_LOG, Utils.chat("&fJungle Log"), 64, null, null);
-            Utils.addItemToInventory(oak, player);
-            Utils.addItemToInventory(spruce, player);
-            Utils.addItemToInventory(dark, player);
-            Utils.addItemToInventory(birch, player);
-            Utils.addItemToInventory(acacia, player);
-            Utils.addItemToInventory(jungle, player);
-            player.sendMessage(Utils.chat("&dYou have been given a lot of wood"));
+        ItemStack grass = createItem(Material.GRASS_BLOCK, "", 64, null, null);
+        ItemStack sand = createItem(Material.SAND, "", 64, null, null);
+        ItemStack stone = createItem(Material.STONE, "", 64, null, null);
+        ItemStack mossyCobble = createItem(Material.MOSSY_COBBLESTONE, "", 64, null, null);
+        ItemStack honey = createItem(Material.HONEY_BLOCK, "", 64, null, null);
+        ItemStack slime = createItem(Material.SLIME_BLOCK, "", 64, null, null);
 
-        } else {
-            ItemStack grass = createItem(Material.GRASS_BLOCK, Utils.chat("&fGrass Block"), 64, null, null);
-            ItemStack sand = createItem(Material.SAND, Utils.chat("&fSand"), 64, null, null);
-            ItemStack stone = createItem(Material.STONE, Utils.chat("&fStone"), 64, null, null);
-            ItemStack mossyCobble = createItem(Material.MOSSY_COBBLESTONE, Utils.chat("&fMossy Cobblestone"), 64, null, null);
-            ItemStack honey = createItem(Material.HONEY_BLOCK, Utils.chat("&fHoney Block"), 64, null, null);
-            ItemStack slime = createItem(Material.SLIME_BLOCK, Utils.chat("&fSlime Block"), 64, null, null);
-            Utils.addItemToInventory(grass, player);
-            Utils.addItemToInventory(sand, player);
-            Utils.addItemToInventory(stone, player);
-            Utils.addItemToInventory(mossyCobble, player);
-            Utils.addItemToInventory(honey, player);
-            Utils.addItemToInventory(slime, player);
-            player.sendMessage(Utils.chat("&dYou have been given some blocks"));
 
-        }
+        GiveItemInfo[] potentialItems = {
+                new GiveItemInfo(beacon, 1, "a beacon"),
+                new GiveItemInfo(netheriteBlock, 1, "a netherite block"),
+                new GiveItemInfo(diamondBlock, 1, "some diamond blocks"),
+                new GiveItemInfo(shulker, 2, "a shulker box"),
+                new GiveItemInfo(chests, 3, "a lot of chests"),
+                new GiveItemInfo(enderchest, 4, "an enderchest"),
+                new GiveItemInfo(gold, 5, "some gold blocks"),
+                new GiveItemInfo(iron, 8, "some iron blocks"),
+                new GiveItemInfo(obsidian, 10, "some obsidian"),
+                new GiveItemInfo(endstone, 15, "some endstone"),
+                new GiveItemInfo(new ItemStack[] {oak, spruce, dark, birch, acacia, jungle}, 20, "a lot of wood"),
+                new GiveItemInfo(new ItemStack[] {grass, sand, stone, mossyCobble, honey, slime}, 30, "some blocks"),
+        };
 
+        Utils.picker(potentialItems, player);
     }
 }

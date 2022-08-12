@@ -106,8 +106,9 @@ public class Utils implements Listener {
         final ItemStack item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(name);
-
+        if (!name.equalsIgnoreCase("")) {
+            meta.setDisplayName(name);
+        }
         meta.setLore(Arrays.asList(lore));
 
         if (enchants != null) {
@@ -152,5 +153,39 @@ public class Utils implements Listener {
             player.sendMessage(Utils.chat("&dItem has been dropped at your feet"));
         }
     }
-    
+
+    public static void picker(GiveItemInfo[] options, Player player) {
+
+        List<GiveItemInfo> hundredList = new ArrayList<>();
+
+        for (GiveItemInfo option : options) {
+            for (int i = 0; i < option.getChance(); i++) {
+                hundredList.add(option);
+            }
+        }
+
+        if (hundredList.size() != 100) {
+            System.out.println("Urgently fix the item %s in one of the files");
+            return;
+        }
+
+        Random rand = new Random();
+
+        int randomIndex = rand.nextInt(hundredList.size());
+
+        GiveItemInfo randomItem = hundredList.get(randomIndex);
+
+        for (ItemStack item : randomItem.getItems()) {
+            Utils.addItemToInventory(item, player);
+        }
+
+        if (randomItem.getChance() <= 5) {
+            Bukkit.broadcastMessage(Utils.chat("&d" + player.getDisplayName() + " has been given " + randomItem.getMessage()));
+
+        } else {
+            player.sendMessage(Utils.chat("&dYou have been given " + randomItem.getMessage()));
+        }
+
+    }
+
 }

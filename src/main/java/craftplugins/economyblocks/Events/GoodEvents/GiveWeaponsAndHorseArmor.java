@@ -2,6 +2,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
+import craftplugins.economyblocks.GiveItemInfo;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,94 +20,64 @@ public class GiveWeaponsAndHorseArmor implements CarePackageEvent {
 
         System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
-        Random rand = new Random();
-        double randomNum = rand.nextDouble() * 100;
+        ItemStack TRIDENT = createItem(Material.TRIDENT, "", 1, null, null);
 
-        if (randomNum > 99) {
-            ItemStack giveItem = createItem(Material.TRIDENT, Utils.chat("&fTrident"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a trident"));
+        ItemStack eNETHERITE_AXE = createItem(Material.NETHERITE_AXE, "", 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY}, new int[]{5, 3});
 
-        } else if (randomNum > 98) {
-            ItemStack giveItem = createItem(Material.NETHERITE_AXE, Utils.chat("&fNetherite Axe"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY}, new int[]{5, 3});
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite axe"));
+        ItemStack eNETHERITE_SWORD = createItem(Material.NETHERITE_SWORD, "", 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_MOBS}, new int[]{5, 3, 3});
 
-        } else if (randomNum > 97) {
-            ItemStack giveItem = createItem(Material.NETHERITE_SWORD, Utils.chat("&fNetherite Sword"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_MOBS}, new int[]{5, 3, 3});
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite sword"));
+        ItemStack eDIAMOND_AXE = createItem(Material.DIAMOND_AXE, "", 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY}, new int[]{5, 3});
 
-        } else if (randomNum > 95) {
-            ItemStack giveItem = createItem(Material.DIAMOND_AXE, Utils.chat("&fDiamond Axe"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY}, new int[]{5, 3});
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond axe"));
+        ItemStack eDIAMOND_SWORD = createItem(Material.DIAMOND_SWORD, "", 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_MOBS}, new int[]{5, 3, 3});
 
-        } else if (randomNum > 93) {
-            ItemStack giveItem = createItem(Material.DIAMOND_SWORD, Utils.chat("&fDiamond Sword"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, Enchantment.LOOT_BONUS_MOBS}, new int[]{5, 3, 3});
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond sword"));
+        ItemStack NETHERITE_AXE = createItem(Material.NETHERITE_AXE, "", 1, null, null);
 
-        } else if (randomNum > 91) {
-            ItemStack giveItem = createItem(Material.NETHERITE_AXE, Utils.chat("&fNetherite Axe"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a netherite axe"));
+        ItemStack NETHERITE_SWORD = createItem(Material.NETHERITE_SWORD, "", 1, null, null);
 
-        } else if (randomNum > 89) {
-            ItemStack giveItem = createItem(Material.NETHERITE_SWORD, Utils.chat("&fNetherite Sword"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a netherite sword"));
+        ItemStack DIAMOND_AXE = createItem(Material.DIAMOND_AXE, "", 1, null, null);
 
-        } else if (randomNum > 86) {
-            ItemStack giveItem = createItem(Material.DIAMOND_AXE, Utils.chat("&fDiamond Axe"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a diamond axe"));
+        ItemStack DIAMOND_SWORD = createItem(Material.DIAMOND_SWORD, "", 1, null, null);
 
-        } else if (randomNum > 83) {
-            ItemStack giveItem = createItem(Material.DIAMOND_SWORD, Utils.chat("&fDiamond Sword"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a diamond sword"));
+        ItemStack DIAMOND_HORSE_ARMOR = createItem(Material.DIAMOND_HORSE_ARMOR, "", 1, null, null);
 
-        } else if (randomNum > 78) {
-            ItemStack giveItem = createItem(Material.DIAMOND_HORSE_ARMOR, Utils.chat("&fDiamond Horse Armor"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given diamond horse armor"));
+        ItemStack IRON_HORSE_ARMOR = createItem(Material.IRON_HORSE_ARMOR, "", 1, null, null);
 
-        } else if (randomNum > 70) {
-            ItemStack giveItem = createItem(Material.GOLDEN_HORSE_ARMOR, Utils.chat("&fGolden Horse Armor"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given golden horse armor"));
+        ItemStack fGOLDEN_SWORD = createItem(Material.GOLDEN_SWORD, "", 1, null, null);
+        ItemStack fGOLDEN_AXE = createItem(Material.GOLDEN_AXE, "", 1, null, null);
 
-        } else if (randomNum > 60) {
-            ItemStack giveItem = createItem(Material.IRON_HORSE_ARMOR, Utils.chat("&fIron Horse Armor"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given iron horse armor"));
+        ItemStack fIRON_SWORD = createItem(Material.IRON_SWORD, "", 1, null, null);
+        ItemStack fIRON_AXE = createItem(Material.IRON_AXE, "", 1, null, null);
 
-        } else if (randomNum > 50) {
-            ItemStack goldSword = createItem(Material.GOLDEN_SWORD, Utils.chat("&fGolden Sword"), 1, null, null);
-            ItemStack goldAxe = createItem(Material.GOLDEN_AXE, Utils.chat("&fGolden Axe"), 1, null, null);
-            Utils.addItemToInventory(goldSword, player);
-            Utils.addItemToInventory(goldAxe, player);
-            player.sendMessage(Utils.chat("&dYou have been given a set of golden weapons"));
+        ItemStack WOODEN_SWORD = createItem(Material.WOODEN_SWORD, "", 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.LOOT_BONUS_MOBS, Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT, Enchantment.DURABILITY}, new int[]{5, 3, 2, 2, 3});
 
-        } else if (randomNum > 40) {
-            ItemStack ironSword = createItem(Material.IRON_SWORD, Utils.chat("&fIron Sword"), 1, null, null);
-            ItemStack ironAxe = createItem(Material.IRON_AXE, Utils.chat("&fIron Axe"), 1, null, null);
-            Utils.addItemToInventory(ironSword, player);
-            Utils.addItemToInventory(ironAxe, player);
-            player.sendMessage(Utils.chat("&dYou have been given a set of iron weapons"));
+        ItemStack eBOW = createItem(Material.BOW, "", 1, new Enchantment[]{Enchantment.ARROW_DAMAGE, Enchantment.ARROW_FIRE, Enchantment.ARROW_KNOCKBACK, Enchantment.ARROW_INFINITE, Enchantment.DURABILITY}, new int[]{3, 2, 2, 1, 3});
 
-        } else if (randomNum > 25) {
-            ItemStack giveItem = createItem(Material.LEATHER_HORSE_ARMOR, Utils.chat("&fLeather Horse Armor"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given leather horse armor"));
+        ItemStack BOW = createItem(Material.BOW, "", 1, null, null);
 
-        } else {
-            ItemStack giveItem = createItem(Material.WOODEN_SWORD, Utils.chat("&6&lGod Sword"), 1, new Enchantment[]{Enchantment.DAMAGE_ALL, Enchantment.LOOT_BONUS_MOBS, Enchantment.KNOCKBACK, Enchantment.FIRE_ASPECT, Enchantment.DURABILITY}, new int[]{5, 3, 2, 2, 3});
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a wooden sword"));
+        ItemStack ARROW = createItem(Material.ARROW, "", 64, null, null);
 
-        }
+        GiveItemInfo[] potentialItems = {
+                new GiveItemInfo(TRIDENT, 1, "a trident"),
+                new GiveItemInfo(eNETHERITE_AXE, 1, "an enchanted netherite axe"),
+                new GiveItemInfo(eNETHERITE_SWORD, 1, "an enchanted netherite sword"),
+                new GiveItemInfo(eBOW, 2, "an enchanted bow"),
+                new GiveItemInfo(eDIAMOND_AXE, 2, "an enchanted diamond axe"),
+                new GiveItemInfo(eDIAMOND_SWORD, 2, "an enchanted diamond sword"),
+                new GiveItemInfo(NETHERITE_AXE, 2, "a netherite axe"),
+                new GiveItemInfo(NETHERITE_SWORD, 3, "a netherite sword"),
+                new GiveItemInfo(DIAMOND_AXE, 3, "a diamond axe"),
+                new GiveItemInfo(DIAMOND_SWORD, 3, "a diamond sword"),
+                new GiveItemInfo(DIAMOND_HORSE_ARMOR, 5, "some diamond horse armor"),
+                new GiveItemInfo(IRON_HORSE_ARMOR, 8, "some iron horse armor"),
+                new GiveItemInfo(new ItemStack[] {fIRON_SWORD, fIRON_AXE}, 8, "a full set of iron weapons"),
+                new GiveItemInfo(new ItemStack[] {fGOLDEN_SWORD, fGOLDEN_AXE}, 10, "full set of golden weapons"),
+                new GiveItemInfo(BOW, 14, "a bow"),
+                new GiveItemInfo(WOODEN_SWORD, 15, "a wooden sword"),
+                new GiveItemInfo(ARROW, 20, "some arrows"),
+
+        };
+
+        Utils.picker(potentialItems, player);
 
     }
 }

@@ -2,14 +2,13 @@ package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
+import craftplugins.economyblocks.GiveItemInfo;
 import craftplugins.economyblocks.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
 
 import static craftplugins.economyblocks.Utils.createItem;
 
@@ -19,108 +18,74 @@ public class GiveArmor implements CarePackageEvent {
 
         System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
-        Random rand = new Random();
-        double randomNum = rand.nextDouble() * 100;
+        ItemStack eNETHERITE_CHESTPLATE = createItem(Material.NETHERITE_CHESTPLATE, "", 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL}, new int[]{3, 4, 3});
 
-        if (randomNum > 99) {
-            ItemStack giveItem = createItem(Material.NETHERITE_CHESTPLATE, Utils.chat("&fNetherite Chestplate"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL}, new int[]{3, 4, 3});
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted netherite chestplate"));
+        ItemStack fNETHERITE_HELMET = createItem(Material.NETHERITE_HELMET, "", 1, null, null);
+        ItemStack fNETHERITE_CHESTPLATE = createItem(Material.NETHERITE_CHESTPLATE, "", 1, null, null);
+        ItemStack fNETHERITE_LEGGINGS = createItem(Material.NETHERITE_LEGGINGS, "", 1, null, null);
+        ItemStack fNETHERITE_BOOTS = createItem(Material.NETHERITE_BOOTS, "", 1, null, null);
 
-        } else if (randomNum > 98) {
-            ItemStack netherHelm = createItem(Material.NETHERITE_HELMET, Utils.chat("&fNetherite Helmet"), 1, null, null);
-            ItemStack netherChest = createItem(Material.NETHERITE_CHESTPLATE, Utils.chat("&fNetherite Chestplate"), 1, null, null);
-            ItemStack netherPants = createItem(Material.NETHERITE_LEGGINGS, Utils.chat("&fNetherite Leggings"), 1, null, null);
-            ItemStack netherBoots = createItem(Material.NETHERITE_BOOTS, Utils.chat("&fNetherite Boots"), 1, null, null);
-            Utils.addItemToInventory(netherHelm, player);
-            Utils.addItemToInventory(netherChest, player);
-            Utils.addItemToInventory(netherPants, player);
-            Utils.addItemToInventory(netherBoots, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a full set of netherite armor"));
+        ItemStack eDIAMOND_CHESTPLATE = createItem(Material.DIAMOND_CHESTPLATE, "", 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL}, new int[]{3, 4, 3});
 
-        } else if (randomNum > 97) {
-            ItemStack giveItem = createItem(Material.DIAMOND_CHESTPLATE, Utils.chat("&fDiamond Chestplate"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL}, new int[]{3, 4, 3});
-            Utils.addItemToInventory(giveItem, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given an enchanted diamond chestplate"));
+        ItemStack fDIAMOND_HELMET = createItem(Material.DIAMOND_HELMET, "", 1, null, null);
+        ItemStack fDIAMOND_CHESTPLATE = createItem(Material.DIAMOND_CHESTPLATE, "", 1, null, null);
+        ItemStack fDIAMOND_LEGGINGS = createItem(Material.DIAMOND_LEGGINGS, "", 1, null, null);
+        ItemStack fDIAMOND_BOOTS = createItem(Material.DIAMOND_BOOTS, "", 1, null, null);
 
-        } else if (randomNum > 96) {
-            ItemStack diamondHelm = createItem(Material.DIAMOND_HELMET, Utils.chat("&fDiamond Helmet"), 1, null, null);
-            ItemStack diamondChest = createItem(Material.DIAMOND_CHESTPLATE, Utils.chat("&fDiamond Chestplate"), 1, null, null);
-            ItemStack diamondPants = createItem(Material.DIAMOND_LEGGINGS, Utils.chat("&fDiamond Leggings"), 1, null, null);
-            ItemStack diamondBoots = createItem(Material.DIAMOND_BOOTS, Utils.chat("&fDiamond Boots"), 1, null, null);
-            Utils.addItemToInventory(diamondHelm, player);
-            Utils.addItemToInventory(diamondChest, player);
-            Utils.addItemToInventory(diamondPants, player);
-            Utils.addItemToInventory(diamondBoots, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a full set of diamond armor"));
+        ItemStack NETHERITE_HELMET = createItem(Material.NETHERITE_HELMET, "", 1, null, null);
 
-        } else if (randomNum > 93) {
-            ItemStack giveItem = createItem(Material.NETHERITE_HELMET, Utils.chat("&fNetherite Helmet"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a netherite helmet"));
+        ItemStack NETHERITE_CHESTPLATE = createItem(Material.NETHERITE_CHESTPLATE, "", 1, null, null);
 
-        } else if (randomNum > 90) {
-            ItemStack giveItem = createItem(Material.NETHERITE_CHESTPLATE, Utils.chat("&fNetherite Chestplate"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a netherite chestplate"));
+        ItemStack NETHERITE_LEGGINGS = createItem(Material.NETHERITE_LEGGINGS, "", 1, null, null);
 
-        } else if (randomNum > 87) {
-            ItemStack giveItem = createItem(Material.NETHERITE_LEGGINGS, Utils.chat("&fNetherite Leggings"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given netherite leggings"));
+        ItemStack NETHERITE_BOOTS = createItem(Material.NETHERITE_BOOTS, "", 1, null, null);
 
-        } else if (randomNum > 84) {
-            ItemStack giveItem = createItem(Material.NETHERITE_BOOTS, Utils.chat("&fNetherite Boots"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given netherite boots"));
+        ItemStack DIAMOND_HELMET = createItem(Material.DIAMOND_HELMET, "", 1, null, null);
 
-        } else if (randomNum > 78) {
-            ItemStack giveItem = createItem(Material.DIAMOND_HELMET, Utils.chat("&fDiamond Helmet"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a diamond helmet"));
+        ItemStack DIAMOND_CHESTPLATE = createItem(Material.DIAMOND_CHESTPLATE, "", 1, null, null);
 
-        } else if (randomNum > 72) {
-            ItemStack giveItem = createItem(Material.DIAMOND_CHESTPLATE, Utils.chat("&fDiamond Chestplate"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a diamond chestplate"));
+        ItemStack DIAMOND_LEGGINGS = createItem(Material.DIAMOND_LEGGINGS, "", 1, null, null);
 
-        } else if (randomNum > 66) {
-            ItemStack giveItem = createItem(Material.DIAMOND_LEGGINGS, Utils.chat("&fDiamond Leggings"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given diamond leggings"));
+        ItemStack DIAMOND_BOOTS = createItem(Material.DIAMOND_BOOTS, "", 1, null, null);
 
-        } else if (randomNum > 60) {
-            ItemStack giveItem = createItem(Material.DIAMOND_BOOTS, Utils.chat("&fDiamond Boots"), 1, null, null);
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given a diamond boots"));
+        ItemStack eIRON_CHESTPLATE = createItem(Material.IRON_CHESTPLATE, "", 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL, Enchantment.THORNS}, new int[]{3, 4, 4, 3});
 
-        } else if (randomNum > 52) {
-            ItemStack giveItem = createItem(Material.IRON_CHESTPLATE, Utils.chat("&fIron Chestplate"), 1, new Enchantment[]{Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.PROTECTION_FALL, Enchantment.THORNS}, new int[]{3, 4, 4, 3});
-            Utils.addItemToInventory(giveItem, player);
-            player.sendMessage(Utils.chat("&dYou have been given an enchanted iron chestplate"));
+        ItemStack fCHAINMAIL_HELMET = createItem(Material.CHAINMAIL_HELMET, "", 1, null, null);
+        ItemStack fCHAINMAIL_CHESTPLATE = createItem(Material.CHAINMAIL_CHESTPLATE, "", 1, null, null);
+        ItemStack fCHAINMAIL_LEGGINGS = createItem(Material.CHAINMAIL_LEGGINGS, "", 1, null, null);
+        ItemStack fCHAINMAIL_BOOTS = createItem(Material.CHAINMAIL_BOOTS, "", 1, null, null);
 
-        } else if (randomNum > 40) {
-            ItemStack chainHelm = createItem(Material.CHAINMAIL_HELMET, Utils.chat("&fChainmail Helmet"), 1, null, null);
-            ItemStack chainChest = createItem(Material.CHAINMAIL_CHESTPLATE, Utils.chat("&fChainmail Chestplate"), 1, null, null);
-            ItemStack chainPants = createItem(Material.CHAINMAIL_LEGGINGS, Utils.chat("&fChainmail Leggings"), 1, null, null);
-            ItemStack chainBoots = createItem(Material.CHAINMAIL_BOOTS, Utils.chat("&fChainmail Boots"), 1, null, null);
-            Utils.addItemToInventory(chainHelm, player);
-            Utils.addItemToInventory(chainChest, player);
-            Utils.addItemToInventory(chainPants, player);
-            Utils.addItemToInventory(chainBoots, player);
-            player.sendMessage(Utils.chat("&dYou have been given a full set of chain armor"));
+        ItemStack fIRON_HELMET = createItem(Material.IRON_HELMET, "", 1, null, null);
+        ItemStack fIRON_CHESTPLATE = createItem(Material.IRON_CHESTPLATE, "", 1, null, null);
+        ItemStack fIRON_LEGGINGS = createItem(Material.IRON_LEGGINGS, "", 1, null, null);
+        ItemStack fIRON_BOOTS = createItem(Material.IRON_BOOTS, "", 1, null, null);
 
-        } else {
-            ItemStack ironHelm = createItem(Material.IRON_HELMET, Utils.chat("&fIron Helmet"), 1, null, null);
-            ItemStack ironChest = createItem(Material.IRON_CHESTPLATE, Utils.chat("&fIron Chestplate"), 1, null, null);
-            ItemStack ironPants = createItem(Material.IRON_LEGGINGS, Utils.chat("&fIron Leggings"), 1, null, null);
-            ItemStack ironBoots = createItem(Material.IRON_BOOTS, Utils.chat("&fIron Boots"), 1, null, null);
-            Utils.addItemToInventory(ironHelm, player);
-            Utils.addItemToInventory(ironChest, player);
-            Utils.addItemToInventory(ironPants, player);
-            Utils.addItemToInventory(ironBoots, player);
-            player.sendMessage(Utils.chat("&dYou have been given a full set of iron armor"));
-        }
+        ItemStack fGOLDEN_HELMET = createItem(Material.GOLDEN_HELMET, "", 1, null, null);
+        ItemStack fGOLDEN_CHESTPLATE = createItem(Material.GOLDEN_CHESTPLATE, "", 1, null, null);
+        ItemStack fGOLDEN_LEGGINGS = createItem(Material.GOLDEN_LEGGINGS, "", 1, null, null);
+        ItemStack fGOLDEN_BOOTS = createItem(Material.GOLDEN_BOOTS, "", 1, null, null);
+
+        GiveItemInfo[] potentialItems = {
+                new GiveItemInfo(eNETHERITE_CHESTPLATE, 1, "an enchanted netherite chestplate"),
+                new GiveItemInfo(new ItemStack[]{fNETHERITE_HELMET, fNETHERITE_CHESTPLATE, fNETHERITE_LEGGINGS, fNETHERITE_BOOTS}, 1, "a full set of netherite armor"),
+                new GiveItemInfo(eDIAMOND_CHESTPLATE, 1, "an enchanted netherite chestplate"),
+                new GiveItemInfo(new ItemStack[]{fDIAMOND_HELMET, fDIAMOND_CHESTPLATE, fDIAMOND_LEGGINGS, fDIAMOND_BOOTS}, 1, "a full set of diamond armor"),
+                new GiveItemInfo(NETHERITE_HELMET, 3, "a netherite helmet"),
+                new GiveItemInfo(NETHERITE_CHESTPLATE, 3, "a netherite chestplate"),
+                new GiveItemInfo(NETHERITE_LEGGINGS, 3, "netherite leggings"),
+                new GiveItemInfo(NETHERITE_BOOTS, 3, "netherite boots"),
+                new GiveItemInfo(DIAMOND_HELMET, 6, "a diamond helmet"),
+                new GiveItemInfo(DIAMOND_CHESTPLATE, 6, "a diamond chestplate"),
+                new GiveItemInfo(DIAMOND_LEGGINGS, 6, "diamond leggings"),
+                new GiveItemInfo(DIAMOND_BOOTS, 6, "diamond boots"),
+                new GiveItemInfo(eIRON_CHESTPLATE, 8, "an enchanted iron chestplate"),
+                new GiveItemInfo(new ItemStack[]{fCHAINMAIL_HELMET, fCHAINMAIL_CHESTPLATE, fCHAINMAIL_LEGGINGS, fCHAINMAIL_BOOTS}, 12, "a full set of chainmail armor"),
+                new GiveItemInfo(new ItemStack[]{fIRON_HELMET, fIRON_CHESTPLATE, fIRON_LEGGINGS, fIRON_BOOTS}, 15, "a full set of iron armor"),
+                new GiveItemInfo(new ItemStack[]{fGOLDEN_HELMET, fGOLDEN_CHESTPLATE, fGOLDEN_LEGGINGS, fGOLDEN_BOOTS}, 25, "a full set of golden armor"),
+
+        };
+
+        Utils.picker(potentialItems, player);
 
     }
 }

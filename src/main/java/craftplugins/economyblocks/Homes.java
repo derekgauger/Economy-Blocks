@@ -1,9 +1,9 @@
 package craftplugins.economyblocks;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,25 +22,18 @@ import org.jetbrains.annotations.NotNull;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-public class Homes implements Listener, CommandExecutor, Serializable {
+public class Homes implements Listener, CommandExecutor {
 
-    private static transient final long serialVersionUID = -1681012206529286331L;
+    EconomyBlocks plugin;
+    BankHandler bankHandler;
+    Material[] materials = {Material.GRASS_BLOCK, Material.NETHERRACK, Material.END_STONE};
+    double teleportPrice = 2000;
 
-    transient EconomyBlocks plugin;
-    transient BankHandler bankHandler;
-    transient Material[] materials = {Material.GRASS_BLOCK, Material.OAK_PLANKS, Material.STONE};
-    transient double teleportPrice = 2500;
-
-    HashMap<String, double[]> homes;
+    List<PlayerHome> homes;
     int maxHomes = 3;
 
     public Homes(EconomyBlocks plugin, BankHandler bankHandler) {
@@ -49,13 +42,27 @@ public class Homes implements Listener, CommandExecutor, Serializable {
         homes = loadData("homes.data");
 
         if (homes == null) {
-            homes = new HashMap<>();
+            homes = new ArrayList<>();
         }
 
         Bukkit.getPluginCommand("sethome").setExecutor(this);
         Bukkit.getPluginCommand("homes").setExecutor(this);
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
+
+//    private void convert() {
+//        for (String key : homes.keySet()) {
+//            int homeNumber = Integer.parseInt(String.valueOf(key.charAt(key.length() - 1)));
+//            String uuid = key.substring(0, key.length() - 3);
+//            String worldName = "World";
+//            double[] location = homes.get(key);
+//            double x = location[0];
+//            double y = location[1];
+//            double z = location[2];
+//
+//            homes.add(new PlayerHome(uuid, homeNumber, worldName, x, y, z));
+//        }
+//    }
 
     public boolean saveData(String filePath) {
         try {
@@ -69,10 +76,10 @@ public class Homes implements Listener, CommandExecutor, Serializable {
         }
     }
 
-    public HashMap<String, double[]> loadData(String filePath) {
+    public List<PlayerHome> loadData(String filePath) {
         try {
             BukkitObjectInputStream in = new BukkitObjectInputStream(new GZIPInputStream(new FileInputStream(filePath)));
-            homes = (HashMap<String, double[]>) in.readObject();
+            homes = (List<PlayerHome>) in.readObject();
             in.close();
             return homes;
         } catch (ClassNotFoundException | IOException e) {
@@ -83,12 +90,21 @@ public class Homes implements Listener, CommandExecutor, Serializable {
 
     private int getPlayerHomeCount(String uuid) {
         int count = 0;
-        for (String key : homes.keySet()) {
-            if (key.contains(uuid)) {
+        for (PlayerHome ph : homes) {
+            if (ph.uuid.equals(uuid)) {
                 count += 1;
             }
         }
         return count;
+    }
+
+    private PlayerHome getPlayerHome(String uuid, int homeNumber) {
+        for (PlayerHome ph : homes) {
+            if (ph.uuid.equals(uuid) && ph.homeNumber == homeNumber) {
+                return ph;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -108,18 +124,20 @@ public class Homes implements Listener, CommandExecutor, Serializable {
                 try {
                     int houseNum = Integer.parseInt(args[0]);
 
-                    if (houseNum > maxHomes) {
-                        player.sendMessage(Utils.chat("Max number of homes is " + maxHomes));
+                    if (houseNum > maxHomes || houseNum <= 0) {
+                        player.sendMessage(Utils.chat("Invalid house number. Must be: 1-" + maxHomes));
                         return false;
                     }
 
                     if (getPlayerHomeCount(uuid) >= maxHomes) {
-                        Location location = player.getLocation();
-                        double x = location.getX();
-                        double y = location.getY();
-                        double z = location.getZ();
+                        PlayerHome ph = getPlayerHome(uuid, houseNum);
 
-                        homes.put(uuid + "--" + houseNum, new double[]{x, y, z});
+                        Location location = player.getLocation();
+                        ph.setX(location.getX());
+                        ph.setY(location.getY());
+                        ph.setZ(location.getZ());
+                        ph.setWorld(location.getWorld().getUID().toString());
+
                         player.sendMessage(Utils.chat("&dHome " + houseNum + " set!"));
                         return true;
                     }
@@ -134,20 +152,18 @@ public class Homes implements Listener, CommandExecutor, Serializable {
 
             if (numHomes >= maxHomes) {
                 player.sendMessage(Utils.chat("&cYou have already reached the max number of homes"));
+                player.sendMessage(Utils.chat("&cTry /sethome {home number}"));
                 return false;
             }
 
             Location location = player.getLocation();
-            double x = location.getX();
-            double y = location.getY();
-            double z = location.getZ();
 
-            homes.put(uuid + "--" + (numHomes + 1), new double[]{x, y, z});
+            PlayerHome ph = new PlayerHome(uuid, getPlayerHomeCount(uuid) + 1, player.getLocation().getWorld().getUID().toString(), location.getX(), location.getY(), location.getZ());
+            homes.add(ph);
+
             player.sendMessage(Utils.chat("&dHome set!"));
-
             return true;
         }
-
         if (getPlayerHomeCount(uuid) == 0) {
             player.sendMessage(Utils.chat("&dYou don't have any homes set. Try /sethome"));
             return false;
@@ -156,42 +172,49 @@ public class Homes implements Listener, CommandExecutor, Serializable {
         int emptyCount = 0;
         int homesCount = 0;
 
-        Inventory homesGui = Bukkit.createInventory(null,9, "Homes");
+        Inventory homesGui = Bukkit.createInventory(null, 9, "Homes");
 
         homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
 
-        for (Map.Entry<String, double[]> entry : homes.entrySet()) {
-            String key = entry.getKey();
-            double[] value = entry.getValue();
+        for (PlayerHome ph : homes) {
 
-
-            if (key.contains(uuid)) {
+            if (ph.uuid.equals(uuid)) {
                 homesCount += 1;
 
-                double x = value[0];
-                double y = value[1];
-                double z = value[2];
-
-                homesGui.addItem(createGuiItem(materials[homesCount - 1], Utils.chat("&6&lHome " + homesCount), Utils.chat("&aTeleport Price: $" + teleportPrice), Utils.chat("&bx: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z))));
+                double x = ph.x;
+                double y = ph.y;
+                double z = ph.z;
+                homesGui.addItem(createGuiItem(materials[homesCount - 1], Utils.chat("&6&lHome " + homesCount), Utils.chat("&aTeleport Price: $" + teleportPrice), Utils.chat("&bWorld: " + getWorldName(UUID.fromString(ph.worldUID))), Utils.chat("&bx: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z))));
 
             }
         }
 
-        for (int i = 0; i < maxHomes - getPlayerHomeCount(uuid); i++) {
+        for (int i = 0; i < 9 - maxHomes - getPlayerHomeCount(uuid); i++) {
             homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
 
         }
-
-        homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
-        homesGui.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
 
         player.openInventory(homesGui);
 
         return true;
 
+    }
+
+    private String getWorldName(UUID UID) {
+        World world = Bukkit.getWorld(UID);
+        String worldType = world.getName();
+
+        if (worldType.contains("end")) {
+            return "End";
+
+        } else if (worldType.contains("nether")) {
+            return "Nether";
+
+        } else {
+            return "Normal World";
+        }
     }
 
     protected ItemStack createGuiItem(final Material material, final String name, final String... lore) {
@@ -222,7 +245,6 @@ public class Homes implements Listener, CommandExecutor, Serializable {
 
         event.setCancelled(true);
 
-
         ItemStack clickedItem = event.getCurrentItem();
 
         if (clickedItem == null || clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
@@ -230,28 +252,25 @@ public class Homes implements Listener, CommandExecutor, Serializable {
         }
 
         Player player = (Player) event.getWhoClicked();
-
         BankAccount bankAccount = bankHandler.getBankAccount(player);
 
-        String home = clickedItem.getItemMeta().getDisplayName();
+        if (bankAccount.getBalance() >= teleportPrice) {
+            String clickedHome = clickedItem.getItemMeta().getDisplayName();
+            int homeNumber = Integer.parseInt(String.valueOf(clickedHome.charAt(clickedHome.length() - 1)));
 
-        int homeNumber = Integer.parseInt(String.valueOf(home.charAt(home.length() - 1)));
-        System.out.println(homeNumber);
+            PlayerHome ph = getPlayerHome(player.getUniqueId().toString(), homeNumber);
 
-        String uuid = player.getUniqueId().toString();
+            World world = Bukkit.getWorld(UUID.fromString(ph.worldUID));
 
-        getPlayerHomeCount(uuid);
+            if (player.getWorld() != world) {
+                player.sendMessage(Utils.chat("&dYou are traveling dimensions!"));
+            }
 
-        double[] location = homes.get(uuid + "--" + homeNumber);
+            player.teleport(new Location(world, ph.x, ph.y, ph.z));
+            bankAccount.withdraw(teleportPrice);
 
-        double x = location[0];
-        double y = location[1];
-        double z = location[2];
-
-
-        player.teleport(new Location(player.getWorld(), x, y, z));
-        bankAccount.withdraw(teleportPrice);
-
+        } else {
+            player.sendMessage(Utils.chat("&cInsufficient funds"));
+        }
     }
-
 }

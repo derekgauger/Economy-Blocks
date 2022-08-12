@@ -2,6 +2,7 @@ package craftplugins.economyblocks.Events.GoodEvents;
 
 import craftplugins.economyblocks.BankHandler;
 import craftplugins.economyblocks.Events.CarePackageEvent;
+import craftplugins.economyblocks.GiveItemInfo;
 import craftplugins.economyblocks.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,65 +18,37 @@ public class GiveItems implements CarePackageEvent {
 
         System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
 
-        ItemStack smiteStick = Utils.createItem(Material.STICK, Utils.chat("&bLightning Stick"), 1,null, null);
-        ItemStack kbStick = Utils.createItem(Material.STICK, Utils.chat("&6Knockback Stick"), 1, new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{10});
-        ItemStack goldenApples = Utils.createItem(Material.GOLDEN_APPLE, Utils.chat("&6Golden Apple"), 10,null, null);
-        ItemStack enchantedGoldenApples = Utils.createItem(Material.ENCHANTED_GOLDEN_APPLE, Utils.chat("&6Enchanted Golden Apple"), 5,null, null);
-        ItemStack enderChest = Utils.createItem(Material.ENDER_CHEST, Utils.chat("&fEnderchest"), 1, null, null);
-        ItemStack netherite = Utils.createItem(Material.NETHERITE_INGOT, Utils.chat("&fNetherite Ingot"), 1, null, null);
-        ItemStack diamond = Utils.createItem(Material.DIAMOND, Utils.chat("&fDiamond"), 9, null, null);
-        ItemStack gold = Utils.createItem(Material.GOLD_INGOT, Utils.chat("&fGold Ingot"), 10, null, null);
-        ItemStack iron = Utils.createItem(Material.IRON_INGOT, Utils.chat("&fIron Ingot"), 10, null, null);
-        ItemStack lapis = Utils.createItem(Material.LAPIS_ORE, Utils.chat("&fLapis Ore"), 16, null, null);
-        ItemStack cookedBeef = Utils.createItem(Material.COOKED_BEEF, Utils.chat("&fCooked Beef"), 32, null, null);
+        ItemStack smiteStick = Utils.createItem(Material.STICK, "", 1,null, null);
+        ItemStack totem = Utils.createItem(Material.TOTEM_OF_UNDYING, "", 1,null, null);
+        ItemStack kbStick = Utils.createItem(Material.STICK, "", 1, new Enchantment[]{Enchantment.KNOCKBACK}, new int[]{10});
+        ItemStack goldenApples = Utils.createItem(Material.GOLDEN_APPLE, "", 10,null, null);
+        ItemStack enchantedGoldenApples = Utils.createItem(Material.ENCHANTED_GOLDEN_APPLE, "", 5,null, null);
+        ItemStack netherite = Utils.createItem(Material.NETHERITE_INGOT, "", 1, null, null);
+        ItemStack diamond = Utils.createItem(Material.DIAMOND, "", 9, null, null);
+        ItemStack gold = Utils.createItem(Material.GOLD_INGOT, "", 16, null, null);
+        ItemStack iron = Utils.createItem(Material.IRON_INGOT, "", 16, null, null);
+        ItemStack lapis = Utils.createItem(Material.LAPIS_ORE, "", 16, null, null);
+        ItemStack cookedBeef = Utils.createItem(Material.COOKED_BEEF, "", 32, null, null);
+        ItemStack cake = Utils.createItem(Material.CAKE, "", 1, null, null);
+        ItemStack beef = Utils.createItem(Material.BEEF, "", 32, null, null);
 
-        Random rand = new Random();
-        double randomNum = rand.nextDouble() * 100;
+        GiveItemInfo[] potentialItems = {
+                new GiveItemInfo(smiteStick, 1, "a smite stick"),
+                new GiveItemInfo(totem, 1, "a totem of undying"),
+                new GiveItemInfo(kbStick, 2, "a knockback stick"),
+                new GiveItemInfo(enchantedGoldenApples, 3, "some enchanted golden apples"),
+                new GiveItemInfo(netherite, 3, "a netherite ingot"),
+                new GiveItemInfo(diamond, 6, "some diamonds"),
+                new GiveItemInfo(goldenApples, 6, "some golden apples"),
+                new GiveItemInfo(gold, 10, "some gold ingots"),
+                new GiveItemInfo(iron, 10, "some iron ingots"),
+                new GiveItemInfo(lapis, 10, "some lapis ore"),
+                new GiveItemInfo(cookedBeef, 13, "some cookedBeef"),
+                new GiveItemInfo(beef, 15, "some beef"),
+                new GiveItemInfo(cake, 20, "a cake"),
 
-        if (randomNum > 98) {
-            Utils.addItemToInventory(smiteStick, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a smite stick!"));
+        };
+        Utils.picker(potentialItems, player);
 
-        } else if (randomNum > 93) {
-            Utils.addItemToInventory(kbStick, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given a knockback stick!"));
-
-        } else if (randomNum > 85) {
-            Utils.addItemToInventory(enderChest, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " have been given an Enderchest!"));
-
-        } else if (randomNum > 80) {
-            Utils.addItemToInventory(enchantedGoldenApples, player);
-            player.sendMessage(Utils.chat("&dYou have been given golden apples"));
-
-        } else if (randomNum > 75) {
-            Utils.addItemToInventory(goldenApples, player);
-            player.sendMessage(Utils.chat("&dYou have been given enchanted golden apples!"));
-
-        } else if (randomNum > 70) {
-            Utils.addItemToInventory(netherite, player);
-            Bukkit.broadcastMessage(Utils.chat("&d" + player.getName() + " has been given netherite ingots!"));
-
-        }  else if (randomNum > 65) {
-            Utils.addItemToInventory(diamond, player);
-            player.sendMessage(Utils.chat("&dYou have been given diamonds!"));
-
-        } else if (randomNum > 50) {
-            Utils.addItemToInventory(gold, player);
-            player.sendMessage(Utils.chat("&dYou have been given gold ingots!"));
-
-        } else if (randomNum > 40) {
-            Utils.addItemToInventory(iron, player);
-            player.sendMessage(Utils.chat("&dYou have been given iron ingots!"));
-
-        } else if (randomNum > 25) {
-            Utils.addItemToInventory(lapis, player);
-            player.sendMessage(Utils.chat("&dYou have been given lapis ore!"));
-
-        } else {
-            Utils.addItemToInventory(cookedBeef, player);
-            player.sendMessage(Utils.chat("&dYou have been given some steak ore!"));
-
-        }
     }
 }
