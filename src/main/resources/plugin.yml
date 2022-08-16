@@ -43,3 +43,23 @@ commands:
     description: Displayed information about the plugin
     aliases:
       - commands
+
+  hub:
+    description: Goes to hub
+
+  community:
+    description: Community commands
+
+  fbs:
+    description: Open the Fill Block Shop menu
+    aliases:
+      - fillblockshop
+      - fbshop
+
+  shop:
+    description: Opens the shops menu
+    aliases:
+      - shops
+
+  setbal:
+    description: Allows the console to set a player's balance

@@ -53,6 +53,10 @@ public class GiveBlocks implements CarePackageEvent {
         ItemStack honey = createItem(Material.HONEY_BLOCK, "", 64, null, null);
         ItemStack slime = createItem(Material.SLIME_BLOCK, "", 64, null, null);
 
+        ItemStack sandstone = createItem(Material.SANDSTONE, "", 64, null, null);
+        ItemStack redSand = createItem(Material.RED_SAND, "", 64, null, null);
+        ItemStack redSandstone = createItem(Material.RED_SANDSTONE, "", 64, null, null);
+        ItemStack soulSand = createItem(Material.SOUL_SAND, "", 64, null, null);
 
         GiveItemInfo[] potentialItems = {
                 new GiveItemInfo(beacon, 1, "a beacon"),
@@ -65,8 +69,9 @@ public class GiveBlocks implements CarePackageEvent {
                 new GiveItemInfo(iron, 8, "some iron blocks"),
                 new GiveItemInfo(obsidian, 10, "some obsidian"),
                 new GiveItemInfo(endstone, 15, "some endstone"),
-                new GiveItemInfo(new ItemStack[] {oak, spruce, dark, birch, acacia, jungle}, 20, "a lot of wood"),
-                new GiveItemInfo(new ItemStack[] {grass, sand, stone, mossyCobble, honey, slime}, 30, "some blocks"),
+                new GiveItemInfo(new ItemStack[] {oak, spruce, dark, birch, acacia, jungle}, 15, "a lot of wood"),
+                new GiveItemInfo(new ItemStack[] {sandstone, redSand, redSandstone, soulSand}, 15, "some sand"),
+                new GiveItemInfo(new ItemStack[] {grass, sand, stone, mossyCobble, honey, slime}, 20, "some blocks"),
         };
 
         Utils.picker(potentialItems, player);

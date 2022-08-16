@@ -6,10 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -17,6 +14,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +42,15 @@ public class Utils implements Listener {
     public void onEntityHit(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player || !(event.getEntity() instanceof LivingEntity)) {
             return;
+        }
+
+        if (event.getEntity() instanceof Cow) {
+            if (event.getEntity().getCustomName() != null) {
+                if (event.getEntity().getCustomName().contains("Community Cow")) {
+                    ((Cow) event.getEntity()).setHealth(2047.9);
+                    return;
+                }
+            }
         }
 
         Entity entity = event.getEntity();
@@ -111,12 +118,20 @@ public class Utils implements Listener {
         }
         meta.setLore(Arrays.asList(lore));
 
+        item.setItemMeta(meta);
         if (enchants != null) {
             for (int i = 0; i < enchants.length; i++) {
-                meta.addEnchant(enchants[i], levels[i], true);
+                if (material == Material.ENCHANTED_BOOK) {
+                    EnchantmentStorageMeta esm = (EnchantmentStorageMeta) item.getItemMeta();
+                    esm.addStoredEnchant(enchants[i], levels[i], true);
+                    item.setItemMeta(esm);
+                } else {
+                    ItemMeta eMeta = item.getItemMeta();
+                    eMeta.addEnchant(enchants[i], levels[i], true);
+                    item.setItemMeta(eMeta);
+                }
             }
         }
-        item.setItemMeta(meta);
 
         return item;
     }

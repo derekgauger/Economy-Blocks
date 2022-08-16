@@ -12,12 +12,27 @@ import java.util.List;
 
 abstract class CarePackage {
 
-    public void good(Player player, BankHandler bankHandler) {
+    public void good(Player player, BankHandler bankHandler, int tier) {
         List<CarePackageEvent> goodEvents = getGoodEvents();
 
-        int randomNum = Utils.getRandomNumber(0, goodEvents.size());
+        int repeats = 1;
 
-        goodEvents.get(randomNum).runEvent(player, bankHandler);
+        if (tier == 5) {
+            repeats = 3;
+        } else if (tier == 3 || tier == 4) {
+            repeats = 2;
+        }
+
+        for (int i = 0; i < repeats; i++) {
+            int randomNum = Utils.getRandomNumber(0, goodEvents.size());
+            CarePackageEvent event = goodEvents.get(randomNum);
+            if (event.getClass() == Party.class || event.getClass() == ChangeBlocksToOres.class) {
+                goodEvents.remove(0);
+                goodEvents.remove(0);
+            }
+            event.runEvent(player, bankHandler);
+
+        }
     }
 
     public void bad(Player player, BankHandler bankHandler) {
@@ -31,6 +46,7 @@ abstract class CarePackage {
     private List<CarePackageEvent> getGoodEvents() {
         List<CarePackageEvent> goodEvents = new ArrayList<>();
         goodEvents.add(new ChangeBlocksToOres());
+        goodEvents.add(new Party());
         goodEvents.add(new GiveArmor());
         goodEvents.add(new GiveBlocks());
         goodEvents.add(new GiveEffects());
@@ -39,7 +55,6 @@ abstract class CarePackage {
         goodEvents.add(new GiveTools());
         goodEvents.add(new GiveWeaponsAndHorseArmor());
         goodEvents.add(new MoneyEvent());
-        goodEvents.add(new Party());
         goodEvents.add(new GiveExp());
 
         return goodEvents;

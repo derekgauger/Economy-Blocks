@@ -37,51 +37,56 @@ public class BuyShop implements Listener, CommandExecutor {
     EconomyBlocks plugin;
     public Inventory shop = Bukkit.createInventory(null,27, "Buy Shop");
     BankHandler bankHandler;
+    CommunityHandler communityHandler;
 
-    static final double tier1Cost = 2000;
-    static final double tier2Cost = 4000;
-    static final double tier3Cost = 6000;
-    static final double tier4Cost = 10000;
-    static final double tier5Cost = 16000;
+    double tier1Cost = 2000;
+    double tier2Cost = 4000;
+    double tier3Cost = 6000;
+    double tier4Cost = 10000;
+    double tier5Cost = 16000;
 
-    static final double fireResPrice = 5000;
-    static final double nightVisionPrice = 2000;
-    static final double musicDiscPrice = 25000;
-    static final double saddlePrice = 10000;
-    static final double nameTagPrice = 20000;
-    static final double axolotlPrice = 5000;
-    static final double pandaPrice = 5000;
-    static final double redstonePrice = 15 * 64;
-    static final double foxPrice = 7500;
-    static final double parrotPrice = 7500;
+    double fireResPrice = 5000;
+    double nightVisionPrice = 2000;
+    double musicDiscPrice = 25000;
+    double saddlePrice = 10000;
+    double nameTagPrice = 20000;
+    double axolotlPrice = 5000;
+    double pandaPrice = 5000;
+    double redstonePrice = 15 * 64;
+    double foxPrice = 7500;
+    double parrotPrice = 7500;
+
+    double[] prices = {tier1Cost, tier2Cost, tier3Cost, tier4Cost, tier5Cost, fireResPrice, nightVisionPrice, musicDiscPrice, saddlePrice, nameTagPrice, axolotlPrice, parrotPrice, foxPrice, parrotPrice};
 
     List<Player> uneligablePlayers = new ArrayList<>();
 
 
-    // 30%
-    ItemStack tierOne = Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier1Cost));
+    ItemStack tierOne = Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
-    // 25%
-    ItemStack tierTwo = Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier2Cost));
+    ItemStack tierTwo = Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
-    // 20%
-    ItemStack tierThree = Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier3Cost));
+    ItemStack tierThree = Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
-    // 15%
-    ItemStack tierFour = Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier4Cost));
+    ItemStack tierFour = Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
-    // 10%
-    ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier5Cost));
+    ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
-    ItemStack[] items = {tierOne, tierTwo, tierThree, tierFour, tierFive};
-
-    public BuyShop(EconomyBlocks plugin, BankHandler bankHandler) {
+    public BuyShop(EconomyBlocks plugin, BankHandler bankHandler, CommunityHandler communityHandler) {
         this.plugin = plugin;
         this.bankHandler = bankHandler;
+        this.communityHandler = communityHandler;
 
-        initializeCarePackages();
+        new TierOne(plugin, tierOne, bankHandler);
 
-        Bukkit.getServer().getPluginManager().registerEvents(this,plugin);
+        new TierTwo(plugin, tierTwo, bankHandler);
+
+        new TierThree(plugin, tierThree, bankHandler);
+
+        new TierFour(plugin, tierFour, bankHandler);
+
+        new TierFive(plugin, tierFive, bankHandler);
+
+        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
         Bukkit.getServer().getPluginCommand("buy").setExecutor(this);
 
     }
@@ -94,45 +99,59 @@ public class BuyShop implements Listener, CommandExecutor {
 
         Player player = (Player) sender;
 
+        Community community = communityHandler.getPlayerCommunity(player.getUniqueId().toString());
+        double discount = 0;
+        if (community == null || community.getLevel() == 0) {
+            discount = 0;
+        } else if (community.getLevel() == 1) {
+            discount = .05;
+        } else if (community.getLevel() == 2) {
+            discount = .07;
+        } else if (community.getLevel() == 3) {
+            discount = .12;
+        } else if (community.getLevel() == 4) {
+            discount = .15;
+
+        } else if (community.getLevel() == 5) {
+            discount = .20;
+        }
+
+        initializeCarePackages(1 - discount);
         player.sendMessage(Utils.chat("&dCalled care packages, but sometimes the Minecraft gods don't care"));
         openInventory((Player) sender);
 
         return true;
     }
 
-    private void initializeCarePackages() {
+    private void initializeCarePackages(double multiplier) {
+        shop.clear();
         int emptyCount = 1;
         Potion fireRes = new Potion(PotionType.FIRE_RESISTANCE);
         ItemStack fireResPot = fireRes.toItemStack(1);
         ItemMeta fireResPotMeta = fireResPot.getItemMeta();
         fireResPotMeta.setDisplayName(Utils.chat("&4&lFire Resistance"));
-        fireResPotMeta.setLore(Arrays.asList(Utils.chat("&aPrice Per: $" + fireResPrice)));
+        fireResPotMeta.setLore(Arrays.asList(Utils.chat("&aPrice Per: $" + fireResPrice * multiplier)));
         fireResPot.setItemMeta(fireResPotMeta);
 
         Potion nightVision = new Potion(PotionType.NIGHT_VISION);
         ItemStack nightVisionPot = nightVision.toItemStack(1);
         ItemMeta nightVisionPotMeta = nightVisionPot.getItemMeta();
         nightVisionPotMeta.setDisplayName(Utils.chat("&5&lNight Vision"));
-        nightVisionPotMeta.setLore(Arrays.asList(Utils.chat("&aPrice Per: $" + nightVisionPrice)));
+        nightVisionPotMeta.setLore(Arrays.asList(Utils.chat("&aPrice Per: $" + nightVisionPrice * multiplier)));
         nightVisionPot.setItemMeta(nightVisionPotMeta);
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
 
-        shop.addItem(tierOne);
-        new TierOne(plugin, tierOne, bankHandler);
+        shop.addItem(Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier1Cost * multiplier)));
 
-        shop.addItem(tierTwo);
-        new TierTwo(plugin, tierTwo, bankHandler);
+        shop.addItem(Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier2Cost * multiplier)));
 
-        shop.addItem(tierThree);
-        new TierThree(plugin, tierThree, bankHandler);
+        shop.addItem(Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier3Cost * multiplier)));
 
-        shop.addItem(tierFour);
-        new TierFour(plugin, tierFour, bankHandler);
+        shop.addItem(Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier4Cost * multiplier)));
 
-        shop.addItem(tierFive);
-        new TierFive(plugin, tierFive, bankHandler);
+        shop.addItem(Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier5Cost * multiplier)));
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
@@ -141,20 +160,20 @@ public class BuyShop implements Listener, CommandExecutor {
 
         shop.addItem(fireResPot);
         shop.addItem(nightVisionPot);
-        shop.addItem(createGuiItem(Material.MUSIC_DISC_PIGSTEP, Utils.chat("&d&lRandom Music Disc"),Utils.chat("&aPrice Per: $" + musicDiscPrice)));
-        shop.addItem(createGuiItem(Material.SADDLE, Utils.chat("&6&lSaddle"),Utils.chat("&aPrice Per: $" + saddlePrice)));
-        shop.addItem(createGuiItem(Material.NAME_TAG, Utils.chat("&f&lName Tag"),Utils.chat("&aPrice Per: $" + nameTagPrice)));
+        shop.addItem(createGuiItem(Material.MUSIC_DISC_PIGSTEP, Utils.chat("&d&lRandom Music Disc"),Utils.chat("&aPrice Per: $" + musicDiscPrice * multiplier)));
+        shop.addItem(createGuiItem(Material.SADDLE, Utils.chat("&6&lSaddle"),Utils.chat("&aPrice Per: $" + saddlePrice * multiplier)));
+        shop.addItem(createGuiItem(Material.NAME_TAG, Utils.chat("&f&lName Tag"),Utils.chat("&aPrice Per: $" + nameTagPrice * multiplier)));
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
 
-        shop.addItem(createGuiItem(Material.AXOLOTL_SPAWN_EGG, Utils.chat("&f&lAxolatl Spawn Egg"),Utils.chat("&aPrice Per: $" + axolotlPrice)));
-        shop.addItem(createGuiItem(Material.PANDA_SPAWN_EGG, Utils.chat("&b&lPanda Spawn Egg"),Utils.chat("&aPrice Per: $" + pandaPrice)));
-        shop.addItem(Utils.createItem(Material.REDSTONE, Utils.chat("&c&lRedstone Dust"), 64, null, null, Utils.chat("&aPrice Per Stack: $" + redstonePrice)));
-        shop.addItem(createGuiItem(Material.FOX_SPAWN_EGG, Utils.chat("&e&lFox Spawn Egg"),Utils.chat("&aPrice Per Stack: $" + foxPrice)));
-        shop.addItem(createGuiItem(Material.PARROT_SPAWN_EGG, Utils.chat("&a&lParrot Spawn Egg"),Utils.chat("&aPrice Per: $" + parrotPrice)));
+        shop.addItem(createGuiItem(Material.AXOLOTL_SPAWN_EGG, Utils.chat("&f&lAxolatl Spawn Egg"),Utils.chat("&aPrice Per: $" + axolotlPrice * multiplier)));
+        shop.addItem(createGuiItem(Material.PANDA_SPAWN_EGG, Utils.chat("&b&lPanda Spawn Egg"),Utils.chat("&aPrice Per: $" + pandaPrice * multiplier)));
+        shop.addItem(Utils.createItem(Material.REDSTONE, Utils.chat("&c&lRedstone Dust"), 64, null, null, Utils.chat("&aPrice Per Stack: $" + redstonePrice * multiplier)));
+        shop.addItem(createGuiItem(Material.FOX_SPAWN_EGG, Utils.chat("&e&lFox Spawn Egg"),Utils.chat("&aPrice Per Stack: $" + foxPrice * multiplier)));
+        shop.addItem(createGuiItem(Material.PARROT_SPAWN_EGG, Utils.chat("&a&lParrot Spawn Egg"),Utils.chat("&aPrice Per: $" + parrotPrice * multiplier)));
 
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
         shop.addItem(createGuiItem(Material.GRAY_STAINED_GLASS_PANE,Utils.chat("&4&lEmpty " + emptyCount++),""));
@@ -179,6 +198,25 @@ public class BuyShop implements Listener, CommandExecutor {
     }
 
     public void openInventory(HumanEntity entity) {
+
+        Community community = communityHandler.getPlayerCommunity(entity.getUniqueId().toString());
+        double discount = 0;
+        if (community == null || community.getLevel() == 0) {
+            discount = 0;
+        } else if (community.getLevel() == 1) {
+            discount = .05;
+        } else if (community.getLevel() == 2) {
+            discount = .07;
+        } else if (community.getLevel() == 3) {
+            discount = .12;
+        } else if (community.getLevel() == 4) {
+            discount = .15;
+
+        } else if (community.getLevel() == 5) {
+            discount = .20;
+        }
+
+        initializeCarePackages(1 - discount);
         entity.openInventory(shop);
     }
 
@@ -205,102 +243,121 @@ public class BuyShop implements Listener, CommandExecutor {
 
         Player player = (Player) event.getWhoClicked();
         BankAccount bankAccount = bankHandler.getBankAccount(player);
+        Community community = communityHandler.getPlayerCommunity(player.getUniqueId().toString());
+
+        double discount = 0;
+        if (community == null || community.getLevel() == 0) {
+            discount = 0;
+        } else if (community.getLevel() == 1) {
+            discount = .05;
+        } else if (community.getLevel() == 2) {
+            discount = .07;
+        } else if (community.getLevel() == 3) {
+            discount = .12;
+        } else if (community.getLevel() == 4) {
+            discount = .15;
+
+        } else if (community.getLevel() == 5) {
+            discount = .20;
+        }
+
+        double multipler = 1 - discount;
 
         if (clickedItem.getType() == Material.WHITE_WOOL) {
-            if (bankAccount.getBalance() >= tier1Cost) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(tier1Cost);
+            if (bankAccount.getBalance() >= tier1Cost * multipler) {
+                Utils.addItemToInventory(tierOne, player);
+                bankAccount.withdraw(tier1Cost * multipler);
                 return;
             }
 
         } else if (clickedItem.getType() == Material.LIME_WOOL) {
-            if (bankAccount.getBalance() >= tier2Cost) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(tier2Cost);
+            if (bankAccount.getBalance() >= tier2Cost * multipler) {
+                Utils.addItemToInventory(tierTwo, player);
+                bankAccount.withdraw(tier2Cost * multipler);
                 return;
             }
 
         } else if (clickedItem.getType() == Material.LIGHT_BLUE_WOOL) {
-            if (bankAccount.getBalance() >= tier3Cost) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(tier3Cost);
+            if (bankAccount.getBalance() >= tier3Cost * multipler) {
+                Utils.addItemToInventory(tierThree, player);
+                bankAccount.withdraw(tier3Cost * multipler);
                 return;
             }
 
         } else if (clickedItem.getType() == Material.PURPLE_WOOL) {
-            if (bankAccount.getBalance() >= tier4Cost) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(tier4Cost);
+            if (bankAccount.getBalance() >= tier4Cost * multipler) {
+                Utils.addItemToInventory(tierFour, player);
+                bankAccount.withdraw(tier4Cost * multipler);
                 return;
             }
 
         } else if (clickedItem.getType() == Material.ORANGE_WOOL) {
-            if (bankAccount.getBalance() >= tier5Cost) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(tier5Cost);
+            if (bankAccount.getBalance() >= tier5Cost * multipler) {
+                Utils.addItemToInventory(tierFive, player);
+                bankAccount.withdraw(tier5Cost * multipler);
                 return;
             }
         } else if (clickedItem.getItemMeta().getDisplayName().toLowerCase().contains("fire")) {
-            if (bankAccount.getBalance() >= fireResPrice) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(fireResPrice);
+            if (bankAccount.getBalance() >= fireResPrice * multipler) {
+                Utils.addItemToInventory(clickedItem, player);
+                bankAccount.withdraw(fireResPrice * multipler);
                 return;
             }
         } else if (clickedItem.getItemMeta().getDisplayName().toLowerCase().contains("night")) {
-            if (bankAccount.getBalance() >= nightVisionPrice) {
-                player.getInventory().addItem(clickedItem);
-                bankAccount.withdraw(nightVisionPrice);
+            if (bankAccount.getBalance() >= nightVisionPrice * multipler) {
+                Utils.addItemToInventory(clickedItem, player);
+                bankAccount.withdraw(nightVisionPrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.MUSIC_DISC_PIGSTEP) {
-            if (bankAccount.getBalance() >= musicDiscPrice) {
+            if (bankAccount.getBalance() >= musicDiscPrice * multipler) {
                 Material[] discs = {Material.MUSIC_DISC_PIGSTEP, Material.MUSIC_DISC_5, Material.MUSIC_DISC_11, Material.MUSIC_DISC_13, Material.MUSIC_DISC_BLOCKS, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_FAR, Material.MUSIC_DISC_MALL, Material.MUSIC_DISC_MELLOHI, Material.MUSIC_DISC_STAL, Material.MUSIC_DISC_STRAD,Material.MUSIC_DISC_WAIT,Material.MUSIC_DISC_WARD, Material.MUSIC_DISC_OTHERSIDE};
                 int randomIndex = Utils.getRandomNumber(0, discs.length);
 
-                player.getInventory().addItem(new ItemStack(discs[randomIndex]));
-                bankAccount.withdraw(musicDiscPrice);
+                Utils.addItemToInventory(new ItemStack(discs[randomIndex]), player);
+                bankAccount.withdraw(musicDiscPrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.SADDLE) {
-            if (bankAccount.getBalance() >= saddlePrice) {
-                player.getInventory().addItem(new ItemStack(Material.SADDLE));
-                bankAccount.withdraw(saddlePrice);
+            if (bankAccount.getBalance() >= saddlePrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.SADDLE), player);
+                bankAccount.withdraw(saddlePrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.NAME_TAG) {
-            if (bankAccount.getBalance() >= nameTagPrice) {
-                player.getInventory().addItem(new ItemStack(Material.NAME_TAG));
-                bankAccount.withdraw(nameTagPrice);
+            if (bankAccount.getBalance() >= nameTagPrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.NAME_TAG), player);
+                bankAccount.withdraw(nameTagPrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.AXOLOTL_SPAWN_EGG) {
-            if (bankAccount.getBalance() >= axolotlPrice) {
-                player.getInventory().addItem(new ItemStack(Material.AXOLOTL_SPAWN_EGG));
-                bankAccount.withdraw(axolotlPrice);
+            if (bankAccount.getBalance() >= axolotlPrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.AXOLOTL_SPAWN_EGG), player);
+                bankAccount.withdraw(axolotlPrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.PANDA_SPAWN_EGG) {
-            if (bankAccount.getBalance() >= pandaPrice) {
-                player.getInventory().addItem(new ItemStack(Material.PANDA_SPAWN_EGG));
-                bankAccount.withdraw(pandaPrice);
+            if (bankAccount.getBalance() >= pandaPrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.PANDA_SPAWN_EGG), player);
+                bankAccount.withdraw(pandaPrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.REDSTONE) {
-            if (bankAccount.getBalance() >= redstonePrice) {
-                player.getInventory().addItem(new ItemStack(Material.REDSTONE, 64));
-                bankAccount.withdraw(redstonePrice);
+            if (bankAccount.getBalance() >= redstonePrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.REDSTONE, 64), player);
+                bankAccount.withdraw(redstonePrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.FOX_SPAWN_EGG) {
-            if (bankAccount.getBalance() >= foxPrice) {
-                player.getInventory().addItem(new ItemStack(Material.FOX_SPAWN_EGG));
-                bankAccount.withdraw(foxPrice);
+            if (bankAccount.getBalance() >= foxPrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.FOX_SPAWN_EGG), player);
+                bankAccount.withdraw(foxPrice * multipler);
                 return;
             }
         } else if (clickedItem.getType() == Material.PARROT_SPAWN_EGG) {
-            if (bankAccount.getBalance() >= parrotPrice) {
-                player.getInventory().addItem(new ItemStack(Material.PARROT_SPAWN_EGG));
-                bankAccount.withdraw(parrotPrice);
+            if (bankAccount.getBalance() >= parrotPrice * multipler) {
+                Utils.addItemToInventory(new ItemStack(Material.PARROT_SPAWN_EGG), player);
+                bankAccount.withdraw(parrotPrice * multipler);
                 return;
             }
         }
@@ -345,11 +402,25 @@ public class BuyShop implements Listener, CommandExecutor {
     }
 
     private void runTimeoutTimer(Player player) {
+        Community community = communityHandler.getPlayerCommunity(player.getUniqueId().toString());
+        int timer;
+
+        if (community != null) {
+            if (community.getLevel() == 1) {
+                timer = 35;
+            } else if (community.getLevel() >= 2) {
+                timer = 25;
+            } else {
+                timer = 45;
+            }
+        } else {
+            timer = 45;
+        }
         new BukkitRunnable() {
             int count = 0;
             @Override
             public void run() {
-                if (count++ > 30) {
+                if (count++ > timer) {
                     uneligablePlayers.remove(player);
                     this.cancel();
                 }
@@ -371,7 +442,7 @@ public class BuyShop implements Listener, CommandExecutor {
 
         Player player = event.getPlayer();
 
-        if (randomNum > 1980) {
+        if (randomNum > 1985) {
 
             giveRandomCarePackage(player);
         }
@@ -390,11 +461,30 @@ public class BuyShop implements Listener, CommandExecutor {
         if (!(killer instanceof Player)) {
             return;
         }
-        
+
         Random rand = new Random();
         int randomNum = (int) (rand.nextDouble() * 2000);
 
-        if (randomNum > 1980) {
+        if (randomNum > 1500) {
+            Community community = communityHandler.getPlayerCommunity(killer.getUniqueId().toString());
+            BankAccount ba = bankHandler.getBankAccount(killer);
+
+            if (community != null) {
+                int min = 1;
+                int max = 10;
+                if (community.getLevel() == 1) {
+                    max = 25;
+                } else if (community.getLevel() >= 2) {
+                    min = 10;
+                    max = 50;
+                }
+
+                int randNum = Utils.getRandomNumber(min, max);
+                ba.deposit(randNum);
+            }
+        }
+
+        if (randomNum > 1985) {
 
             giveRandomCarePackage(killer);
         }
@@ -404,6 +494,12 @@ public class BuyShop implements Listener, CommandExecutor {
     public void onHarvest(BlockBreakEvent event) {
         Block block = event.getBlock();
         Material[] validCrops = {Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.POTATOES};
+
+        Community community = communityHandler.getPlayerCommunity(event.getPlayer().getUniqueId().toString());
+
+        if (community == null) {
+            return;
+        }
 
         boolean giveChance = false;
         for (Material m : validCrops) {
@@ -431,7 +527,7 @@ public class BuyShop implements Listener, CommandExecutor {
 
         Player player = event.getPlayer();
 
-        if (randomNum > 1980) {
+        if (randomNum > 1985) {
 
             giveRandomCarePackage(player);
         }

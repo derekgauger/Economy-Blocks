@@ -42,25 +42,37 @@ public class GiveMoreCarePackages implements CarePackageEvent {
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;
 
+        int randomAmount = Utils.getRandomNumber(1,5);
+
         if (randomNum > 90) {
-            Utils.addItemToInventory(tierFive, player);
-            player.sendMessage(Utils.chat("&dYou have been given a &6Tier 5 Care Package"));
+            for (int i = 0; i < randomAmount; i++) {
+                Utils.addItemToInventory(tierFive, player);
+            }
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 5 Care Package(s)"));
 
         } else if (randomNum > 75) {
-            Utils.addItemToInventory(tierFour, player);
-            player.sendMessage(Utils.chat("&dYou have been given a &5Tier 4 Care Package"));
+            for (int i = 0; i < randomAmount; i++) {
+                Utils.addItemToInventory(tierFour, player);
+            }
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 4 Care Package(s)"));
 
         } else if (randomNum > 55) {
-            Utils.addItemToInventory(tierThree, player);
-            player.sendMessage(Utils.chat("&dYou have been given a &bTier 3 Care Package"));
+            for (int i = 0; i < randomAmount; i++) {
+                Utils.addItemToInventory(tierThree, player);
+            }
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 3 Care Package(s)"));
 
         } else if (randomNum > 35) {
-            Utils.addItemToInventory(tierTwo, player);
-            player.sendMessage(Utils.chat("&dYou have been given a &aTier 2 Care Package"));
+            for (int i = 0; i < randomAmount; i++) {
+                Utils.addItemToInventory(tierTwo, player);
+            }
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 2 Care Package(s)"));
 
         } else {
-            Utils.addItemToInventory(tierOne, player);
-            player.sendMessage(Utils.chat("&dYou have been given a &fTier 1 Care Package"));
+            for (int i = 0; i < randomAmount; i++) {
+                Utils.addItemToInventory(tierOne, player);
+            }
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 1 Care Package(s)"));
 
         }
     }

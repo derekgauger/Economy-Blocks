@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
@@ -186,7 +187,7 @@ public class Homes implements Listener, CommandExecutor {
                 double x = ph.x;
                 double y = ph.y;
                 double z = ph.z;
-                homesGui.addItem(createGuiItem(materials[homesCount - 1], Utils.chat("&6&lHome " + homesCount), Utils.chat("&aTeleport Price: $" + teleportPrice), Utils.chat("&bWorld: " + getWorldName(UUID.fromString(ph.worldUID))), Utils.chat("&bx: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z))));
+                homesGui.addItem(createGuiItem(materials[homesCount - 1], Utils.chat("&6&lHome " + homesCount), Utils.chat("&aLeft Click: Teleport for $" + teleportPrice), Utils.chat("&aRight Click: Display coordinates for free"), Utils.chat("&bWorld: " + getWorldName(UUID.fromString(ph.worldUID))), Utils.chat("&bx: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z))));
 
             }
         }
@@ -213,7 +214,7 @@ public class Homes implements Listener, CommandExecutor {
             return "Nether";
 
         } else {
-            return "Normal World";
+            return "Overworld";
         }
     }
 
@@ -253,14 +254,21 @@ public class Homes implements Listener, CommandExecutor {
 
         Player player = (Player) event.getWhoClicked();
         BankAccount bankAccount = bankHandler.getBankAccount(player);
+        String clickedHome = clickedItem.getItemMeta().getDisplayName();
+        int homeNumber = Integer.parseInt(String.valueOf(clickedHome.charAt(clickedHome.length() - 1)));
+
+        PlayerHome ph = getPlayerHome(player.getUniqueId().toString(), homeNumber);
+
+        World world = Bukkit.getWorld(UUID.fromString(ph.worldUID));
+
+        ClickType clickType = event.getClick();
+        if (clickType.isRightClick()) {
+            player.sendMessage(Utils.chat("&dWorld: " + getWorldName(world.getUID()) + ", x: " + Utils.format(ph.x) + ", y: " + Utils.format(ph.y) + ", z: " + Utils.format(ph.z)));
+            return;
+        }
 
         if (bankAccount.getBalance() >= teleportPrice) {
-            String clickedHome = clickedItem.getItemMeta().getDisplayName();
-            int homeNumber = Integer.parseInt(String.valueOf(clickedHome.charAt(clickedHome.length() - 1)));
 
-            PlayerHome ph = getPlayerHome(player.getUniqueId().toString(), homeNumber);
-
-            World world = Bukkit.getWorld(UUID.fromString(ph.worldUID));
 
             if (player.getWorld() != world) {
                 player.sendMessage(Utils.chat("&dYou are traveling dimensions!"));

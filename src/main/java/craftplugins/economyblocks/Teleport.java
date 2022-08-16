@@ -48,7 +48,7 @@ public class Teleport implements Listener, CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player)) {
             System.out.println("Only players in game can do that!");
@@ -56,6 +56,33 @@ public class Teleport implements Listener, CommandExecutor {
         }
 
         Player player = (Player) sender;
+
+        if (args.length >= 1) {
+            String username = args[0];
+            if (!removedPlayers.contains(username)) {
+                Player teleportPerson = Bukkit.getPlayer(username);
+
+                if (teleportPerson == null) {
+                    player.sendMessage(Utils.chat("&c'" + args[0] + "' is offline and cannot be teleported to"));
+                    return false;
+                }
+                BankAccount ba = bankHandler.getBankAccount(player);
+
+                if (ba.getBalance() < teleportPrice) {
+                    player.sendMessage(Utils.chat("&cInsufficient funds. Teleport price: $" + Utils.format(teleportPrice)));
+                    return false;
+                }
+
+                player.teleport(teleportPerson);
+                ba.withdraw(teleportPrice);
+
+                return true;
+            } else {
+                player.sendMessage(Utils.chat("&cThat player has /go disabled"));
+                return false;
+            }
+        }
+
 
         if (label.equalsIgnoreCase("godisable")) {
             if (!removedPlayers.contains(player.getUniqueId().toString())) {

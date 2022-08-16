@@ -7,6 +7,7 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -40,7 +41,7 @@ public class TierThree extends CarePackage implements Listener {
         ItemStack item = event.getItemInHand();
         Player player = event.getPlayer();
 
-        if (!item.isSimilar(carePackage)) {
+        if (!item.getItemMeta().getDisplayName().contains("Care Package") || !item.getItemMeta().hasEnchant(Enchantment.MENDING) || item.getType() != carePackage.getType()) {
             return;
         }
 
@@ -50,7 +51,7 @@ public class TierThree extends CarePackage implements Listener {
         if (randDouble >= .80) {
             bad(player, bankHandler);
         } else {
-            good(player, bankHandler);
+            good(player, bankHandler, 3);
             Firework fw = (Firework) block.getWorld().spawnEntity(block.getLocation().add(.5,8.5,.5), EntityType.FIREWORK);
             FireworkMeta fwm = fw.getFireworkMeta();
             fwm.setPower(2);

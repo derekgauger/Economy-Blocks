@@ -40,13 +40,10 @@ public class BankHandler implements Listener, CommandExecutor {
             }
         }
 
-        new BuyShop(plugin, this);
-        new SellShop(plugin, this);
-        new Teleport(plugin, this);
-
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
         Bukkit.getServer().getPluginCommand("send").setExecutor(this);
         Bukkit.getServer().getPluginCommand("balance").setExecutor(this);
+        Bukkit.getServer().getPluginCommand("setbal").setExecutor(this);
     }
 
     private void print_bank(BankAccount ba) {
@@ -96,7 +93,6 @@ public class BankHandler implements Listener, CommandExecutor {
         for (BankAccount ba : bankAccounts) {
             if (ba.uuid.equals(p.getUniqueId().toString())) {
                 ba.setPlayer();
-
             }
         }
     }
@@ -104,11 +100,45 @@ public class BankHandler implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
+        if (!(sender instanceof Player)) {
+            if (label.equalsIgnoreCase("setbal")) {
+
+                try {
+                    String username = args[0];
+                    double amount = Double.parseDouble(args[1]);
+
+                    if (amount < 0) {
+                        System.out.println("Invalid set amount");
+                        return false;
+                    }
+
+                    if (!checkPlayerExists(username)) {
+                        System.out.println("User does not exist");
+                        return false;
+                    }
+
+                    Player p = Bukkit.getPlayer(username);
+                    BankAccount ba = getBankAccount(p);
+                    ba.balance = amount;
+                    p.sendMessage(Utils.chat("&dYour balance has been set to &a$" + Utils.format(amount)));
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid set amount");
+                    return false;
+                }
+            }
+        }
+
         if (label.equalsIgnoreCase("send")) {
             try {
                 String toUsername = args[0];
 
                 double amount = Double.parseDouble(args[1]);
+
+                if (amount < .01) {
+                    sender.sendMessage(Utils.chat("&cYou have to send at least $0.01"));
+                    return false;
+                }
 
                 if (!checkPlayerExists(toUsername)) {
                     sender.sendMessage(Utils.chat("&cUsername: '&4" + toUsername + "&c' not found."));
@@ -133,7 +163,7 @@ public class BankHandler implements Listener, CommandExecutor {
                 }
 
 
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
                 sender.sendMessage(Utils.chat("&cUsage: /send {player} {amount}"));
                 return false;
             }

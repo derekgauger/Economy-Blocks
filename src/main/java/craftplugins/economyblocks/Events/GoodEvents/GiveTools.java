@@ -62,7 +62,7 @@ public class GiveTools implements CarePackageEvent {
                 new GiveItemInfo(NETHERITE_HOE, 10, "a netherite hoe"),
                 new GiveItemInfo(DIAMOND_HOE, 12, "a diamond hoe"),
                 new GiveItemInfo(WOODEN_PICKAXE, 13, "a wooden pickaxe"),
-                new GiveItemInfo(WOODEN_SHOVEL, 13, "a wooden pickaxe"),
+                new GiveItemInfo(WOODEN_SHOVEL, 13, "a wooden shovel"),
                 new GiveItemInfo(new ItemStack[] {fIRON_PICKAXE, fIRON_AXE, fIRON_SHOVEL, fIRON_HOE}, 18, "a full set of iron tools"),
 
         };
