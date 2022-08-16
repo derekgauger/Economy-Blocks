@@ -20,7 +20,6 @@ Community Maintenance Commands:
 - /c create {name} : Creates a community
 - /c delete : Deletes your community
 - /c invite {username} : Invites a user to your community
-- /c join {community name} : Joins a community
 - /c kick {username} : Removes a user from the community
 - /c upgrade : Upgrades your community to the next tier
 - /c sethub : Sets the hub location
@@ -37,6 +36,7 @@ Community Member Commands:
 - /c progress : Displays the current community progress
 
 Community All Users Commands:
+- /c join {community name} : Joins a community
 - /c list : lists all communities on the server
 - /c list invites : lists all the communities that invited you
 - /c perks : lists all perks for all tiers
