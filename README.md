@@ -8,7 +8,7 @@ play together, build communities, and communicate.
 
 The info command is a shortened version of this description.
 
-- /info : Displays the information about the plugin
+- /info : Displays the information about the plugin (unfinished)
 
 **Communities**
 
