@@ -1299,7 +1299,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
                     Utils.addItemToInventory(new ItemStack(Material.DIAMOND_BLOCK, 1), player);
 
                 }
-
+                
                 if (community.getLevel() >= 4) {
                     Utils.addItemToInventory(new ItemStack(Material.NETHERITE_SCRAP, 1), player);
 
