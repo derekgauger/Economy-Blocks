@@ -31,7 +31,6 @@ Community Member Commands:
 - /hub display : Displays info about community hub location
 - /c leave : Leaves the community
 - /c info : Displays info about the community
-- /c shop : Opens the community shop
 - /c fund {amount} : Adds money to the upgrade pool
 - /c progress : Displays the current community progress
 
