@@ -19,19 +19,19 @@ public class GiveMoreCarePackages implements CarePackageEvent {
     static final double tier5Cost = 16000;
 
     // 30%
-    ItemStack tierOne = Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier1Cost));
+    ItemStack tierOne = Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
     // 25%
-    ItemStack tierTwo = Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier2Cost));
+    ItemStack tierTwo = Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
     // 20%
-    ItemStack tierThree = Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier3Cost));
+    ItemStack tierThree = Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
     // 15%
-    ItemStack tierFour = Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier4Cost));
+    ItemStack tierFour = Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
     // 10%
-    ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1}, Utils.chat("&aCost: $" + tier5Cost));
+    ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
 
     @Override
@@ -42,7 +42,7 @@ public class GiveMoreCarePackages implements CarePackageEvent {
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;
 
-        int randomAmount = Utils.getRandomNumber(1,5);
+        int randomAmount = Utils.getRandomNumber(1,3);
 
         if (randomNum > 90) {
             for (int i = 0; i < randomAmount; i++) {
@@ -54,25 +54,25 @@ public class GiveMoreCarePackages implements CarePackageEvent {
             for (int i = 0; i < randomAmount; i++) {
                 Utils.addItemToInventory(tierFour, player);
             }
-            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 4 Care Package(s)"));
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &5Tier 4 Care Package(s)"));
 
-        } else if (randomNum > 55) {
+        } else if (randomNum > 60) {
             for (int i = 0; i < randomAmount; i++) {
                 Utils.addItemToInventory(tierThree, player);
             }
-            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 3 Care Package(s)"));
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &bTier 3 Care Package(s)"));
 
         } else if (randomNum > 35) {
             for (int i = 0; i < randomAmount; i++) {
                 Utils.addItemToInventory(tierTwo, player);
             }
-            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 2 Care Package(s)"));
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &aTier 2 Care Package(s)"));
 
         } else {
             for (int i = 0; i < randomAmount; i++) {
                 Utils.addItemToInventory(tierOne, player);
             }
-            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &6Tier 1 Care Package(s)"));
+            player.sendMessage(Utils.chat("&dYou have been given " + randomAmount + " &fTier 1 Care Package(s)"));
 
         }
     }

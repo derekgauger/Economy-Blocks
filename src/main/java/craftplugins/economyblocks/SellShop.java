@@ -41,10 +41,10 @@ public class SellShop implements Listener, CommandExecutor {
     double quartzPrice = 3;
     double coalPrice = 5;
     double lapisPrice = 6;
-    double copperPrice = 8;
+    double copperPrice = 25;
     double emeraldPrice = 30;
-    double ironIngotPrice = 50;
-    double goldIngotPrice = 55;
+    double ironIngotPrice = 75;
+    double goldIngotPrice = 100;
     double diamondPrice = 500;
     double netheriteScrapPrice = 8000;
 

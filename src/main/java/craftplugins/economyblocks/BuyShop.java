@@ -375,6 +375,17 @@ public class BuyShop implements Listener, CommandExecutor {
         Random rand = new Random();
         double randomNum = rand.nextDouble() * 100;
 
+        ItemStack tierOne = Utils.createItem(Material.WHITE_WOOL, Utils.chat("&f&lCare Package Tier 1"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
+
+        ItemStack tierTwo = Utils.createItem(Material.LIME_WOOL,Utils.chat("&a&lCare Package Tier 2"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
+
+        ItemStack tierThree = Utils.createItem(Material.LIGHT_BLUE_WOOL,Utils.chat("&b&lCare Package Tier 3"),1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
+
+        ItemStack tierFour = Utils.createItem(Material.PURPLE_WOOL,Utils.chat("&5&lCare Package Tier 4"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
+
+        ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
+
+
         if (randomNum > 90) {
             Utils.addItemToInventory(tierFive, player);
             Bukkit.broadcastMessage(Utils.chat("&d" + player.getDisplayName() + " has received a free " + tierFive.getItemMeta().getDisplayName() + "&d!"));

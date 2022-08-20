@@ -22,7 +22,7 @@ public class ChangeBlocksToOres implements CarePackageEvent {
     public void runEvent(Player player, BankHandler bankHandler) {
 
         System.out.println(player.getName() + " has opened a care package : " + this.getClass().getSimpleName());
-        blocks = Utils.getBlocks(player.getLocation().getBlock(), 3);
+        blocks = Utils.getBlocks(player.getLocation().getBlock(), 2);
 
         for (Block block : blocks) {
             blockDatas.add(block.getBlockData());

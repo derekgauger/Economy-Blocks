@@ -49,6 +49,8 @@ commands:
 
   community:
     description: Community commands
+    aliases:
+      - c
 
   fbs:
     description: Open the Fill Block Shop menu

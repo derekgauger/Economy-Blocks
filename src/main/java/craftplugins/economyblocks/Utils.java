@@ -48,8 +48,13 @@ public class Utils implements Listener {
             if (event.getEntity().getCustomName() != null) {
                 if (event.getEntity().getCustomName().contains("Community Cow")) {
                     ((Cow) event.getEntity()).setHealth(2047.9);
-                    return;
                 }
+            }
+        }
+
+        if (event.getEntity().getCustomName() !=  null && !event.getEntity().getCustomName().equalsIgnoreCase("")) {
+            if (!event.getEntity().getCustomName().contains("❤")) {
+                return;
             }
         }
 

@@ -236,7 +236,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
         } else if (cmd.equalsIgnoreCase("info")) {
             handleInfo(player, uuid);
 
-        } else if (cmd.equalsIgnoreCase("contribute")) {
+        } else if (cmd.equalsIgnoreCase("fund")) {
             handleContribute(player, uuid, args);
 
         } else if (cmd.equalsIgnoreCase("kick")) {
@@ -657,7 +657,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
         }
 
         if (args.length < 2) {
-            player.sendMessage(Utils.chat("&cUsage: /community contribute {amount}"));
+            player.sendMessage(Utils.chat("&cUsage: /community fund {amount}"));
             return;
         }
 
@@ -1204,6 +1204,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
         Community com = new Community(uuid,communityName,0, tierGoals[0]);
 
         communities.add(com);
+        ba.withdraw(communityCreationPrice);
         automatedDrops(player);
         Bukkit.broadcastMessage(Utils.chat("&dCommunity named &5'" + com.getName() + "'&d has been created"));
     }
@@ -1299,7 +1300,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
                     Utils.addItemToInventory(new ItemStack(Material.DIAMOND_BLOCK, 1), player);
 
                 }
-                
+
                 if (community.getLevel() >= 4) {
                     Utils.addItemToInventory(new ItemStack(Material.NETHERITE_SCRAP, 1), player);
 
@@ -1314,6 +1315,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
                 }
 
                 player.updateInventory();
+                player.sendMessage(Utils.chat("&dYou have been given your reoccurring community rewards"));
 
             }
         }.runTaskTimer(plugin, 20 * 60 * 30, 20 * 60 * 30);
