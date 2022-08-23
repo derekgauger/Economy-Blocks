@@ -8,7 +8,7 @@ play together, build communities, and communicate.
 
 The info command is a shortened version of this description.
 
-- /info : Displays the information about the plugin (unfinished)
+- /info : Displays the information about the plugin
 
 **Communities**
 
@@ -25,6 +25,8 @@ Community Maintenance Commands:
 - /c sethub : Sets the hub location
 - /c promote {username} : Gives user admin permissions
 - /c demote {username} : Removes user's admin permissions
+- /c primary {color code} : Changes the community's primary color
+- /c secondary {color code} : Changes the communty's secondary color
 
 Community Member Commands: 
 - /hub : Teleports to community hub
@@ -74,7 +76,6 @@ This plugin has a very basic implementation of an economy.
 - /send {username} {amount} : Transfers money from your bank account to another player's bank account
 - /bal : Checks your bank account balance
 - /bal {username} : Checks another player's bank account balance
-- /setbal {username} {amount} : Allows console to set a player's bank account balance
 
 **Teleport Menu:**
 
@@ -92,3 +93,17 @@ The homes menu is a GUI that allows the user to display coordinates and teleport
 - /sethome : Adds a new home location
 - /sethome {home number}: Replaces an existing home location
 - /homes : Open the menu for displaying currently set homes
+
+**Colors and Nicknames**
+
+These commands are for spicing up chat a bit. It'll allow a little bit more color to be included.
+
+- /colors : Displays all color codes
+- /nick {new name} : Changes your chat display name
+
+**Console only commands**
+
+These are commands that only the console can do without affecting more than the specified player.
+
+- /setbal {username} {amount} : Allows console to set a player's bank account balance
+- /send {username} {amount} : Sends a player the amount of money specified, but console wont remove money from anyone.
