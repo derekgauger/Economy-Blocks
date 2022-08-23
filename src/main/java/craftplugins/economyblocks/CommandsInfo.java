@@ -68,6 +68,8 @@ public class CommandsInfo implements Listener, CommandExecutor {
                 player.sendMessage(Utils.chat("&d - &a/c sethub &d: Sets community hub"));
                 player.sendMessage(Utils.chat("&d - &a/c promote {username} &d: Promotes a member"));
                 player.sendMessage(Utils.chat("&d - &a/c demote {username} &d: Demotes a member"));
+                player.sendMessage(Utils.chat("&d - &a/c primary {color code} &d: Changes the primary color"));
+                player.sendMessage(Utils.chat("&d - &a/c secondary {color code} &d: Changes the secondary color"));
                 player.sendMessage(Utils.chat("&d-----------------------------------"));
                 player.sendMessage(Utils.chat("&aCommunity Mmeber Commands"));
                 player.sendMessage(Utils.chat("&d-----------------------------------"));
@@ -133,6 +135,12 @@ public class CommandsInfo implements Listener, CommandExecutor {
                 player.sendMessage(Utils.chat("&aTier 3 &d: 80% chance of a good event - Executes 2 good events"));
                 player.sendMessage(Utils.chat("&aTier 4 &d: 95% chance of a good event - Executes 2 good events"));
                 player.sendMessage(Utils.chat("&aTier 5 &d: 100% chance of a good event - Executes 3 good events"));
+            } else if (cmd.equalsIgnoreCase("names")) {
+                player.sendMessage(Utils.chat("&d-----------------------------------"));
+                player.sendMessage(Utils.chat("&aNames and Colors"));
+                player.sendMessage(Utils.chat("&d-----------------------------------"));
+                player.sendMessage(Utils.chat("&d - &a/colors &d: Lists all the possible color codes for chatting"));
+                player.sendMessage(Utils.chat("&d - &a/nick {nickname} &d: Makes a nickname for you"));
             } else {
                 player.sendMessage(Utils.chat("&cInvalid command check /info for usages"));
                 return false;

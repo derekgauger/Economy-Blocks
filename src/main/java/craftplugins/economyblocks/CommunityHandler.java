@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.zip.GZIPInputStream;
@@ -39,8 +40,8 @@ public class CommunityHandler implements CommandExecutor, Listener {
     double[] tierGoals = {100000, 250000, 500000, 1000000, 2000000};
     String[] tierZeroPerks = {"Ability to earn random care packages from harvesting crops", "Ability to earn random care packages from killing mobs", "Ability to kill mobs for $1-10", "1 cooked beef every 30 minutes"};
     String[] tierOnePerks = {"Ability to kill mobs for $1-25", "Reduce random care package wait time by 10 seconds", "Reduce buy shop prices by 5%", "Increase sell shop prices by 5%", "Give all online community members 5 tier 1 care packages", "Add 1 heart to player maximum health", "$2500 every 30 minutes", "And all previous perks"};
-    String[] tierTwoPerks = {"Ability to kill mobs for $10-50", "Reduce random care package wait time by 10 seconds", "Reduce buy shop prices by 7%", "Increase sell shop prices by 7%", "Gives all online community members 32 iron, gold, lapis, and copper blocks", "Give all online community members 5 tier 2 care packages", "Add 1 heart to player maximum health", "A wither skeleton skull every 30 minutes", "And all previous perks"};
-    String[] tierThreePerks = {"Reduce buy shop prices by 12%", "Increase sell shop prices by 12%", "Give all online community members 4 mending books", "Give all online community members 64 diamonds", "All online community members receive 5 tier 3 care packages", "Add 1 heart to player maximum health", "A diamond block every 30 minutes", "And all previous perks"};
+    String[] tierTwoPerks = {"Ability to kill mobs for $10-50", "Reduce random care package wait time by 10 seconds", "Reduce buy shop prices by 7%", "Increase sell shop prices by 7%", "Gives all online community members 32 iron, gold, lapis, and copper blocks", "Give all online community members 5 tier 2 care packages", "Add 1 heart to player maximum health", "Another $2500 every 30 minutes", "And all previous perks"};
+    String[] tierThreePerks = {"Reduce buy shop prices by 12%", "Increase sell shop prices by 12%", "Give all online community members 4 mending books", "Give all online community members 64 diamonds", "Give all online community members a wither skeleton skull","All online community members receive 5 tier 3 care packages", "Add 1 heart to player maximum health", "A diamond block every 30 minutes", "And all previous perks"};
     String[] tierFourPerks = {"Reduce buy shop prices by 15%", "Increase sell shop prices by 15%", "Give all online community members 45 experience levels", "Give all online community members a shulker box", "Spawn a community cow with 10,000 health", "All online community members receive 5 tier 4 care packages", "Add 1 heart to player maximum health", "A netherite scrap every 30 minutes", "And all previous perks"};
     String[] tierFivePerks = {"Reduce buy shop prices by 20%", "Increase sell shop prices by 20%", "Give all online community members 75 experience levels", "Give all online community members 1 netherite block", "Give community owner a dragon egg", "Give all online community members a totem of undying", "Give all online community members 5 tier 5 care packages", "Add 1 heart to player maximum health", "A random enchanted book every 30 minutes", "And all previous perks"};
 
@@ -58,9 +59,9 @@ public class CommunityHandler implements CommandExecutor, Listener {
     ItemStack tierFive = Utils.createItem(Material.ORANGE_WOOL,Utils.chat("&6&lCare Package Tier 5"), 1, new Enchantment[]{Enchantment.MENDING}, new int[]{1});
 
     Material[] materials = {Material.GRASS_BLOCK, Material.STONE, Material.COBBLESTONE, Material.GRANITE,
-            Material.ANDESITE, Material.DIORITE, Material.CALCITE, Material.BASALT, Material. DEEPSLATE,
-            Material.BLACKSTONE, Material.GRAVEL, Material.SAND, Material.SANDSTONE, Material.BRICKS,
-            Material.NETHER_BRICK, Material.NETHERRACK, Material.GLOWSTONE, Material.SEA_LANTERN, Material.RED_DYE,
+            Material.ICE, Material.DIORITE, Material.CALCITE, Material.BASALT, Material. DEEPSLATE,
+            Material.BLACKSTONE, Material.GRAVEL, Material.SAND, Material.SNOW_BLOCK, Material.BRICKS,
+            Material.NETHER_BRICKS, Material.NETHERRACK, Material.GLOWSTONE, Material.SEA_LANTERN, Material.RED_DYE,
             Material.ORANGE_DYE, Material.YELLOW_DYE, Material.GREEN_DYE, Material.BLUE_DYE, Material.MAGENTA_DYE,
             Material.PURPLE_DYE, Material.WHITE_DYE, Material.BLACK_DYE};
 
@@ -68,24 +69,27 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
     Enchantment[] enchants = {
             Enchantment.MENDING, Enchantment.DURABILITY, Enchantment.WATER_WORKER, Enchantment.BINDING_CURSE, Enchantment.DEPTH_STRIDER,
-            Enchantment.PROTECTION_FALL, Enchantment.FROST_WALKER, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.OXYGEN, Enchantment.THORNS,
+            Enchantment.PROTECTION_FALL, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.OXYGEN, Enchantment.THORNS,
             Enchantment.SOUL_SPEED, Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS, Enchantment.IMPALING, Enchantment.KNOCKBACK,
             Enchantment.DAMAGE_ALL, Enchantment.SWEEPING_EDGE, Enchantment.CHANNELING, Enchantment.RIPTIDE, Enchantment.LOYALTY,
             Enchantment.ARROW_INFINITE, Enchantment.ARROW_FIRE, Enchantment.ARROW_DAMAGE, Enchantment.ARROW_KNOCKBACK, Enchantment.DIG_SPEED,
-            Enchantment.SILK_TOUCH, Enchantment.LOOT_BONUS_BLOCKS
+            Enchantment.DIG_SPEED, Enchantment.SILK_TOUCH, Enchantment.LOOT_BONUS_BLOCKS
     };
+
+    double[] bookPrices = {100000, 25000, 35000, 75000, 50000, 65000, 85000, 50000, 65000, 25000, 50000, 60000, 45000, 40000, 85000, 75000, 60000, 60000, 50000, 75000, 60000, 65000, 30000, 90000, 420000, 85000, 80000};
+
+    String[] colorCodes = {"&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9", "&a", "&b", "&c", "&d", "&e", "&f"};
 
     int[] levels = {
             1, 3, 1, 1, 3,
-            4, 2, 4, 3, 3,
+            4, 4, 3, 3,
             3, 2, 3, 5, 2,
             5, 3, 1, 3, 3,
             1, 1, 5, 2, 5,
-            1, 3
+            8, 1, 3
     };
 
     double setHubPrice = 5000;
-    double bookPrice = 50000;
     double communityCreationPrice = 25000;
     double communityJoinPrice = 2500;
 
@@ -180,6 +184,10 @@ public class CommunityHandler implements CommandExecutor, Listener {
         return false;
     }
 
+    public String getCommunityName(Community community) {
+        return community.getSecondaryColor() + "<" + community.getPrimaryColor() + community.getName() + community.getSecondaryColor() + ">";
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -266,12 +274,96 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
             openBookInventory(player);
 
+        } else if (cmd.equalsIgnoreCase("primary")) {
+            handlePrimary(player, uuid, args);
+
+        } else if (cmd.equalsIgnoreCase("secondary")) {
+            handleSecondary(player, uuid, args);
+
         } else {
             player.sendMessage(Utils.chat("&cDo /info to get more information on communities"));
             return false;
         }
 
         return true;
+    }
+
+    private void handlePrimary(Player player, String uuid, String[] args) {
+        Community community = getPlayerCommunity(uuid);
+
+        if (community == null) {
+            player.sendMessage(Utils.chat("&cYou are not in a community"));
+            return;
+        }
+
+        if (!playerIsAdmin(community, uuid)) {
+            player.sendMessage(Utils.chat("&cYou need to have admin permissions to do this command"));
+            return;
+        }
+
+        if (args.length < 2) {
+            player.sendMessage(Utils.chat("&cUsage: /community primary {color code}"));
+            return;
+        }
+
+        String colorCode = args[1];
+
+        if (colorCode.equalsIgnoreCase("&k")) {
+            player.sendMessage(Utils.chat("&cCannot use ") + "&k" + Utils.chat(" for this action"));
+            return;
+        }
+
+        if (!Arrays.asList(colorCodes).contains(colorCode)) {
+            player.sendMessage(Utils.chat("&cInvalid color code. Try /colors - Cannot be a formatter either"));
+            return;
+        }
+
+        community.setPrimaryColor(colorCode);
+        for (String id : community.uuids) {
+            Player p = Bukkit.getPlayer(UUID.fromString(id));
+            if (p != null) {
+                p.sendMessage(Utils.chat("&dYour new community name style is: " + getCommunityName(community)));
+            }
+        }
+    }
+
+    private void handleSecondary(Player player, String uuid, String[] args) {
+        Community community = getPlayerCommunity(uuid);
+
+        if (community == null) {
+            player.sendMessage(Utils.chat("&cYou are not in a community"));
+            return;
+        }
+
+        if (!playerIsAdmin(community, uuid)) {
+            player.sendMessage(Utils.chat("&cYou need to have admin permissions to do this command"));
+            return;
+        }
+
+        if (args.length < 2) {
+            player.sendMessage(Utils.chat("&cUsage: /community primary {color code}"));
+            return;
+        }
+
+        String colorCode = args[1];
+
+        if (colorCode.equalsIgnoreCase("&k")) {
+            player.sendMessage(Utils.chat("&cCannot use ") + "&k" + Utils.chat(" for this action"));
+            return;
+        }
+
+        if (!Arrays.asList(colorCodes).contains(colorCode)) {
+            player.sendMessage(Utils.chat("&cInvalid color code. Try /colors - Cannot be a formatter either"));
+            return;
+        }
+
+        community.setSecondaryColor(colorCode);
+        for (String id : community.uuids) {
+            Player p = Bukkit.getPlayer(UUID.fromString(id));
+            if (p != null) {
+                p.sendMessage(Utils.chat("&dYour new community name style is: " + getCommunityName(community)));
+            }
+        }
     }
 
     private void initializeBuildShop(double multiplier) {
@@ -286,7 +378,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
         bookShop.clear();
 
         for (int i = 0; i < enchants.length; i++) {
-            bookShop.addItem(Utils.createItem(Material.ENCHANTED_BOOK, "",1, new Enchantment[] {enchants[i]}, new int[] {levels[i]}, Utils.chat("&aPrice Per: $" + Utils.format(bookPrice * multiplier))));
+            bookShop.addItem(Utils.createItem(Material.ENCHANTED_BOOK, "",1, new Enchantment[] {enchants[i]}, new int[] {levels[i]}, Utils.chat("&aPrice Per: $" + Utils.format(bookPrices[i] * multiplier))));
         }
     }
 
@@ -365,7 +457,11 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
         ItemStack clickedItem = event.getCurrentItem();
 
-        if (clickedItem == null || clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
+        if (!event.getInventory().contains(clickedItem)) {
+            return;
+        }
+
+        if (clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
             return;
         }
 
@@ -436,7 +532,11 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
         ItemStack clickedItem = event.getCurrentItem();
 
-        if (clickedItem == null || clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
+        if (!event.getInventory().contains(clickedItem)) {
+            return;
+        }
+
+        if (clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
             return;
         }
 
@@ -462,11 +562,20 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
         double multipler = 1 - discount;
 
+        double bookPrice = 0;
+        for (int i = 0; i < event.getInventory().getSize(); i++) {
+            ItemStack item = event.getInventory().getItem(i);
+            if (item.isSimilar(clickedItem)) {
+                bookPrice = bookPrices[i];
+                break;
+            }
+        }
+
         if (bankAccount.getBalance() < bookPrice * multipler) {
             player.sendMessage(Utils.chat("&cInsufficient Funds"));
             return;
         }
-
+        System.out.println(bookPrice);
         Utils.addItemToInventory(clickedItem, player);
         bankAccount.withdraw(bookPrice * multipler);
 
@@ -804,7 +913,9 @@ public class CommunityHandler implements CommandExecutor, Listener {
             }
         }
 
-        EntityType[] mobs = {EntityType.WITHER_SKELETON, EntityType.CREEPER, EntityType.VEX, EntityType.VINDICATOR, EntityType.ILLUSIONER, EntityType.ENDERMAN, EntityType.WITCH};
+        EntityType[] mobs = {EntityType.RAVAGER, EntityType.WITHER_SKELETON, EntityType.VEX, EntityType.VINDICATOR, EntityType.ILLUSIONER, EntityType.ENDERMAN, EntityType.WITCH};
+
+        boolean ravagerSpawned = false;
 
         for (Location location : locations) {
             int randomNum = Utils.getRandomNumber(0, 100);
@@ -812,8 +923,17 @@ public class CommunityHandler implements CommandExecutor, Listener {
                 continue;
             }
 
+
             randomNum = Utils.getRandomNumber(0, mobs.length);
+            if (ravagerSpawned) {
+                randomNum = Utils.getRandomNumber(1, mobs.length);
+            }
+
             EntityType randomEntity = mobs[randomNum];
+
+            if (randomEntity == EntityType.RAVAGER) {
+                ravagerSpawned = true;
+            }
 
             locations.get(0).getWorld().spawnEntity(location, randomEntity);
 
@@ -853,12 +973,14 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
                     }
 
+                    ItemStack witherSkull = Utils.createItem(Material.WITHER_SKELETON_SKULL, "", 1, null, null);
                     ItemStack mending = Utils.createItem(Material.ENCHANTED_BOOK, "", 1, new Enchantment[] {Enchantment.MENDING}, new int[] {1});
                     ItemStack diamonds = Utils.createItem(Material.DIAMOND, "", 64, null, null);
 
                     for (int i = 0; i < 4; i++) {
                         Utils.addItemToInventory(mending, player);
                     }
+                    Utils.addItemToInventory(witherSkull, player);
                     Utils.addItemToInventory(diamonds, player);
 
                 } else if (community.getLevel() == 4) {
@@ -982,7 +1104,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
         for (String id : community.uuids) {
             Player p = Bukkit.getPlayer(UUID.fromString(id));
             if (p != null) {
-                p.sendMessage(Utils.chat("&dYour community hub has been set to x: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z) + " in the " + getWorldName(UUID.fromString(worldID)) + " dimension"));
+                p.sendMessage(Utils.chat("&dYour community hub has been set to x: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z) + " in the " + Utils.getWorldName(UUID.fromString(worldID)) + " dimension"));
             }
         }
     }
@@ -1070,7 +1192,7 @@ public class CommunityHandler implements CommandExecutor, Listener {
             String cmdParameter = args[0];
 
             if (cmdParameter.equalsIgnoreCase("display")) {
-                player.sendMessage(Utils.chat("&dYour community hub is set to x: " + Utils.format(playerCommunity.x) + ", y: " + Utils.format(playerCommunity.y) + ", z: " + Utils.format(playerCommunity.z) + " in the " + getWorldName(UUID.fromString(playerCommunity.worldUUID)) + " dimension"));
+                player.sendMessage(Utils.chat("&dYour community hub is set to x: " + Utils.format(playerCommunity.x) + ", y: " + Utils.format(playerCommunity.y) + ", z: " + Utils.format(playerCommunity.z) + " in the " + Utils.getWorldName(UUID.fromString(playerCommunity.worldUUID)) + " dimension"));
             } else {
                 player.sendMessage(Utils.chat("&cInvalid command '/hub " + args[0] + "' try /hub display"));
             }
@@ -1196,6 +1318,11 @@ public class CommunityHandler implements CommandExecutor, Listener {
 
         String communityName = args[1];
 
+        if (communityName.length() > 32) {
+            player.sendMessage(Utils.chat("&cCommunity name cannot be longer than 32 characters"));
+            return;
+        }
+
         if (checkCommunityNameExists(communityName)) {
             player.sendMessage(Utils.chat("&c'" + communityName + "' already exists"));
             return;
@@ -1233,21 +1360,6 @@ public class CommunityHandler implements CommandExecutor, Listener {
         }
     }
 
-    private String getWorldName(UUID UID) {
-        World world = Bukkit.getWorld(UID);
-        String worldType = world.getName();
-
-        if (worldType.contains("end")) {
-            return "End";
-
-        } else if (worldType.contains("nether")) {
-            return "Nether";
-
-        } else {
-            return "Overworld";
-        }
-    }
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -1269,8 +1381,10 @@ public class CommunityHandler implements CommandExecutor, Listener {
     public void automatedDrops(Player player) {
 
         new BukkitRunnable() {
+            int count = 0;
             @Override
             public void run() {
+                count++;
                 Community community = getPlayerCommunity(player.getUniqueId().toString());
                 if (community == null) {
                     this.cancel();
@@ -1281,44 +1395,46 @@ public class CommunityHandler implements CommandExecutor, Listener {
                     this.cancel();
                     return;
                 }
-                if (community.getLevel() >= 0) {
-                    Utils.addItemToInventory(new ItemStack(Material.COOKED_BEEF, 1), player);
+
+                if (count % (60 * 30) == 0) {
+
+                    if (community.getLevel() >= 0) {
+                        Utils.addItemToInventory(new ItemStack(Material.COOKED_BEEF, 1), player);
+                    }
+
+                    if (community.getLevel() >= 1) {
+                        BankAccount ba = bankHandler.getBankAccount(player);
+                        if (community.getLevel() == 1) {
+                            ba.deposit(2500);
+                        } else if (community.getLevel() >= 2) {
+                            ba.deposit(5000);
+                        }
+
+                    }
+
+                    if (community.getLevel() >= 3) {
+                        Utils.addItemToInventory(new ItemStack(Material.DIAMOND_BLOCK, 1), player);
+
+                    }
+
+                    if (community.getLevel() >= 4) {
+                        Utils.addItemToInventory(new ItemStack(Material.NETHERITE_SCRAP, 1), player);
+
+                    }
+
+                    if (community.getLevel() >= 5) {
+                        int randomIndex = Utils.getRandomNumber(0, enchants.length);
+
+                        ItemStack book = Utils.createItem(Material.ENCHANTED_BOOK, "", 1, new Enchantment[]{enchants[randomIndex]}, new int[]{levels[randomIndex]});
+                        Utils.addItemToInventory(book, player);
+
+                    }
+
+                    player.updateInventory();
+                    player.sendMessage(Utils.chat("&dYou have been given your reoccurring community rewards"));
                 }
-
-                if (community.getLevel() >= 1) {
-                    BankAccount ba = bankHandler.getBankAccount(player);
-                    ba.deposit(2500);
-
-                }
-
-                if (community.getLevel() >= 2) {
-                    Utils.addItemToInventory(new ItemStack(Material.WITHER_SKELETON_SKULL, 1), player);
-
-                }
-
-                if (community.getLevel() >= 3) {
-                    Utils.addItemToInventory(new ItemStack(Material.DIAMOND_BLOCK, 1), player);
-
-                }
-
-                if (community.getLevel() >= 4) {
-                    Utils.addItemToInventory(new ItemStack(Material.NETHERITE_SCRAP, 1), player);
-
-                }
-
-                if (community.getLevel() >= 5) {
-                    int randomIndex = Utils.getRandomNumber(0, enchants.length);
-
-                    ItemStack book = Utils.createItem(Material.ENCHANTED_BOOK, "", 1, new Enchantment[] {enchants[randomIndex]}, new int[] {levels[randomIndex]});
-                    Utils.addItemToInventory(book, player);
-
-                }
-
-                player.updateInventory();
-                player.sendMessage(Utils.chat("&dYou have been given your reoccurring community rewards"));
-
             }
-        }.runTaskTimer(plugin, 20 * 60 * 30, 20 * 60 * 30);
+        }.runTaskTimer(plugin, 20, 20);
 
     }
 }

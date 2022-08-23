@@ -22,6 +22,8 @@ public class Community implements Serializable {
     double progress;
     double goal;
     List<String> playerNames = new ArrayList<>();
+    String primaryColor = "&f";
+    String secondaryColor = "&f";
 
     List<String> admins = new ArrayList<>();
     List<String> adminNames = new ArrayList<>();
@@ -38,6 +40,22 @@ public class Community implements Serializable {
         admins.add(ownerUUID);
         adminNames.add(ownerName);
 
+    }
+
+    public void setPrimaryColor(String color) {
+        primaryColor = color;
+    }
+
+    public void setSecondaryColor(String color) {
+        secondaryColor = color;
+    }
+
+    public String getPrimaryColor() {
+        return primaryColor;
+    }
+
+    public String getSecondaryColor() {
+        return secondaryColor;
     }
 
     public double getGoal() {

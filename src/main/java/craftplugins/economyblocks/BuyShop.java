@@ -237,7 +237,11 @@ public class BuyShop implements Listener, CommandExecutor {
 
         ItemStack clickedItem = event.getCurrentItem();
 
-        if (clickedItem == null || clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
+        if (!event.getInventory().contains(clickedItem)) {
+            return;
+        }
+
+        if (clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
             return;
         }
 
@@ -414,24 +418,21 @@ public class BuyShop implements Listener, CommandExecutor {
 
     private void runTimeoutTimer(Player player) {
         Community community = communityHandler.getPlayerCommunity(player.getUniqueId().toString());
-        int timer;
+        int timer = 60;
 
         if (community != null) {
             if (community.getLevel() == 1) {
-                timer = 35;
+                timer -= 10;
             } else if (community.getLevel() >= 2) {
-                timer = 25;
-            } else {
-                timer = 45;
+                timer -= 10;
             }
-        } else {
-            timer = 45;
         }
+        int finalTimer = timer;
         new BukkitRunnable() {
             int count = 0;
             @Override
             public void run() {
-                if (count++ > timer) {
+                if (count++ > finalTimer) {
                     uneligablePlayers.remove(player);
                     this.cancel();
                 }

@@ -219,7 +219,11 @@ public class SellShop implements Listener, CommandExecutor {
 
         ItemStack clickedItem = event.getCurrentItem();
 
-        if (clickedItem == null || clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
+        if (!event.getInventory().contains(clickedItem)) {
+            return;
+        }
+
+        if (clickedItem.getType() == Material.AIR || clickedItem.getType() == Material.GRAY_STAINED_GLASS_PANE) {
             return;
         }
 

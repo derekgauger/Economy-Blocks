@@ -8,6 +8,7 @@ public final class EconomyBlocks extends JavaPlugin {
     BankHandler bankHandler;
     Homes home;
     CommunityHandler communityHandler;
+    Nicknames nicknames;
 
     @Override
     public void onEnable() {
@@ -15,11 +16,13 @@ public final class EconomyBlocks extends JavaPlugin {
         bankHandler = new BankHandler(this);
         home = new Homes(this, bankHandler);
         communityHandler = new CommunityHandler(this, bankHandler);
+        nicknames = new Nicknames(this);
 
         new Shops(this, bankHandler, communityHandler);
         new Teleport(this, bankHandler);
-        new Utils(this);
+        new Utils(this, communityHandler, nicknames);
         new CommandsInfo(this);
+        new ColorsCommand(this);
 
         new BukkitRunnable() {
             @Override
@@ -40,6 +43,7 @@ public final class EconomyBlocks extends JavaPlugin {
         bankHandler.saveData("bank.data");
         home.saveData("homes.data");
         communityHandler.saveData("communities.data");
-        System.out.println("Saved bank accounts, homes, and communities to the bank.data, homes.data, and communities.data files");
+        nicknames.saveData("nicknames.data");
+        System.out.println("Saved information to the bank.data, homes.data, nicknames.data and communities.data files");
     }
 }

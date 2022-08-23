@@ -187,7 +187,7 @@ public class Homes implements Listener, CommandExecutor {
                 double x = ph.x;
                 double y = ph.y;
                 double z = ph.z;
-                homesGui.addItem(createGuiItem(materials[homesCount - 1], Utils.chat("&6&lHome " + homesCount), Utils.chat("&aLeft Click: Teleport for $" + teleportPrice), Utils.chat("&aRight Click: Display coordinates for free"), Utils.chat("&bWorld: " + getWorldName(UUID.fromString(ph.worldUID))), Utils.chat("&bx: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z))));
+                homesGui.addItem(createGuiItem(materials[homesCount - 1], Utils.chat("&6&lHome " + homesCount), Utils.chat("&aLeft Click: Teleport for $" + teleportPrice), Utils.chat("&aRight Click: Display coordinates for free"), Utils.chat("&bWorld: " + Utils.getWorldName(UUID.fromString(ph.worldUID))), Utils.chat("&bx: " + Utils.format(x) + ", y: " + Utils.format(y) + ", z: " + Utils.format(z))));
 
             }
         }
@@ -201,21 +201,6 @@ public class Homes implements Listener, CommandExecutor {
 
         return true;
 
-    }
-
-    private String getWorldName(UUID UID) {
-        World world = Bukkit.getWorld(UID);
-        String worldType = world.getName();
-
-        if (worldType.contains("end")) {
-            return "End";
-
-        } else if (worldType.contains("nether")) {
-            return "Nether";
-
-        } else {
-            return "Overworld";
-        }
     }
 
     protected ItemStack createGuiItem(final Material material, final String name, final String... lore) {
@@ -263,7 +248,7 @@ public class Homes implements Listener, CommandExecutor {
 
         ClickType clickType = event.getClick();
         if (clickType.isRightClick()) {
-            player.sendMessage(Utils.chat("&dWorld: " + getWorldName(world.getUID()) + ", x: " + Utils.format(ph.x) + ", y: " + Utils.format(ph.y) + ", z: " + Utils.format(ph.z)));
+            player.sendMessage(Utils.chat("&dWorld: " + Utils.getWorldName(world.getUID()) + ", x: " + Utils.format(ph.x) + ", y: " + Utils.format(ph.y) + ", z: " + Utils.format(ph.z)));
             return;
         }
 

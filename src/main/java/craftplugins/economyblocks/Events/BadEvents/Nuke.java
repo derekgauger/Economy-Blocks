@@ -27,7 +27,7 @@ public class Nuke implements CarePackageEvent {
 
             @Override
             public void run() {
-                Bukkit.broadcastMessage(Utils.chat("&4NUKE IN " + (16 - count++) + "!!!!"));
+                Bukkit.broadcastMessage(Utils.chat("&4NUKE IN " + (15 - count++) + "!!!!"));
 
                 if (count > 15) {
                     nukeIt();

@@ -120,7 +120,7 @@ public class Teleport implements Listener, CommandExecutor {
             int x = (int) location.getX();
             int y = (int) location.getY();
             int z = (int) location.getZ();
-            tps.addItem(createGuiItem(player, Utils.chat("&6&l" + player.getName()), Utils.chat("&aPrice to Teleport: $" + teleportPrice), Utils.chat("&bClick to the last location of " + player.getName()), Utils.chat("&b" + x + ", " + y + ", " + z)));
+            tps.addItem(createGuiItem(player, Utils.chat("&6&l" + player.getName()), Utils.chat("&aPrice to Teleport: $" + teleportPrice), Utils.chat("&bClick to the last location of " + player.getName()), Utils.chat("&b" + Utils.getWorldName(player.getWorld().getUID())), Utils.chat("&b" + x + ", " + y + ", " + z)));
         }
     }
 

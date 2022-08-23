@@ -65,3 +65,9 @@ commands:
 
   setbal:
     description: Allows the console to set a player's balance
+
+  colors:
+    description: Displays possible chat colors
+
+  nick:
+    description: Changes nickname

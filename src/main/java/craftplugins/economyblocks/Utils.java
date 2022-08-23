@@ -1,9 +1,7 @@
 package craftplugins.economyblocks;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -11,7 +9,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -21,15 +22,20 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Utils implements Listener {
 
     EconomyBlocks plugin;
     ItemStack smiteStick = Utils.createItem(Material.STICK, Utils.chat("&bLightning Stick"), 1,null, null);
 
+    CommunityHandler communityHandler;
+    Nicknames nicknames;
 
-    public Utils(EconomyBlocks plugin) {
+    public Utils(EconomyBlocks plugin, CommunityHandler communityHandler, Nicknames nicknames) {
         this.plugin = plugin;
+        this.communityHandler = communityHandler;
+        this.nicknames = nicknames;
 
         Bukkit.getServer().getPluginManager().registerEvents(this,plugin);
     }
@@ -128,7 +134,7 @@ public class Utils implements Listener {
             for (int i = 0; i < enchants.length; i++) {
                 if (material == Material.ENCHANTED_BOOK) {
                     EnchantmentStorageMeta esm = (EnchantmentStorageMeta) item.getItemMeta();
-                    esm.addStoredEnchant(enchants[i], levels[i], true);
+                    esm.addStoredEnchant(enchants[i], levels[i],true);
                     item.setItemMeta(esm);
                 } else {
                     ItemMeta eMeta = item.getItemMeta();
@@ -206,6 +212,92 @@ public class Utils implements Listener {
             player.sendMessage(Utils.chat("&dYou have been given " + randomItem.getMessage()));
         }
 
+    }
+
+    public static String getWorldName(UUID UID) {
+        World world = Bukkit.getWorld(UID);
+        String worldType = world.getName();
+
+        if (worldType.contains("end")) {
+            return "End";
+
+        } else if (worldType.contains("nether")) {
+            return "Nether";
+
+        } else {
+            return "Overworld";
+        }
+    }
+
+    @EventHandler
+    public void onAnvilPrepare(PrepareAnvilEvent event) {
+        Player player = (Player) event.getViewers().get(0);
+        AnvilInventory inventory = event.getInventory();
+        ItemStack FIRST_ITEM = inventory.getItem(0);
+        ItemStack SECOND_ITEM = inventory.getItem(1);
+
+        if ((FIRST_ITEM == null) || (SECOND_ITEM == null)) return;
+
+        if (SECOND_ITEM.getType() == Material.ENCHANTED_BOOK) {
+            if (FIRST_ITEM.getType() != Material.ENCHANTED_BOOK) {
+
+                ItemStack result = FIRST_ITEM.clone();
+                ItemMeta bookMeta = SECOND_ITEM.getItemMeta();
+                assert bookMeta != null;
+                for (Enchantment enchantment : ((EnchantmentStorageMeta) bookMeta).getStoredEnchants().keySet()) {
+                    if (canEnchant(FIRST_ITEM, enchantment)) {
+                        int bookLevel = ((EnchantmentStorageMeta) bookMeta).getStoredEnchantLevel(enchantment);
+                        int itemLevel = FIRST_ITEM.getEnchantmentLevel(enchantment);
+                        if (itemLevel < bookLevel) {
+                            result.addUnsafeEnchantment(enchantment, bookLevel);
+                        } else if (itemLevel == bookLevel) {
+                            if (itemLevel >= enchantment.getMaxLevel()) {
+                                continue;
+                            }
+                            result.addUnsafeEnchantment(enchantment, bookLevel + 1);
+                        }
+                    }
+                }
+                event.setResult(result);
+            }
+        }
+    }
+
+    public boolean canEnchant(ItemStack itemStack, Enchantment enchantment) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        AtomicBoolean canEnchant = new AtomicBoolean(enchantment.canEnchantItem(itemStack));
+
+        if (itemMeta != null) {
+            itemMeta.getEnchants().keySet().forEach(ench -> {
+                if (ench != enchantment && ench.conflictsWith(enchantment)) {
+                    canEnchant.set(false);
+                }
+            });
+        }
+        return canEnchant.get();
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+
+        Community community = communityHandler.getPlayerCommunity(player.getUniqueId().toString());
+        String prefix = "";
+        if (community != null) {
+            prefix = communityHandler.getCommunityName(community) + "&f";
+        }
+
+        String name = nicknames.getPlayerName(player.getUniqueId().toString());
+
+        if (name == null) {
+            if (player.isOp()) {
+                name = "&e" + player.getName();
+            } else {
+                name = "&b" + player.getName();
+            }
+        }
+
+        event.setFormat(Utils.chat(prefix + "&f " + name + "&f : " + event.getMessage()));
     }
 
 }

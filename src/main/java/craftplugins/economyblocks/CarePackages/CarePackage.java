@@ -36,7 +36,11 @@ abstract class CarePackage {
     }
 
     public void bad(Player player, BankHandler bankHandler) {
-        List<CarePackageEvent> badEvents = getBadEvents();
+        boolean alternateDimension = false;
+        if (Utils.getWorldName(player.getWorld().getUID()).equalsIgnoreCase("End") || Utils.getWorldName(player.getWorld().getUID()).equalsIgnoreCase("Nether")) {
+            alternateDimension = true;
+        }
+        List<CarePackageEvent> badEvents = getBadEvents(alternateDimension);
 
         int randomNum = Utils.getRandomNumber(0, badEvents.size());
 
@@ -60,7 +64,7 @@ abstract class CarePackage {
         return goodEvents;
     }
 
-    private List<CarePackageEvent> getBadEvents() {
+    private List<CarePackageEvent> getBadEvents(boolean alternateDimension) {
         List<CarePackageEvent> badEvents = new ArrayList<>();
         badEvents.add(new Boost());
         badEvents.add(new ChangeBlocksHarmful());
@@ -68,7 +72,9 @@ abstract class CarePackage {
         badEvents.add(new Death());
         badEvents.add(new Fire());
         badEvents.add(new Nuke());
-        badEvents.add(new RandomTeleport());
+        if (!alternateDimension) {
+            badEvents.add(new RandomTeleport());
+        }
         badEvents.add(new RemoveMoney());
         badEvents.add(new SpawnEnemies());
         badEvents.add(new SpawnTNT());
@@ -76,5 +82,7 @@ abstract class CarePackage {
 
         return badEvents;
     }
+
+
 
 }
